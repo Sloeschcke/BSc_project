@@ -1,0 +1,17 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-ReliableImpl",
+      "appliesTo": "ReliablePaperImpl/ReliableImpl.cpp",
+      "type": "default",
+      "command": "g++",
+      "args": [
+        "-g",
+        "-o",
+        "ReliablePaperImpl/Reliable",
+        "ReliablePaperImpl/ReliableImpl.cpp"
+      ]
+    }
+  ]
+}

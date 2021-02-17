@@ -1,28 +1,36 @@
+#define HEAD_INFO
+#define HEAD_TRACE
+#include <hoved.h>
+using namespace std;
 class Graph
 {
 public:
-    int n, m, k;
+    int numNodes, m, k;
+    vector<vector<int>> adjMatrix;
+    Graph(int n) {
+        numNodes = n;
+        //adjMatrix = vector<vector<int>> v(n, vector<int> (n));
+    }
     vector<int> inDeg;
-    vector<vector<int>> gT(n, vector<int>(n));
 
     vector<bool> hasnode;
     string graph_file;
     void readGraph()
     {
-        FILE *fin = fopen((graph_file).c_str(), "r");
+        FILE* fin = fopen((graph_file).c_str(), "r");
         ASSERT(fin != false);
         int readCnt = 0;
         for (int i = 0; i < m; i++)
         {
-            readCnt ++;
+            readCnt++;
             int a, b;
             double p;
             int c = fscanf(fin, "%d%d%lf", &a, &b, &p);
             ASSERTT(c == 3, a, b, p, c);
 
             //TRACE_LINE(a, b);
-            ASSERT( a < n );
-            ASSERT( b < n );
+            ASSERT(a < numNodes);
+            ASSERT(b < numNodes);
             hasnode[a] = true;
             hasnode[b] = true;
             add_edge(a, b, p);
@@ -30,7 +38,7 @@ public:
 
         TRACE_LINE_END();
         int s = 0;
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < numNodes; i++)
             if (hasnode[i])
                 s++;
         INFO(s);
@@ -40,7 +48,7 @@ public:
 
     void add_edge(int a, int b, double p)
     {
-        gT[a][b] = p
-        gT[b][a] = p
-    }
-}
+        adjMatrix[a][b] = p;
+        adjMatrix[b][a] = p;
+    };
+};

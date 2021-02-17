@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.git",
+    "\\.vscode",
+    "\\HelloWorld",
+    "\\Local settings (.vs)",
+    "\\ReliablePaperImpl"
+  ],
+  "SelectedNode": "\\ReliablePaperImpl\\ReliableImpl.cpp",
+  "PreviewInSolutionExplorer": false
+}
