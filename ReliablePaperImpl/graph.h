@@ -1,31 +1,29 @@
 #define HEAD_INFO
 #define HEAD_TRACE
+#include <cassert>
 #include "hoved.h"
 using namespace std;
 class Graph
 {
 public:
     int numNodes, m, k;
-    vector<vector<int>> adjMatrix;
+    vector<vector<double>> adjMatrix;
     vector<bool> hasNode;
     string graph_file;
 
-    Graph(int n, string fileName) { //Try adding filename with colon here
+    Graph(int n, string fileName) : graph_file(fileName){ 
         numNodes = n;
         m = 9;
         hasNode = vector<bool> (numNodes);
-        graph_file = fileName;
-        //adjMatrix = vector<vector<int>> v(n, vector<int> (n));
+        adjMatrix = vector<vector<double>> (n, vector<double> (n));
     }
     vector<int> inDeg;
 
     void readGraph()
     {
-        // FILE* fin = fopen((graph_file).c_str(), "r");
-        FILE* fin = fopen("graph_file.inf", "r");
-        if (fin == NULL){
-            cout << "It was null";
-        }
+        FILE* fin;
+        fin = fopen((graph_file).c_str(), "r");
+        assert(fin!=NULL);
         int readCnt = 0;
         for (int i = 0; i < m; i++)
         {
@@ -42,11 +40,6 @@ public:
         }
 
         //TRACE_LINE_END();
-        int s = 0;
-        for (int i = 0; i < numNodes; i++)
-            if (hasNode[i])
-                s++;
-        //INFO(s);
         //ASSERT(readCnt == m);
         fclose(fin);
     }
