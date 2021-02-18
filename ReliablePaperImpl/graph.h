@@ -7,7 +7,8 @@ class Graph
 {
 public:
     int numNodes, m, k;
-    vector<vector<double>> adjMatrix;
+    vector<vector<double>> probs;
+    vector<vector<int>> adjList;
     vector<bool> hasNode;
     string graph_file;
 
@@ -15,7 +16,8 @@ public:
         numNodes = n;
         m = 9;
         hasNode = vector<bool> (numNodes);
-        adjMatrix = vector<vector<double>> (n, vector<double> (n));
+        adjList = vector<vector<int>> (n);
+        probs = vector<vector<double>> (n);
     }
     vector<int> inDeg;
 
@@ -46,7 +48,12 @@ public:
 
     void add_edge(int a, int b, double p)
     {
-        adjMatrix[a][b] = p;
-        adjMatrix[b][a] = p;
+        adjList[a].push_back(b);
+        adjList[b].push_back(a);
+        probs[a].push_back(p);
+        probs[b].push_back(p);
+
+        // adjMatrix[a][b] = p;
+        // adjMatrix[b][a] = p;
     };
 };
