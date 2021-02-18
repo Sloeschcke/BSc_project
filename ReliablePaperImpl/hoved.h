@@ -34,6 +34,7 @@ this_is_deprecated
 #include <vector>
 #include <map>
 #include <deque>
+#include <assert.h>
 using namespace std;
 typedef unsigned int uint;
 typedef unsigned char uint8;
