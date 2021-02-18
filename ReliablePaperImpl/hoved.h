@@ -35,6 +35,7 @@ this_is_deprecated
 #include <map>
 #include <deque>
 #include <cassert>
+#include <time.h>
 using namespace std;
 typedef unsigned int uint;
 typedef unsigned char uint8;
