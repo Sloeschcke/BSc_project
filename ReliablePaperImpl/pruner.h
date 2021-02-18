@@ -21,7 +21,6 @@ set<set<int>> prune(set<set<int>> original) {
 	}
 	return original;
 }
-
 #endif
 
 
