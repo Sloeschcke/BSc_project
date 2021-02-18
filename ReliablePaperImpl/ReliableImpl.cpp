@@ -32,11 +32,9 @@ set<set<int>> prune(set<set<int>> original) {
 }
 
 void testPrune(){
-	set<set<int>> vertices;
-	vertices.insert({1,2,3});
-	vertices.insert({1,2});
+	set<set<int>> vertices = {{1,2,3}, {1,2}, {1,4}};
 
-	set<set<int>> expected = {{1,2,3}};
+	set<set<int>> expected = {{1,2,3}, {1,4}};
 	assert(prune(vertices)==expected);
 }
 
