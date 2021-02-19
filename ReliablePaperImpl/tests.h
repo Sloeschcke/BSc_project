@@ -35,6 +35,19 @@ void testConnectedComponnets(){
 		set<set<int>> cC = connectedComponents(&samples[0]);
     }
 
+void testConnectedComponnets2(){
+		// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
+		string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
+		int numEdges = 11;
+		int numNodes = 11;
+		Graph graph (numNodes,numEdges, graph_file);
+		graph.readGraph();
+		vector<vector<vector<int>>> samples = sample(graph, 1);
+
+	    std::cout << "Started testConnectedComponnets: \n";
+		set<set<int>> cC = connectedComponents(&samples[0]);
+    }
+
 void testSampler(){
     // string graph_file = ".\\ReliablePaperImpl\\graph_file.inf";
     string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file.inf";
@@ -57,6 +70,7 @@ void testSampler(){
 
 void testAll(){
 //    testPrune();
+	testConnectedComponnets2();
 	testConnectedComponnets();
 	testSampler();
 }

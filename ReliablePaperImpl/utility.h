@@ -46,5 +46,4 @@ set<set<int>> connectedComponents(vector<vector<int>> *sample)
     return components;
 }
 
-
 #endif
