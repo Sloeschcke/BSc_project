@@ -24,8 +24,8 @@ void testConnectedComponnets(){
     }
 
 void testConnectedComponnets2(){
-		// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
-		string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
+		string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
+		//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
 		int numEdges = 11;
 		int numNodes = 11;
 		Graph graph (numNodes,numEdges, graph_file);
