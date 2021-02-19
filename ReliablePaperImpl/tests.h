@@ -10,21 +10,9 @@ void testPrune(){
 	assert(prune(vertices)==expected);
 }
 
-// void testConnectedComponnets(){
-// 		// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
-// 		string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
-// 		int numEdges = 4;
-// 		int numNodes = 6;
-// 		Graph graph (numNodes,numEdges, graph_file);
-// 		graph.readGraph();
-
-// 	    std::cout << "Started testConnectedComponnets: \n";
-// 		graph.connectedComponents();
-//     }
-
 void testConnectedComponnets(){
-		// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
-		string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
+		string graph_file = ".\\ReliablePaperImpl\\graph_file.inf";
+		//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
 		int numEdges = 4;
 		int numNodes = 6;
 		Graph graph (numNodes,numEdges, graph_file);
@@ -36,8 +24,8 @@ void testConnectedComponnets(){
     }
 
 void testSampler(){
-    // string graph_file = ".\\ReliablePaperImpl\\graph_file.inf";
-    string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file.inf";
+    string graph_file = ".\\ReliablePaperImpl\\graph_file.inf";
+    //string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file.inf";
 	Graph graph (7,9, graph_file);
 	graph.readGraph();
 	vector<vector<vector<int>>> samples = sample(graph, 5);
@@ -56,7 +44,7 @@ void testSampler(){
 }
 
 void testAll(){
-//    testPrune();
+    testPrune();
 	testConnectedComponnets();
 	testSampler();
 }

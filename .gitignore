@@ -30,11 +30,9 @@
 *.exe
 *.out
 *.app
-<<<<<<< HEAD
-*.dSYM
-=======
+.dSYM
 .vs
 .vscode
->>>>>>> 2050c58280b18a0f13136bfdab9a22a4b9450564
+*.json
 
 CppProperties.json
