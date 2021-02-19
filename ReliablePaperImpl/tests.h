@@ -9,8 +9,8 @@ void testPrune(){
 }
 
 void testConnectedComponnets(){
-		// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
-		string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file.inf";
+		string graph_file = ".\\ReliablePaperImpl\\graph_file.inf";
+		//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
 		int numEdges = 4;
 		int numNodes = 6;
 		Graph graph (numNodes,numEdges, graph_file);
@@ -22,8 +22,8 @@ void testConnectedComponnets(){
     }
 
 void testConnectedComponnets2(){
-		// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
-		string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
+		string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
+		//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
 		int numEdges = 11;
 		int numNodes = 11;
 		Graph graph (numNodes,numEdges, graph_file);
@@ -39,8 +39,8 @@ void testConnectedComponnets2(){
     }
 
 void testSampler(){
-    // string graph_file = ".\\ReliablePaperImpl\\graph_file.inf";
-    string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file.inf";
+    string graph_file = ".\\ReliablePaperImpl\\graph_file.inf";
+    //string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file.inf";
 	Graph graph (7,9, graph_file);
 	graph.readGraph();
 	vector<vector<vector<int>>> samples = sample(graph, 5);
@@ -59,8 +59,7 @@ void testSampler(){
 }
 
 void testAll(){
-//    testPrune();
-	testConnectedComponnets2();
+    //testPrune();
 	testConnectedComponnets();
 	testSampler();
 }
