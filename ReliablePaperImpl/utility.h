@@ -23,6 +23,7 @@ void DFS(int v, vector<bool> *visited, set<int> *component, vector<vector<int>> 
     }
 }
 
+//TODO: flatten to set of set
 // Method to print connected components in an undirected graph
 set<set<set<int>>> connectedComponents(vector<vector<vector<int>>> *samples)
 {
@@ -88,6 +89,12 @@ set<set<int>> prune(set<set<int>> original) {
 		}
 	}
 	return original;
+}
+
+set<set<int>> apriori(set<set<int>> connectedComponents, double threshold)  {
+    //find support > threshold
+    // 
+
 }
 
 #endif
