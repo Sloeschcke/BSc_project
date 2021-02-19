@@ -16,6 +16,16 @@ void testSampler(){
 	vector<vector<vector<int>>> samples = sample(graph, 5);
 
 	assert(samples.size() == 5);
+	for (int i = 0; i < samples.size(); i++){
+		vector<vector<int>> world = samples[i];
+		assert(world.size()==graph.adjList.size());
+		for (int j = 0; j < samples[i].size(); j++){
+			vector<int> worldVertex = world[j];
+			vector<int> graphVertex = graph.adjList[j];
+			assert(worldVertex.size() <= graphVertex.size());
+		}
+	}
+	
 
 
 }
