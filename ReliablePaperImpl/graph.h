@@ -6,16 +6,19 @@ using namespace std;
 class Graph
 {
 public:
-    int numNodes, m, k;
-    vector<vector<double>> adjMatrix;
+    int numNodes, numEdges, k;
+    vector<vector<double> > probs;
+    vector<vector<int> > adjList;
     vector<bool> hasNode;
+    vector<bool> visited;
     string graph_file;
 
-    Graph(int n, string fileName) : graph_file(fileName){ 
+    Graph(int n, int m, string fileName) : graph_file(fileName){ 
         numNodes = n;
-        m = 9;
+        numEdges = m;
         hasNode = vector<bool> (numNodes);
-        adjMatrix = vector<vector<double>> (n, vector<double> (n));
+        adjList = vector<vector<int> > (n);
+        probs = vector<vector<double> > (n);
     }
     vector<int> inDeg;
 
@@ -25,7 +28,7 @@ public:
         fin = fopen((graph_file).c_str(), "r");
         assert(fin!=NULL);
         int readCnt = 0;
-        for (int i = 0; i < m; i++)
+        for (int i = 0; i < numEdges; i++)
         {
             readCnt++;
             int a, b;
@@ -46,7 +49,42 @@ public:
 
     void add_edge(int a, int b, double p)
     {
-        adjMatrix[a][b] = p;
-        adjMatrix[b][a] = p;
+        adjList[a].push_back(b);
+        adjList[b].push_back(a);
+        probs[a].push_back(p);
+        probs[b].push_back(p);
     };
+    
+    // Method to print connected components in an undirected graph
+    void connectedComponents()
+    {
+        // Mark all the vertices as not visited
+        visited = vector<bool> (numNodes);
+        
+        for (int n = 0; n < numNodes; n++) {
+            if (visited[n] == false) {
+                // print all reachable vertices from n
+                DFS(n, &visited);
+                cout << "\n";
+            }
+        }
+        visited.clear();
+    }
+    
+    void DFS(int v, vector<bool> *visited)
+    {
+        // Mark the current node as visited and print it
+        (*visited)[v] = true;
+        cout << v << " ";
+    
+        // Recur on all adjacent vertices
+        for(auto u : adjList[v]){
+            if(!(*visited)[u]){
+                DFS(u, visited);
+            }
+        }
+    }
+
+   
 };
+
