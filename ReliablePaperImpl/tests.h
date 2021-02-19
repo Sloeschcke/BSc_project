@@ -1,6 +1,4 @@
 #include "hoved.h"
-#include "sampler.h"
-#include "pruner.h"
 #include "utility.h"
 
 void testPrune(){
@@ -10,18 +8,6 @@ void testPrune(){
 	assert(prune(vertices)==expected);
 }
 
-// void testConnectedComponnets(){
-// 		// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
-// 		string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
-// 		int numEdges = 4;
-// 		int numNodes = 6;
-// 		Graph graph (numNodes,numEdges, graph_file);
-// 		graph.readGraph();
-
-// 	    std::cout << "Started testConnectedComponnets: \n";
-// 		graph.connectedComponents();
-//     }
-
 void testConnectedComponnets(){
 		// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
 		string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file.inf";
@@ -29,10 +15,10 @@ void testConnectedComponnets(){
 		int numNodes = 6;
 		Graph graph (numNodes,numEdges, graph_file);
 		graph.readGraph();
-		vector<vector<vector<int>>> samples = sample(graph, 1);
+		vector<vector<vector<int>>> samples = sample(graph, 3);
 
 	    std::cout << "Started testConnectedComponnets: \n";
-		set<set<int>> cC = connectedComponents(&samples[0]);
+		set<set<set<int>>> cC = connectedComponents(&samples);
     }
 
 void testConnectedComponnets2(){
@@ -45,7 +31,11 @@ void testConnectedComponnets2(){
 		vector<vector<vector<int>>> samples = sample(graph, 1);
 
 	    std::cout << "Started testConnectedComponnets: \n";
-		set<set<int>> cC = connectedComponents(&samples[0]);
+
+		set<set<set<int>>> cC = connectedComponents(&samples);
+		set<set<set<int>>> expected = {{{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}}};
+
+		assert(cC ==  expected);
     }
 
 void testSampler(){
