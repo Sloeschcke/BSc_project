@@ -1,8 +1,8 @@
-#define HEAD_INFO
-#define HEAD_TRACE
+#ifndef GRAPH_H
+#define GRAPH_H
 #include <cassert>
 #include "hoved.h"
-using namespace std;
+
 class Graph
 {
 public:
@@ -10,7 +10,6 @@ public:
     vector<vector<double> > probs;
     vector<vector<int> > adjList;
     vector<bool> hasNode;
-    vector<bool> visited;
     string graph_file;
 
     Graph(int n, int m, string fileName) : graph_file(fileName){ 
@@ -35,15 +34,10 @@ public:
             double p;
             int c = fscanf(fin, "%d%d%lf", &a, &b, &p);
 
-            //TRACE_LINE(a, b);
-            //ASSERT(b < numNodes);
             hasNode[a] = true;
             hasNode[b] = true;
             add_edge(a, b, p);
-        }
-
-        //TRACE_LINE_END();
-        //ASSERT(readCnt == m);
+        };
         fclose(fin);
     }
 
@@ -54,35 +48,7 @@ public:
         probs[a].push_back(p);
         probs[b].push_back(p);
     };
-    
-    // Method to print connected components in an undirected graph
-    void connectedComponents()
-    {
-        // Mark all the vertices as not visited
-        visited = vector<bool> (numNodes);
-        for (int n = 0; n < numNodes; n++) {
-            if (visited[n] == false) {
-                // print all reachable vertices from n
-                DFS(n, &visited);
-                cout << "\n";
-            }
-        }
-        visited.clear();
-    }
-    
-    void DFS(int v, vector<bool> *visited)
-    {
-        // Mark the current node as visited and print it
-        (*visited)[v] = true;
-        cout << v << " ";
-        // Recur on all adjacent vertices
-        for(auto u : adjList[v]){
-            if(!(*visited)[u]){
-                DFS(u, visited);
-            }
-        }
-    }
-
-   
 };
+
+#endif
 
