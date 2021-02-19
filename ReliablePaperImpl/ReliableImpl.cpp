@@ -2,7 +2,9 @@
 #include "graph.h"
 #include "hoved.h"
 #include "pruner.h"
+#include "sampler.h"
 #include "tests.h"
+
 using namespace std;
 
 int main(int argc, char const *argv[])

@@ -1,6 +1,7 @@
-#include "hoved.h"
 #ifndef PRUNER_H
 #define PRUNER_H
+#include "hoved.h"
+
 
 using namespace std;
 

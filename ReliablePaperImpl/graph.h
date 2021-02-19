@@ -1,8 +1,8 @@
-#define HEAD_INFO
-#define HEAD_TRACE
+#ifndef GRAPH_H
+#define GRAPH_H
 #include <cassert>
 #include "hoved.h"
-using namespace std;
+
 class Graph
 {
 public:
@@ -34,15 +34,11 @@ public:
             double p;
             int c = fscanf(fin, "%d%d%lf", &a, &b, &p);
 
-            //TRACE_LINE(a, b);
-            //ASSERT(b < numNodes);
             hasNode[a] = true;
             hasNode[b] = true;
             add_edge(a, b, p);
         }
-
-        //TRACE_LINE_END();
-        //ASSERT(readCnt == m);
+;
         fclose(fin);
     }
 
@@ -57,3 +53,4 @@ public:
         // adjMatrix[b][a] = p;
     };
 };
+#endif
