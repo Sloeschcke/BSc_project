@@ -56,5 +56,6 @@
         "xutility": "cpp",
         "array": "cpp",
         "string_view": "cpp"
+        "xlocale": "cpp"
     }
 }
