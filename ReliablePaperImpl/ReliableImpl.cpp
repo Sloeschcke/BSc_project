@@ -6,22 +6,22 @@
 
 using namespace std;
 
-// string GetPath2()
+// // string GetPath2()
+// // {
+// //      wchar_t buffer[MAX_PATH] = {};
+// //      ::GetSystemDirectoryA(buffer,_countof(buffer)); // notice the A
+// //      strcat(buffer,"\\version.dll");
+
+// //      return std::string(buffer);
+// //  }
+// //  #include <string>
+// // #include <windows.h>
+
+// std::string getexepath()
 // {
-//      wchar_t buffer[MAX_PATH] = {};
-//      ::GetSystemDirectoryA(buffer,_countof(buffer)); // notice the A
-//      strcat(buffer,"\\version.dll");
-
-//      return std::string(buffer);
-//  }
-//  #include <string>
-// #include <windows.h>
-
-std::string getexepath()
-{
-  char result[ MAX_PATH ]={};
-  return std::string( result, GetCurrentDirectoryA( MAX_PATH, result) );
-}
+//   char result[ MAX_PATH ]={};
+//   return std::string( result, GetCurrentDirectoryA( MAX_PATH, result) );
+// }
 
 int main(int argc, char const *argv[])
 {
