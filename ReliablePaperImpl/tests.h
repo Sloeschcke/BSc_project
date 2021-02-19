@@ -24,7 +24,7 @@ void testPrune(){
 
 void testConnectedComponnets(){
 		// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
-		string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
+		string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file.inf";
 		int numEdges = 4;
 		int numNodes = 6;
 		Graph graph (numNodes,numEdges, graph_file);

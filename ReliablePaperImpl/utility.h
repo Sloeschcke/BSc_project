@@ -42,7 +42,6 @@ set<set<int>> connectedComponents(vector<vector<int>> *sample)
         }
     }
     visited.clear();
-    //more memory leak??
     return components;
 }
 
