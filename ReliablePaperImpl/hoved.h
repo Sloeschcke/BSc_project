@@ -1,15 +1,5 @@
 #define __HEAD_H__
 
-
-
-#ifdef DEBUG_INFO
-this_is_deprecated
-#endif
-#ifdef DEBUG_TRACE
-this_is_deprecated
-#endif
-
-
 #if defined(WIN32)
 #elif defined(__CYGWIN__) // cygwin
 #endif
@@ -34,6 +24,10 @@ this_is_deprecated
 #include <vector>
 #include <map>
 #include <deque>
+#include <cassert>
+#include <time.h>
+#include <random>
+#include <stdlib.h>     
 using namespace std;
 typedef unsigned int uint;
 typedef unsigned char uint8;

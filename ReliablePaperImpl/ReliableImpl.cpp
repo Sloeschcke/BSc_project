@@ -1,9 +1,14 @@
 #include <iostream>
 #include "graph.h"
 #include "hoved.h"
+#include "pruner.h"
+#include "sampler.h"
+#include "tests.h"
+
 using namespace std;
+
 void testConnectedComponnets(){
-		string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
+		string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
 		std::cout << "Hello ze world";
 		int numEdges = 4;
 		int numNodes = 6;
@@ -26,8 +31,6 @@ int main(int argc, char const *argv[])
 	// graph.readGraph();
 	testConnectedComponnets();
 	std::cout << "Hello ze world";
-	
+	testAll();
 	return 0;
 }
-
- 
