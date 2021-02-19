@@ -9,7 +9,7 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file.inf";
+    string graph_file = ".\\ReliablePaperImpl\\graph_file.inf";
 	std::cout << "Hello ze world";
 	Graph graph (7, graph_file);
 	graph.readGraph();

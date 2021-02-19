@@ -10,7 +10,7 @@ void testPrune(){
 }
 
 void testSampler(){
-    string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file.inf";
+    string graph_file = ".\\ReliablePaperImpl\\graph_file.inf";
 	Graph graph (7, graph_file);
 	graph.readGraph();
 	vector<vector<vector<int>>> samples = sample(graph, 5);
