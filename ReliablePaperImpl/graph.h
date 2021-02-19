@@ -60,7 +60,6 @@ public:
     {
         // Mark all the vertices as not visited
         visited = vector<bool> (numNodes);
-        
         for (int n = 0; n < numNodes; n++) {
             if (visited[n] == false) {
                 // print all reachable vertices from n
@@ -76,7 +75,6 @@ public:
         // Mark the current node as visited and print it
         (*visited)[v] = true;
         cout << v << " ";
-    
         // Recur on all adjacent vertices
         for(auto u : adjList[v]){
             if(!(*visited)[u]){
