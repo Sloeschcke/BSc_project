@@ -47,11 +47,6 @@ public:
                 L = generateL();
                 frequentSet.push_back(L);
             }
-            
-            // for(auto&stepItemSet:frequentSet) {
-            //     for(auto&items:stepItemSet) {
-            //         generateAssociationRule(items, {}, {}, 0);
-            //     }
     }
     vector<int> getElement(vector<vector<int> > itemset) {
         vector<int> element;
@@ -141,8 +136,17 @@ public:
             long double support = getSupport(row);
             if(round(support, 2) < minSupport) continue;
             ret.push_back(row);
+        }
         return ret;
     }
 };
+
+set<set<int>> getMFI(vector<vector<int>> components, double threshold, int numSamples){
+    Apriori apriori (components, threshold, numSamples);
+    apriori.process();
+    vector<vector<vector<int>>> result = apriori.getFrequentSet();
+    set<set<int>> FI = convertFrequentToSets(result);
+    return prune(FI); //MFI = MFLS 
+}
 
 #endif

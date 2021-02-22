@@ -17,7 +17,7 @@ bool shouldAddToMFCS(set<set<int>> MFCS, set<int> m){
     return true;
 }
 
-set<set<int>> peeling(vector<vector<vector<int>>> graphSamples, set<set<int>> mfls, double threshold, set<set<int>> MFCS){
+set<set<int>> peeling(vector<vector<vector<int>>> graphSamples, set<set<int>> mfls, double threshold, set<set<int>> MFCS, int numSamples){
     for (auto m : mfls){
         if(subgraphReliability(graphSamples, m) >= threshold){ //check if m is a frequent cohesive set
             //no m' in MFCS where m is subset of m'
@@ -26,11 +26,14 @@ set<set<int>> peeling(vector<vector<vector<int>>> graphSamples, set<set<int>> mf
                 MFCS = prune(MFCS);
             }
         } else {
-
+            vector<vector<int>> components = connectedComponentsSubgraph(&graphSamples, m);
+            set<set<int>> maximalFI = getMFI(components, threshold, numSamples);
+            peeling(graphSamples, maximalFI, threshold, MFCS, numSamples);
         }
     }
     return MFCS;
 }
+
 
 set<set<int>> runPeeling(string fileName, int numNodes, int numEdges, int numSamples, long double threshold){
     Graph graph (numNodes, numEdges, fileName);
@@ -38,18 +41,9 @@ set<set<int>> runPeeling(string fileName, int numNodes, int numEdges, int numSam
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     vector<vector<int>> components = connectedComponents(&graphSamples);
     
-    Apriori apriori (components, threshold, numSamples);
-	apriori.process();
-    vector<vector<vector<int>>> result = apriori.getFrequentSet();
-	set<set<int>> FI = convertFrequentToSets(result);
-	set<set<int>> maximalFI = prune(FI); //MFI = MFLS
-    
-    set<set<int>> res = peeling(graphSamples, maximalFI, threshold, {});
+    set<set<int>> maximalFI = getMFI(components, threshold, numSamples);
+    set<set<int>> res = peeling(graphSamples, maximalFI, threshold, {}, numSamples);
     return res;
-}
-
-set<set<int>> transform(vector<vector<vector<int>>> graphSample, set<int> m){
-    return {};
 }
 
 #endif

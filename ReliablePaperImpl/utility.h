@@ -21,6 +21,7 @@ void DFS(int v, vector<bool> *visited, vector<int> *component, vector<vector<int
         }
     }
 }
+
 // https://www.geeksforgeeks.org/connected-components-in-an-undirected-graph/ 
 // Method to print connected components in an undirected graph
 vector<vector<int>> connectedComponents(vector<vector<vector<int>>> *samples)
@@ -46,6 +47,63 @@ vector<vector<int>> connectedComponents(vector<vector<vector<int>>> *samples)
     return vectorOfComponents;
 }
 
+void DFSOnSubgraph(int v, vector<bool> *visited, vector<int> * component, vector<vector<int>> *sample, set<int> *subgraph)
+{
+    // Mark the current node as visited
+    (*visited)[v] = true;
+    // Recur on all adjacent vertices
+    for(auto u : (*sample)[v]){
+        if((*subgraph).count(u) == 1 && !(*visited)[u]){
+            DFSOnSubgraph(u, visited, component, sample, subgraph);
+        }
+    }
+}
+
+// https://www.geeksforgeeks.org/connected-components-in-an-undirected-graph/ 
+// Method to print connected components in an undirected graph
+vector<vector<int>> connectedComponentsSubgraph(vector<vector<vector<int>>> *samples, set<int> subgraph)
+{
+    vector<vector<int>> vectorOfComponents;
+    for (int i = 0; i < (*samples).size(); i++){
+        vector<vector<int>> sample = (*samples)[i];
+        vector<bool> visited;
+        int numNodes = (sample).size();
+        // Mark all the vertices as not visited
+        visited = vector<bool> (numNodes);
+        for (auto node : subgraph) {
+            vector<int> component;
+            if (visited[node] == false) {
+                // print all reachable vertices from n
+                DFSOnSubgraph(node, &visited, &component, &sample, &subgraph);
+                // cout << "\n";
+                vectorOfComponents.push_back(component);
+            } 
+        }
+        visited.clear();
+    }
+    return vectorOfComponents;
+}
+
+bool DFSToCheckConnectivityOfSubgraph(int v, vector<bool> *visited, vector<vector<int>> *sample, set<int> *subgraph, int counter)
+{
+    // Mark the current node as visited
+    (*visited)[v] = true;
+    if(counter==(*subgraph).size()){
+        return true;
+    }
+    // Recur on all adjacent vertices
+    for(auto u : (*sample)[v]){
+        if((*subgraph).count(u) == 1 && !(*visited)[u]){
+            DFSToCheckConnectivityOfSubgraph(u, visited, sample, subgraph, counter++);
+        }
+    }
+    for(auto s: *subgraph){
+        if(!(*visited)[s]) {
+            return false;
+        }
+    }
+    return true;
+}
 vector<vector<vector<int>>> sample(Graph g, int number) {
     default_random_engine eng(static_cast<long unsigned int>(time(0)));
     uniform_real_distribution<> distr(0, 1);
@@ -94,7 +152,7 @@ set<set<int>> prune(set<set<int>> original) {
 
 // https://www.geeksforgeeks.org/how-to-convert-a-vector-to-set-in-c/
 // Function to convert Vector to Set 
-set<int> convertToSet(vector<int> v) 
+set<int> convertVectorToSet(vector<int> v) 
 { 
     // Declaring the set 
     // using range of vector 
@@ -108,38 +166,18 @@ set<set<int>> convertFrequentToSets (vector<vector<vector<int>>> frequentList){
     set<set<int>> res;
     for (auto elem1:frequentList){
         for (auto elem2:elem1){
-            set<int> temp = convertToSet(elem2);
-            res.insert(convertToSet(elem2));
+            res.insert(convertVectorToSet(elem2));
         }
     }
     return res;
 }
 
-bool DFSWithSubgraphCheck(int v, vector<bool> *visited, vector<vector<int>> *sample, set<int> *subgraph, int counter)
-{
-    // Mark the current node as visited
-    (*visited)[v] = true;
-    if(counter==(*subgraph).size()){
-        return true;
-    }
-    // Recur on all adjacent vertices
-    for(auto u : (*sample)[v]){
-        if((*subgraph).count(u) == 1 && !(*visited)[u]){
-            DFSWithSubgraphCheck(u, visited, sample, subgraph, counter++);
-        }
-    }
-    for(auto s: *subgraph){
-        if(!(*visited)[s]) {
-            return false;
-        }
-    }
-    return true;
-}
+
 
 bool isInducedConnectedComponent(vector<vector<int>> G, set<int> subgraph ){
     auto it = subgraph.begin();
     vector<bool> visited(G.size());
-    bool containsSubgraph = DFSWithSubgraphCheck(*it, &visited, &G, &subgraph, 0);
+    bool containsSubgraph = DFSToCheckConnectivityOfSubgraph(*it, &visited, &G, &subgraph, 0);
     return containsSubgraph;
 }
 
