@@ -127,7 +127,7 @@ public:
                 ret++;
             }
         }
-        return (long double)ret/transactions.size()*100.0;
+        return (long double)ret/transactions.size();
     }
     
     vector<vector<int> > generateL() {
