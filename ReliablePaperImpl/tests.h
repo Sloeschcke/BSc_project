@@ -79,6 +79,8 @@ void testApriori(){
 	Apriori apriori (transactions, 0.5);
 	apriori.process();
 	vector<vector<vector<int>>> result = apriori.getFrequentSet();
+	set<set<int>> MFI = convertFrequentToSets(result);
+	set<set<int>> maximalFI = prune(MFI);
 	cout << "something";
 }
 

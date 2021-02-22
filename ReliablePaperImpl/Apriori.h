@@ -10,7 +10,8 @@ long double round(long double value, int pos){
     temp *= pow( 10, -pos );
     return temp;
 }
-
+//Copied from
+//https://github.com/bowbowbow/Apriori/blob/master/apriori.cpp
 class Apriori {
 private:
     int nowStep;

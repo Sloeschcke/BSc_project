@@ -6,14 +6,13 @@
 
 using namespace std;
 
-//loop over samples og kald CC på hver
+// https://www.geeksforgeeks.org/connected-components-in-an-undirected-graph/ 
 // return: sets af sets for hvert CC call
-
 void DFS(int v, vector<bool> *visited, vector<int> *component, vector<vector<int>> *sample)
 {
     // Mark the current node as visited and print it
     (*visited)[v] = true;
-    cout << v << " ";
+    // cout << v << " ";
     (*component).push_back(v);
     // Recur on all adjacent vertices
     for(auto u : (*sample)[v]){
@@ -22,7 +21,6 @@ void DFS(int v, vector<bool> *visited, vector<int> *component, vector<vector<int
         }
     }
 }
-
 // Method to print connected components in an undirected graph
 vector<vector<int>> connectedComponents(vector<vector<vector<int>>> *samples)
 {
@@ -38,7 +36,7 @@ vector<vector<int>> connectedComponents(vector<vector<vector<int>>> *samples)
             if (visited[n] == false) {
                 // print all reachable vertices from n
                 DFS(n, &visited, &component, &sample);
-                cout << "\n";
+                // cout << "\n";
                 vectorOfComponents.push_back(component);
             } 
         }
@@ -87,6 +85,31 @@ set<set<int>> prune(set<set<int>> original) {
 	}
 	return original;
 }
+
+// https://www.geeksforgeeks.org/how-to-convert-a-vector-to-set-in-c/
+// Function to convert Vector to Set 
+set<int> convertToSet(vector<int> v) 
+{ 
+    // Declaring the set 
+    // using range of vector 
+    set<int> s(v.begin(), v.end()); 
+  
+    // Return the resultant Set 
+    return s; 
+} 
+
+set<set<int>> convertFrequentToSets (vector<vector<vector<int>>> frequentList){
+    set<set<int>> res;
+    for (auto elem1:frequentList){
+        for (auto elem2:elem1){
+            set<int> temp = convertToSet(elem2);
+            res.insert(convertToSet(elem2));
+        }
+    }
+    return res;
+}
+
+
 
 
 #endif
