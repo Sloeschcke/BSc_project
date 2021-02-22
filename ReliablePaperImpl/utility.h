@@ -115,15 +115,17 @@ set<set<int>> convertFrequentToSets (vector<vector<vector<int>>> frequentList){
     return res;
 }
 
-bool DFSWithSubgraphCheck(int v, vector<bool> *visited, vector<vector<int>> *sample, set<int> *subgraph)
+bool DFSWithSubgraphCheck(int v, vector<bool> *visited, vector<vector<int>> *sample, set<int> *subgraph, int counter)
 {
-    // Mark the current node as visited and print it
+    // Mark the current node as visited
     (*visited)[v] = true;
-    // cout << v << " ";
+    if(counter==(*subgraph).size()){
+        return true;
+    }
     // Recur on all adjacent vertices
     for(auto u : (*sample)[v]){
         if((*subgraph).count(u) == 1 && !(*visited)[u]){
-            DFSWithSubgraphCheck(u, visited, sample, subgraph);
+            DFSWithSubgraphCheck(u, visited, sample, subgraph, counter++);
         }
     }
     for(auto s: *subgraph){
@@ -132,6 +134,13 @@ bool DFSWithSubgraphCheck(int v, vector<bool> *visited, vector<vector<int>> *sam
         }
     }
     return true;
+}
+
+bool isInducedConnectedComponent(vector<vector<int>> G, set<int> subgraph ){
+    auto it = subgraph.begin();
+    vector<bool> visited(G.size());
+    bool containsSubgraph = DFSWithSubgraphCheck(*it, &visited, &G, &subgraph, 0);
+    return containsSubgraph;
 }
 
 double subgraphReliability( vector<vector<vector<int>>> samples, set<int> subgraph){
@@ -143,24 +152,8 @@ double subgraphReliability( vector<vector<vector<int>>> samples, set<int> subgra
         }
     }
     double reliability = counter/samples.size();
-
+    return reliability;
 }
 
-bool isInducedConnectedComponent(vector<vector<int>> G, set<int> subgraph ){
-    // find conneceted comp
-    // check if subgraph is connected 
-
-    // make new neighbor table with collumns from suvgraphs vertices
-    // create new vector<vector<int>> with collumns from subgraph
-    // pushback all G[subgraph] to new vector<vector<int>>
-    vector<vector<int>> subG(subgraph.size());
-    for (auto s: subgraph){
-        subG.push_back(G[s]);
-    }
-    auto it = subgraph.begin();
-    vector<bool> visited(subG.size());
-    bool containsSubgraph = DFSWithSubgraphCheck(*it, &visited, &subG, &subgraph);
-    return containsSubgraph;
-}
 
 #endif
