@@ -1,6 +1,8 @@
 #include "hoved.h"
 #include "utility.h"
+#include "apriori.h"
 
+using namespace std;
 void testPrune(){
 	set<set<int>> vertices = {{1,2,3}, {1,2}, {1,4}};
 
@@ -9,7 +11,7 @@ void testPrune(){
 }
 
 void testConnectedComponnets(){
-		string graph_file = ".\\ReliablePaperImpl\\graph_file.inf";
+		string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
 		//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
 		int numEdges = 4;
 		int numNodes = 6;
@@ -18,11 +20,11 @@ void testConnectedComponnets(){
 		vector<vector<vector<int>>> samples = sample(graph, 3);
 
 	    std::cout << "Started testConnectedComponnets: \n";
-		set<set<set<int>>> cC = connectedComponents(&samples);
+		vector<vector<int>> cC = connectedComponents(&samples);
     }
 
 void testConnectedComponnets2(){
-		string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
+		string graph_file = ".\\ReliablePaperImpl\\graph_file_certain.inf";
 		//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
 		int numEdges = 11;
 		int numNodes = 11;
@@ -32,8 +34,8 @@ void testConnectedComponnets2(){
 
 	    std::cout << "Started testConnectedComponnets: \n";
 
-		set<set<set<int>>> cC = connectedComponents(&samples);
-		set<set<set<int>>> expected = {{{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}}};
+		vector<vector<int>> cC = connectedComponents(&samples);
+		vector<vector<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
 
 		assert(cC ==  expected);
     }
@@ -58,9 +60,33 @@ void testSampler(){
 	  std::cout << "Sampling test finished: \n";
 }
 
+void testApriori(){
+
+	// string graph_file = ".\\ReliablePaperImpl\\graph_file_certain.inf";
+	// //string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
+	// int numEdges = 11;
+	// int numNodes = 11;
+	// Graph graph (numNodes,numEdges, graph_file);
+	// graph.readGraph();
+	// vector<vector<vector<int>>> samples = sample(graph, 1);
+
+	// std::cout << "Started testConnectedComponnets: \n";
+
+	// vector<vector<int>> cC = connectedComponents(&samples);
+	vector<vector<int>> transactions = {
+		{1,3,4}, {2,3,5}, {1,2,3,5}, {2,5}
+	};
+	Apriori apriori (transactions, 0.5);
+	apriori.process();
+	vector<vector<vector<int>>> result = apriori.getFrequentSet();
+	cout << "something";
+}
+
 void testAll(){
     //testPrune();
+	testApriori();
 	testConnectedComponnets();
+	testConnectedComponnets2();
 	testSampler();
 }
 

@@ -9,12 +9,12 @@ using namespace std;
 //loop over samples og kald CC på hver
 // return: sets af sets for hvert CC call
 
-void DFS(int v, vector<bool> *visited, set<int> *component, vector<vector<int>> *sample)
+void DFS(int v, vector<bool> *visited, vector<int> *component, vector<vector<int>> *sample)
 {
     // Mark the current node as visited and print it
     (*visited)[v] = true;
-    //cout << v << " ";
-    (*component).insert(v);
+    cout << v << " ";
+    (*component).push_back(v);
     // Recur on all adjacent vertices
     for(auto u : (*sample)[v]){
         if(!(*visited)[u]){
@@ -23,31 +23,28 @@ void DFS(int v, vector<bool> *visited, set<int> *component, vector<vector<int>> 
     }
 }
 
-//TODO: flatten to set of set
 // Method to print connected components in an undirected graph
-set<set<set<int>>> connectedComponents(vector<vector<vector<int>>> *samples)
+vector<vector<int>> connectedComponents(vector<vector<vector<int>>> *samples)
 {
-    set<set<set<int>>> setOfComponents;
+    vector<vector<int>> vectorOfComponents;
     for (int i = 0; i < (*samples).size(); i++){
-        set<set<int>> components;
         vector<vector<int>> sample = (*samples)[i];
         vector<bool> visited;
         int numNodes = (sample).size();
         // Mark all the vertices as not visited
         visited = vector<bool> (numNodes);
         for (int n = 0; n < numNodes; n++) {
-            set<int> component = {};
+            vector<int> component;
             if (visited[n] == false) {
                 // print all reachable vertices from n
                 DFS(n, &visited, &component, &sample);
-                //cout << "\n";
-                components.insert(component);
+                cout << "\n";
+                vectorOfComponents.push_back(component);
             } 
         }
         visited.clear();
-        setOfComponents.insert(components);
     }
-    return setOfComponents;
+    return vectorOfComponents;
 }
 
 vector<vector<vector<int>>> sample(Graph g, int number) {
@@ -91,10 +88,5 @@ set<set<int>> prune(set<set<int>> original) {
 	return original;
 }
 
-set<set<int>> apriori(set<set<int>> connectedComponents, double threshold)  {
-    //find support > threshold
-    // 
-
-}
 
 #endif
