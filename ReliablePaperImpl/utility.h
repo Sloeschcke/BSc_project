@@ -70,20 +70,25 @@ vector<vector<vector<int>>> sample(Graph g, int number) {
 
 set<set<int>> prune(set<set<int>> original) {
 	bool foundSuperSet;
+    set<set<int>> res = original;
 	for (auto it = original.begin(); it != original.end(); it++){
 		foundSuperSet = false;
 		for (auto resultElem : original){
+            if(foundSuperSet){
+                break;
+            }
 			if(*it!=resultElem){
 				if(includes(resultElem.begin(), resultElem.end(), it->begin(), it->end())){
 					foundSuperSet = true;
+                    break;
 				}
 			}
 		}
 		if(foundSuperSet){
-			original.erase(it--);
+			res.erase((*it));
 		}
 	}
-	return original;
+	return res;
 }
 
 // https://www.geeksforgeeks.org/how-to-convert-a-vector-to-set-in-c/

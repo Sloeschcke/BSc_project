@@ -3,11 +3,14 @@
 #include "apriori.h"
 
 using namespace std;
-void testPrune(){
-	set<set<int>> vertices = {{1,2,3}, {1,2}, {1,4}};
 
-	set<set<int>> expected = {{1,2,3}, {1,4}};
-	assert(prune(vertices)==expected);
+
+void testPrune(){
+	set<set<int>> vertices = {{1},{1,2}, {1,2,3}, {1,4},{2,3,5},{2,3}};
+	set<set<int>> pruned = prune(vertices);
+
+	set<set<int>> expected = {{1,2,3}, {1,4},{2,3,5}};
+	assert(pruned==expected);
 }
 
 void testConnectedComponnets(){
@@ -81,11 +84,12 @@ void testApriori(){
 	vector<vector<vector<int>>> result = apriori.getFrequentSet();
 	set<set<int>> MFI = convertFrequentToSets(result);
 	set<set<int>> maximalFI = prune(MFI);
-	cout << "something";
+	set<set<int>> expected = {{2,3,5},{1,3}};
+	assert(maximalFI == expected);
 }
 
 void testAll(){
-    //testPrune();
+    testPrune();
 	testApriori();
 	testConnectedComponnets();
 	testConnectedComponnets2();
