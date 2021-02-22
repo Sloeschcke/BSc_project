@@ -1,6 +1,7 @@
 #include "hoved.h"
 #include "utility.h"
 #include "apriori.h"
+#include "peeling.h"
 
 using namespace std;
 
@@ -102,6 +103,12 @@ void testReliability(){
 	assert(reliability == 1);
 }
 
+void testPeeling(){
+	set<set<int>> res = runPeeling(".\\ReliablePaperImpl\\graph_file_certain.inf", 11, 11, 1, 0.5);
+	set<set<int>> expected = {{2,3,5},{1,3}};
+	assert(res == expected);
+}
+
 void testAll(){
     testPrune();
 	testApriori();
@@ -109,5 +116,6 @@ void testAll(){
 	testConnectedComponnets2();
 	testReliability();
 	testSampler();
+	testPeeling();
 }
 
