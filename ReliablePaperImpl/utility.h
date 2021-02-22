@@ -21,6 +21,7 @@ void DFS(int v, vector<bool> *visited, vector<int> *component, vector<vector<int
         }
     }
 }
+// https://www.geeksforgeeks.org/connected-components-in-an-undirected-graph/ 
 // Method to print connected components in an undirected graph
 vector<vector<int>> connectedComponents(vector<vector<vector<int>>> *samples)
 {
@@ -109,7 +110,52 @@ set<set<int>> convertFrequentToSets (vector<vector<vector<int>>> frequentList){
     return res;
 }
 
+bool DFSWithSubgraphCheck(int v, vector<bool> *visited, vector<vector<int>> *sample, set<int> *subgraph)
+{
+    // Mark the current node as visited and print it
+    (*visited)[v] = true;
+    // cout << v << " ";
+    // Recur on all adjacent vertices
+    for(auto u : (*sample)[v]){
+        if((*subgraph).count(u) == 1 && !(*visited)[u]){
+            DFSWithSubgraphCheck(u, visited, sample, subgraph);
+        }
+    }
+    for(auto s: *subgraph){
+        if(!(*visited)[s]) {
+            return false;
+        }
+    }
+    return true;
+}
 
+double subgraphReliability( vector<vector<vector<int>>> samples, set<int> subgraph){
+    int counter = 0;
+    for (auto G: samples){
+        bool isInduced = isInducedConnectedComponent(G,subgraph);
+        if (isInduced){
+            counter++;
+        }
+    }
+    double reliability = counter/samples.size();
 
+}
+
+bool isInducedConnectedComponent(vector<vector<int>> G, set<int> subgraph ){
+    // find conneceted comp
+    // check if subgraph is connected 
+
+    // make new neighbor table with collumns from suvgraphs vertices
+    // create new vector<vector<int>> with collumns from subgraph
+    // pushback all G[subgraph] to new vector<vector<int>>
+    vector<vector<int>> subG(subgraph.size());
+    for (auto s: subgraph){
+        subG.push_back(G[s]);
+    }
+    auto it = subgraph.begin();
+    vector<bool> visited(subG.size());
+    bool containsSubgraph = DFSWithSubgraphCheck(*it, &visited, &subG, &subgraph);
+    return containsSubgraph;
+}
 
 #endif

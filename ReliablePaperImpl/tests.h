@@ -84,6 +84,10 @@ void testApriori(){
 	cout << "something";
 }
 
+void testReliability(){
+	
+}
+
 void testAll(){
     //testPrune();
 	testApriori();
