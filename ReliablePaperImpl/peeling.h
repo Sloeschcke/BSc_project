@@ -32,13 +32,13 @@ set<set<int>> peeling(vector<vector<vector<int>>> graphSamples, set<set<int>> mf
     return MFCS;
 }
 
-set<set<int>> runPeeling(string fileName, int numNodes, int numEdges, int numSamples, double threshold){
+set<set<int>> runPeeling(string fileName, int numNodes, int numEdges, int numSamples, long double threshold){
     Graph graph (numNodes, numEdges, fileName);
 	graph.readGraph();
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     vector<vector<int>> components = connectedComponents(&graphSamples);
     
-    Apriori apriori (components, threshold);
+    Apriori apriori (components, threshold, numSamples);
 	apriori.process();
     vector<vector<vector<int>>> result = apriori.getFrequentSet();
 	set<set<int>> FI = convertFrequentToSets(result);

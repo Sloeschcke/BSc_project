@@ -80,7 +80,7 @@ void testApriori(){
 	vector<vector<int>> transactions = {
 		{1,3,4}, {2,3,5}, {1,2,3,5}, {2,5}
 	};
-	Apriori apriori (transactions, 0.5);
+	Apriori apriori (transactions, 0.5, 4);
 	apriori.process();
 	vector<vector<vector<int>>> result = apriori.getFrequentSet();
 	set<set<int>> MFI = convertFrequentToSets(result);
