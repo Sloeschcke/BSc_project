@@ -30,7 +30,7 @@ void peeling(vector<vector<vector<int>>> graphSamples, set<set<int>> mfls, doubl
             set<set<int>> maximalFI = getMFI(components, threshold, numSamples);
             peeling(graphSamples, maximalFI, threshold, MFCS, numSamples);
         }
-    }z
+    }
 }
 
 

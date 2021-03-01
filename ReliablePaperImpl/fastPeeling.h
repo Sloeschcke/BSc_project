@@ -49,7 +49,7 @@ set<set<int>> fastPeeling(vector<vector<vector<int>>> graphSamples, set<set<int>
         for (auto m : L){
             if(subgraphReliability(graphSamples, m) >= threshold){ //check if m is a frequent cohesive set
                 //no m' in MFCS where m is subset of m'
-                if(shouldAddToMFCS(MFCS, m)){
+                if(containsSupersetOfElem(MFCS, m)){
                     MFCS.insert(m);
                     MFCS = prune(MFCS);
                 }

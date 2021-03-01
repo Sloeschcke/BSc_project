@@ -150,7 +150,6 @@ void testFastPeelingNonDeterministic(){
 	set<set<int>> resFastPeeling = runFastPeeling(".\\ReliablePaperImpl\\graph_file.inf", 7, 10, 100, 0.5);
 	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
 	assert(res == resFastPeeling);
-	assert(res == expected);
 }
 
 void testAll(){
