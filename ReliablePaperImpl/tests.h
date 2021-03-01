@@ -112,9 +112,11 @@ void testPeeling(){
 }
 
 void testFastPeeling(){
-	set<set<int>> res = runFastPeeling(".\\ReliablePaperImpl\\graph_file_certain.inf", 11, 11, 1, 0.5);
+	set<set<int>> resPeeling = runPeeling(".\\ReliablePaperImpl\\graph_file_certain.inf", 11, 11, 1, 0.5);
+	set<set<int>> resFastPeeling = runFastPeeling(".\\ReliablePaperImpl\\graph_file_certain.inf", 11, 11, 1, 0.5);
 	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
-	assert(res == expected);
+	assert(resPeeling == expected);
+	assert(resPeeling == resFastPeeling);
 }
 
 void testSetSorting(){
@@ -132,6 +134,14 @@ void testPeelingNonDeterministic(){
 	assert(res == expected);
 }
 
+void testFastPeelingNonDeterministic(){
+	set<set<int>> res = runPeeling(".\\ReliablePaperImpl\\graph_file.inf", 7, 10, 100, 0.5);
+	set<set<int>> resFastPeeling = runFastPeeling(".\\ReliablePaperImpl\\graph_file.inf", 7, 10, 100, 0.5);
+	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
+	assert(res == resFastPeeling);
+	assert(res == expected);
+}
+
 void testAll(){
     // testPrune();
 	// testApriori();
@@ -143,5 +153,6 @@ void testAll(){
 	// testPeelingNonDeterministic();
 	testSetSorting();
 	testFastPeeling();
+	testFastPeelingNonDeterministic();
 }
 

@@ -18,6 +18,27 @@ struct customCompareLength final{
     }
 };
 
+bool isContainedInPrevious(vector<int> component, set<set<int>> previous){
+    //TODO, make components list of sets.
+    set<int> componentSet(component.begin(), component.end());
+    int count = previous.count(componentSet);
+    return (count != 0);
+}
+
+vector<vector<int>> transReduce(vector<vector<vector<int>>> * graphSamples, set<int> m, set<set<int>> P, set<set<int>> MFCS){
+    vector<vector<int>> components = connectedComponentsSubgraph(graphSamples, m);
+    set<set<int>> cup = P;
+    cup.insert(MFCS.begin(), MFCS.end());
+
+    vector<vector<int>> result;
+    for (auto component : components){
+        if (!isContainedInPrevious(component, cup)){
+            result.push_back(component);
+        };
+    };
+    return result;
+}
+
 set<set<int>> fastPeeling(vector<vector<vector<int>>> graphSamples, set<set<int>> mfls, double threshold, set<set<int>> MFCS1, int numSamples){
     set<set<int>, customCompareLength> L;
 	copy(mfls.begin(), mfls.end(), inserter(L, L.begin()));
@@ -53,26 +74,7 @@ set<set<int>> fastPeeling(vector<vector<vector<int>>> graphSamples, set<set<int>
     return MFCS;
 }
 
-bool isContainedInPrevious(vector<int> component, set<set<int>> previous){
-    //TODO, make components list of sets.
-    set<int> componentSet(component.begin(), component.end());
-    int count = previous.count(componentSet);
-    return (count != 0);
-}
 
-vector<vector<int>> transReduce(vector<vector<vector<int>>> * graphSamples, set<int> m, set<set<int>> P, set<set<int>> MFCS){
-    vector<vector<int>> components = connectedComponentsSubgraph(graphSamples, m);
-    set<set<int>> cup = P;
-    cup.insert(MFCS.begin(), MFCS.end());
-
-    vector<vector<int>> result;
-    for (auto component : components){
-        if (!isContainedInPrevious(component, cup)){
-            result.push_back(component);
-        };
-    };
-    return result;
-}
 
 set<set<int>> runFastPeeling(string fileName, int numNodes, int numEdges, int numSamples, long double threshold){
     Graph graph (numNodes, numEdges, fileName);
