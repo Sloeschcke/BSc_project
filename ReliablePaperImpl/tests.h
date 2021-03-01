@@ -2,6 +2,7 @@
 #include "utility.h"
 #include "apriori.h"
 #include "peeling.h"
+#include "fastPeeling.h"
 
 using namespace std;
 
@@ -110,6 +111,20 @@ void testPeeling(){
 	assert(res == expected);
 }
 
+void testFastPeeling(){
+	set<set<int>> res = runFastPeeling(".\\ReliablePaperImpl\\graph_file_certain.inf", 11, 11, 1, 0.5);
+	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
+	assert(res == expected);
+}
+
+void testSetSorting(){
+	set<set<int>> unSorted = {{1,2},  {6,7,8},{3,4,5}};
+	set<int> tofind = {1,2,3};
+	int count = unSorted.count(tofind);
+	set<set<int>, customCompareLength> sorted;
+	copy(unSorted.begin(), unSorted.end(), inserter(sorted, sorted.begin()));
+	assert(sorted == sorted);
+}
 //TODO FIX result
 void testPeelingNonDeterministic(){
 	set<set<int>> res = runPeeling(".\\ReliablePaperImpl\\graph_file.inf", 7, 10, 100, 0.5);
@@ -118,13 +133,15 @@ void testPeelingNonDeterministic(){
 }
 
 void testAll(){
-    testPrune();
-	testApriori();
-	testConnectedComponnets();
-	testConnectedComponnets2();
-	testReliability();
-	testSampler();
-	testPeeling();
-	testPeelingNonDeterministic();
+    // testPrune();
+	// testApriori();
+	// testConnectedComponnets();
+	// testConnectedComponnets2();
+	// testReliability();
+	// testSampler();
+	// testPeeling();
+	// testPeelingNonDeterministic();
+	testSetSorting();
+	testFastPeeling();
 }
 
