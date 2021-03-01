@@ -49,8 +49,9 @@ vector<vector<int>> connectedComponents(vector<vector<vector<int>>> *samples)
 
 void DFSOnSubgraph(int v, vector<bool> *visited, vector<int> * component, vector<vector<int>> *sample, set<int> *subgraph)
 {
-    // Mark the current node as visited
+    // Mark the current node as visited and add to component
     (*visited)[v] = true;
+    (*component).push_back(v);
     // Recur on all adjacent vertices
     for(auto u : (*sample)[v]){
         if((*subgraph).count(u) == 1 && !(*visited)[u]){
@@ -182,7 +183,7 @@ bool isInducedConnectedComponent(vector<vector<int>> G, set<int> subgraph ){
 }
 
 double subgraphReliability( vector<vector<vector<int>>> samples, set<int> subgraph){
-    int counter = 0;
+    double counter = 0;
     for (auto G: samples){
         bool isInduced = isInducedConnectedComponent(G,subgraph);
         if (isInduced){

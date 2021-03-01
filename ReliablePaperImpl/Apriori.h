@@ -148,5 +148,4 @@ set<set<int>> getMFI(vector<vector<int>> components, double threshold, int numSa
     set<set<int>> FI = convertFrequentToSets(result);
     return prune(FI); //MFI = MFLS 
 }
-
 #endif
