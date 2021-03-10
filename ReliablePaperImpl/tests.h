@@ -9,7 +9,7 @@ using namespace std;
 
 void testPrune(){
 	set<set<int>> vertices = {{1},{1,2}, {1,2,3}, {1,4},{2,3,5},{2,3}};
-	set<set<int>> pruned = prune(vertices);
+	set<set<int>> pruned = prune(&vertices);
 
 	set<set<int>> expected = {{1,2,3}, {1,4},{2,3,5}};
 	assert(pruned==expected);
@@ -95,7 +95,7 @@ void testReliability(){
 	vector<vector<vector<int>>> samples = sample(graph, 2);
 	set<int> subgraph = {0,1};
 
-	double reliability = subgraphReliability(samples, subgraph);
+	double reliability = subgraphReliability(&samples, subgraph);
 	assert(reliability == 1);
 }
 
@@ -123,8 +123,10 @@ void testPeeling(){
 }
 
 void testFastPeeling(){
-	set<set<int>> resPeeling = runPeeling(".\\ReliablePaperImpl\\graph_file_certain.inf", 11, 11, 1, 0.5);
-	set<set<int>> resFastPeeling = runFastPeeling(".\\ReliablePaperImpl\\graph_file_certain.inf", 11, 11, 1, 0.5);
+	string path =".\\ReliablePaperImpl\\graph_file_certain.inf" ;
+	// string path = "/mnt/c/Users/mabet/OneDrive - Aarhus Universitet/Datalogi/Bachelor projekt/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
+	set<set<int>> resPeeling = runPeeling(path, 11, 11, 1, 0.5);
+	set<set<int>> resFastPeeling = runFastPeeling(path, 11, 11, 1, 0.5);
 	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
 	assert(resPeeling == expected);
 	assert(resPeeling == resFastPeeling);
@@ -138,6 +140,7 @@ void testSetSorting(){
 	copy(unSorted.begin(), unSorted.end(), inserter(sorted, sorted.begin()));
 	assert(sorted == sorted);
 }
+
 //TODO FIX result
 void testPeelingNonDeterministic(){
 	set<set<int>> res = runPeeling(".\\ReliablePaperImpl\\graph_file3.inf", 7, 10, 100, 0.5);
@@ -152,17 +155,26 @@ void testFastPeelingNonDeterministic(){
 	assert(res == resFastPeeling);
 }
 
+void testPeelingFacebook(){
+	string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
+	// string path = "/mnt/c/Users/mabet/OneDrive - Aarhus Universitet/Datalogi/Bachelor projekt/BSc_project/GraphsGeneration/processed_graphs/facebook_0.edges";
+	set<set<int>> res = runPeeling(path,199, 270, 100, 0.95);
+	set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.95);
+	assert(res == resFastPeeling);
+}
+
 void testAll(){
-    // testPrune();
+    testPrune();
 	// testApriori();
 	// testConnectedComponnets();
 	// testConnectedComponnets2();
 	// testReliability();
 	// testSampler();
 	// testPeeling();
-	// testPeelingNonDeterministic();
-	testSetSorting();
-	testFastPeeling();
-	testFastPeelingNonDeterministic();
+	// // testPeelingNonDeterministic();
+	// testSetSorting();
+	//testFastPeeling();
+	// testFastPeelingNonDeterministic();
+	testPeelingFacebook();
 }
 

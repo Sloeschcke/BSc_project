@@ -22,6 +22,16 @@ void DFS(int v, vector<bool> *visited, vector<int> *component, vector<vector<int
     }
 }
 
+vector<vector<int>> removeLen1Components ( vector<vector<int>> * components){
+    vector<vector<int>> res = {};
+    for (auto component : *components){
+        if (component.size()>2){
+            res.push_back(component);
+        }
+    }
+    return res;
+}
+
 // https://www.geeksforgeeks.org/connected-components-in-an-undirected-graph/ 
 // Method to print connected components in an undirected graph
 vector<vector<int>> connectedComponents(vector<vector<vector<int>>> *samples)
@@ -128,26 +138,30 @@ vector<vector<vector<int>>> sample(Graph g, int number) {
     return samples;
 }
 
-set<set<int>> prune(set<set<int>> original) {
+set<set<int>> prune(set<set<int>> * original) {
+    clock_t start;
+    double duration;
+    start = clock();
+
 	bool foundSuperSet;
-    set<set<int>> res = original;
-	for (auto it = original.begin(); it != original.end(); it++){
+    cout << "pruning " << original -> size() << "sets";
+    set<set<int>> res = *original;
+	for (auto it = original->begin(); it != original->end(); it++){
 		foundSuperSet = false;
-		for (auto resultElem : original){
-            if(foundSuperSet){
-                break;
-            }
-			if(*it!=resultElem){
+		for (auto resultElem : *original){
 				if(includes(resultElem.begin(), resultElem.end(), it->begin(), it->end())){
-					foundSuperSet = true;
-                    break;
+                    if(*it!=resultElem){
+                        foundSuperSet = true;
+                        break;
+                    }
 				}
 			}
-		}
 		if(foundSuperSet){
 			res.erase((*it));
 		}
 	}
+    duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+    cout << "Time in prune: " << duration << "\n";
 	return res;
 }
 
@@ -182,15 +196,15 @@ bool isInducedConnectedComponent(vector<vector<int>> G, set<int> subgraph ){
     return containsSubgraph;
 }
 
-double subgraphReliability( vector<vector<vector<int>>> samples, set<int> subgraph){
+double subgraphReliability( vector<vector<vector<int>>> *samples, set<int> subgraph){
     double counter = 0;
-    for (auto G: samples){
+    for (auto G: *samples){
         bool isInduced = isInducedConnectedComponent(G,subgraph);
         if (isInduced){
             counter++;
         }
     }
-    double reliability = counter/samples.size();
+    double reliability = counter/(*samples).size();
     return reliability;
 }
 

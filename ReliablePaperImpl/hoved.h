@@ -27,7 +27,8 @@
 #include <cassert>
 #include <time.h>
 #include <random>
-#include <stdlib.h>     
+#include <stdlib.h>  
+#include <ctime>   
 using namespace std;
 typedef unsigned int uint;
 typedef unsigned char uint8;

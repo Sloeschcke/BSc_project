@@ -39,7 +39,7 @@ vector<vector<int>> transReduce(vector<vector<vector<int>>> * graphSamples, set<
     return result;
 }
 
-set<set<int>> fastPeeling(vector<vector<vector<int>>> graphSamples, set<set<int>> mfls, double threshold, set<set<int>> MFCS1, int numSamples){
+set<set<int>> fastPeeling(vector<vector<vector<int>>> * graphSamples, set<set<int>> mfls, double threshold, set<set<int>> MFCS1, int numSamples){
     set<set<int>, customCompareLength> L;
 	copy(mfls.begin(), mfls.end(), inserter(L, L.begin()));
     set<set<int>> newLayer = {};
@@ -51,18 +51,18 @@ set<set<int>> fastPeeling(vector<vector<vector<int>>> graphSamples, set<set<int>
                 //no m' in MFCS where m is subset of m'
                 if(containsSupersetOfElem(MFCS, m)){
                     MFCS.insert(m);
-                    MFCS = prune(MFCS);
+                    MFCS = prune(&MFCS);
                 }
             } else {
-                vector<vector<int>> components = transReduce(&graphSamples, m, P, MFCS);
+                vector<vector<int>> components = transReduce(graphSamples, m, P, MFCS);
                 set<set<int>> maximalFI = getMFI(components, threshold, numSamples);
                 newLayer.insert(maximalFI.begin(), maximalFI.end());
-                newLayer = prune(newLayer);
+                newLayer = prune(&newLayer);
             }
             P.insert(m);
         }
         copy(MFCS.begin(), MFCS.end(), inserter(newLayer, newLayer.begin()));
-        newLayer = prune(newLayer);
+        newLayer = prune(&newLayer);
         for (auto m : MFCS){
             newLayer.erase(m);
         }
@@ -81,9 +81,10 @@ set<set<int>> runFastPeeling(string fileName, int numNodes, int numEdges, int nu
 	graph.readGraph();
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     vector<vector<int>> components = connectedComponents(&graphSamples);
-    
-    set<set<int>> maximalFI = getMFI(components, threshold, numSamples);
-    set<set<int>> res = fastPeeling(graphSamples, maximalFI, threshold, {}, numSamples);
+    vector<vector<int>> filteredComponents = removeLen1Components(&components);
+
+    set<set<int>> maximalFI = getMFI(filteredComponents, threshold, numSamples);
+    set<set<int>> res = fastPeeling(&graphSamples, maximalFI, threshold, {}, numSamples);
     return res;
 }
 
