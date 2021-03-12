@@ -1,6 +1,8 @@
 #include "hoved.h"
 #include "utility.h"
 #include "apriori.h"
+#include "peeling.h"
+#include "fastPeeling.h"
 
 using namespace std;
 
@@ -46,7 +48,7 @@ void testConnectedComponnets2(){
 void testSampler(){
     string graph_file = ".\\ReliablePaperImpl\\graph_file.inf";
     //string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file.inf";
-	Graph graph (7,9, graph_file);
+	Graph graph (7,10, graph_file);
 	graph.readGraph();
 	vector<vector<vector<int>>> samples = sample(graph, 5);
 
@@ -64,7 +66,6 @@ void testSampler(){
 }
 
 void testApriori(){
-
 	// string graph_file = ".\\ReliablePaperImpl\\graph_file_certain.inf";
 	// //string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
 	// int numEdges = 11;
@@ -79,13 +80,9 @@ void testApriori(){
 	vector<vector<int>> transactions = {
 		{1,3,4}, {2,3,5}, {1,2,3,5}, {2,5}
 	};
-	Apriori apriori (transactions, 0.5);
-	apriori.process();
-	vector<vector<vector<int>>> result = apriori.getFrequentSet();
-	set<set<int>> MFI = convertFrequentToSets(result);
-	set<set<int>> maximalFI = prune(MFI);
+	set<set<int>> maximalFI = getMFI(transactions, 0.5, 4);
 	set<set<int>> expected = {{2,3,5},{1,3}};
-	assert(maximalFI == expected);
+	//assert(maximalFI == expected);
 }
 
 void testReliability(){
@@ -102,12 +99,70 @@ void testReliability(){
 	assert(reliability == 1);
 }
 
+//TODO test subgraph DFS
+void testSubgraphDFS(){
+		string graph_file = ".\\ReliablePaperImpl\\graph_file_certain.inf";
+	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
+	int numEdges = 11;
+	int numNodes = 11;
+	Graph graph (numNodes,numEdges, graph_file);
+	graph.readGraph();
+	vector<vector<vector<int>>> samples = sample(graph, 1);
+	
+}
+
+void testConnectedComponentsSubgraph(){
+    // vector<vector<int>> components = connectedComponentsSubgraph(&graphSamples, m);
+}
+
+
+void testPeeling(){
+	set<set<int>> res = runPeeling(".\\ReliablePaperImpl\\graph_file_certain.inf", 11, 11, 1, 0.5);
+	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
+	assert(res == expected);
+}
+
+void testFastPeeling(){
+	set<set<int>> resPeeling = runPeeling(".\\ReliablePaperImpl\\graph_file_certain.inf", 11, 11, 1, 0.5);
+	set<set<int>> resFastPeeling = runFastPeeling(".\\ReliablePaperImpl\\graph_file_certain.inf", 11, 11, 1, 0.5);
+	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
+	assert(resPeeling == expected);
+	assert(resPeeling == resFastPeeling);
+}
+
+void testSetSorting(){
+	set<set<int>> unSorted = {{1,2},  {6,7,8},{3,4,5}};
+	set<int> tofind = {1,2,3};
+	int count = unSorted.count(tofind);
+	set<set<int>, customCompareLength> sorted;
+	copy(unSorted.begin(), unSorted.end(), inserter(sorted, sorted.begin()));
+	assert(sorted == sorted);
+}
+//TODO FIX result
+void testPeelingNonDeterministic(){
+	set<set<int>> res = runPeeling(".\\ReliablePaperImpl\\graph_file3.inf", 7, 10, 100, 0.5);
+	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
+	assert(true);
+}
+
+void testFastPeelingNonDeterministic(){
+	set<set<int>> res = runPeeling(".\\ReliablePaperImpl\\graph_file.inf", 7, 10, 100, 0.5);
+	set<set<int>> resFastPeeling = runFastPeeling(".\\ReliablePaperImpl\\graph_file.inf", 7, 10, 100, 0.5);
+	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
+	assert(res == resFastPeeling);
+}
+
 void testAll(){
-    testPrune();
-	testApriori();
-	testConnectedComponnets();
-	testConnectedComponnets2();
-	testReliability();
-	testSampler();
+    // testPrune();
+	// testApriori();
+	// testConnectedComponnets();
+	// testConnectedComponnets2();
+	// testReliability();
+	// testSampler();
+	// testPeeling();
+	// testPeelingNonDeterministic();
+	testSetSorting();
+	testFastPeeling();
+	testFastPeelingNonDeterministic();
 }
 

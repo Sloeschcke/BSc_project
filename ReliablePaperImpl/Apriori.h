@@ -3,6 +3,7 @@
 #include "hoved.h"
 
 using namespace std;
+
 long double round(long double value, int pos){
     long double temp;
     temp = value * pow( 10, pos );
@@ -10,6 +11,7 @@ long double round(long double value, int pos){
     temp *= pow( 10, -pos );
     return temp;
 }
+
 //Copied from
 //https://github.com/bowbowbow/Apriori/blob/master/apriori.cpp
 class Apriori {
@@ -19,10 +21,12 @@ private:
     vector<vector<int> > transactions;
     vector<vector<int> > C, L;
     vector<vector<vector<int> > > frequentSet;
+    int numSamples;
 public:
     
-    Apriori (vector<vector<int> > _transactions, long double _minSupport) {
+    Apriori (vector<vector<int> > _transactions, long double _minSupport, int _numSamples) {
         nowStep=0;
+        numSamples = _numSamples;
         minSupport = _minSupport;
         for(auto&row:_transactions){
             sort(row.begin(), row.end());
@@ -43,11 +47,6 @@ public:
                 L = generateL();
                 frequentSet.push_back(L);
             }
-            
-            // for(auto&stepItemSet:frequentSet) {
-            //     for(auto&items:stepItemSet) {
-            //         generateAssociationRule(items, {}, {}, 0);
-            //     }
     }
     vector<int> getElement(vector<vector<int> > itemset) {
         vector<int> element;
@@ -128,7 +127,7 @@ public:
                 ret++;
             }
         }
-        return (long double)ret/transactions.size();
+        return (long double)ret/numSamples;
     }
     
     vector<vector<int> > generateL() {
@@ -142,4 +141,11 @@ public:
     }
 };
 
+set<set<int>> getMFI(vector<vector<int>> components, double threshold, int numSamples){
+    Apriori apriori (components, threshold, numSamples);
+    apriori.process();
+    vector<vector<vector<int>>> result = apriori.getFrequentSet();
+    set<set<int>> FI = convertFrequentToSets(result);
+    return prune(FI); //MFI = MFLS 
+}
 #endif
