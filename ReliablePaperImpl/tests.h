@@ -8,10 +8,10 @@ using namespace std;
 
 
 void testPrune(){
-	set<set<int>> vertices = {{1},{1,2}, {1,2,3}, {1,4},{2,3,5},{2,3}};
-	set<set<int>> pruned = prune(vertices);
+	vector<vector<int>> vertices = {{1},{1,2}, {1,2,3}, {1,4},{2,3,5},{2,3}};
+	vector<vector<int>> pruned = prune(vertices);
 
-	set<set<int>> expected = {{1,2,3}, {1,4},{2,3,5}};
+	vector<vector<int>> expected = {{1,2,3}, {1,4},{2,3,5}};
 	assert(pruned==expected);
 }
 
@@ -153,7 +153,7 @@ void testFastPeelingNonDeterministic(){
 }
 
 void testAll(){
-    // testPrune();
+    testPrune();
 	// testApriori();
 	// testConnectedComponnets();
 	// testConnectedComponnets2();
@@ -161,8 +161,8 @@ void testAll(){
 	// testSampler();
 	// testPeeling();
 	// testPeelingNonDeterministic();
-	testSetSorting();
-	testFastPeeling();
-	testFastPeelingNonDeterministic();
+	// testSetSorting();
+	// testFastPeeling();
+	// testFastPeelingNonDeterministic();
 }
 

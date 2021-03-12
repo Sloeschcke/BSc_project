@@ -128,15 +128,12 @@ vector<vector<vector<int>>> sample(Graph g, int number) {
     return samples;
 }
 
-set<set<int>> prune(set<set<int>> original) {
+vector<vector<int>> prune(vector<vector<int>>& original) {
 	bool foundSuperSet;
-    set<set<int>> res = original;
+    vector<vector<int>> res = {};
 	for (auto it = original.begin(); it != original.end(); it++){
 		foundSuperSet = false;
 		for (auto resultElem : original){
-            if(foundSuperSet){
-                break;
-            }
 			if(*it!=resultElem){
 				if(includes(resultElem.begin(), resultElem.end(), it->begin(), it->end())){
 					foundSuperSet = true;
@@ -144,12 +141,42 @@ set<set<int>> prune(set<set<int>> original) {
 				}
 			}
 		}
-		if(foundSuperSet){
-			res.erase((*it));
-		}
+		if(!foundSuperSet){
+            res.push_back(*it);
+        }
 	}
 	return res;
 }
+
+// set<set<int>> prune(set<set<int>> original) {
+// 	bool foundSuperSet;
+//     //vector<set<int>> 
+    
+//     set<set<int>> res = original;
+// 	for (auto it = original.begin(); it != original.end(); it++){
+// 		foundSuperSet = false;
+// 		for (auto resultElem : original){
+//             if(foundSuperSet){
+//                 break;
+//             }
+// 			if(*it!=resultElem){
+// 				if(includes(resultElem.begin(), resultElem.end(), it->begin(), it->end())){
+// 					foundSuperSet = true;
+//                     break;
+// 				}
+// 			}
+// 		}
+// 		if(foundSuperSet){
+// 			res.erase((*it));
+// 		}
+// 	}
+// 	return res;
+// }
+
+
+
+
+
 
 // https://www.geeksforgeeks.org/how-to-convert-a-vector-to-set-in-c/
 // Function to convert Vector to Set 
