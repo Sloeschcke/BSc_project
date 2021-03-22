@@ -159,6 +159,8 @@ public:
     }
 };
 
+
+
 set<set<int>> getMFI(vector<vector<int>> components, double threshold, int numSamples){
     Apriori apriori (components, threshold, numSamples);
     apriori.process();
@@ -166,16 +168,13 @@ set<set<int>> getMFI(vector<vector<int>> components, double threshold, int numSa
     vector<vector<vector<int>>> result = apriori.getFrequentSet();
 
     vector<vector<vector<int>>> filteredRes;
-
     for (auto res: result){
         filteredRes.push_back(removeLen1Components(&res));
     }
-    
-    cout << "starting set conversion\n";
-    set<set<int>> FI = convertFrequentToSets(filteredRes);
-    cout << "set conversion done\n";
-    FI = prune(&FI);
-    cout << "prune done\n";
-    return FI; //MFI = MFLS 
+    vector<vector<int>> FI = flatten(filteredRes);
+    vector<vector<int>> MFI = pruneVector(FI);
+    set<set<int>> setMFI = vectorVectorToSetSet(MFI);
+    return setMFI; //MFI = MFLS 
+
 }
 #endif

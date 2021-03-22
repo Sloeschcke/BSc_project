@@ -9,28 +9,28 @@ using namespace std;
 
 
 void testPrune(){
-	set<set<int>> vertices = {{1},{1,2}, {1,2,3}, {1,4},{2,3,5},{2,3}};
-	set<set<int>> pruned = prune(&vertices);
+	vector<vector<int>> vertices = {{1},{1,2}, {1,2,3}, {1,4},{2,3,5},{2,3}};
+	vector<vector<int>> pruned = pruneVector(vertices);
 
-	set<set<int>> expected = {{1,2,3}, {1,4},{2,3,5}};
+	vector<vector<int>> expected = {{1,2,3}, {1,4},{2,3,5}};
 	assert(pruned==expected);
 }
 
 void testConnectedComponnets(){
-		string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
+		string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file2.inf";
+		// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
 		//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
 		int numEdges = 4;
 		int numNodes = 6;
 		Graph graph (numNodes,numEdges, graph_file);
 		graph.readGraph();
 		vector<vector<vector<int>>> samples = sample(graph, 3);
-
-	    std::cout << "Started testConnectedComponnets: \n";
 		vector<vector<int>> cC = connectedComponents(&samples);
     }
 
 void testConnectedComponnets2(){
-		string graph_file = ".\\ReliablePaperImpl\\graph_file_certain.inf";
+		string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
+		// string graph_file = ".\\ReliablePaperImpl\\graph_file_certain.inf";
 		//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
 		int numEdges = 11;
 		int numNodes = 11;
@@ -47,7 +47,8 @@ void testConnectedComponnets2(){
     }
 
 void testSampler(){
-    string graph_file = ".\\ReliablePaperImpl\\graph_file.inf";
+	string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file.inf";
+    // string graph_file = ".\\ReliablePaperImpl\\graph_file.inf";
     //string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file.inf";
 	Graph graph (7,10, graph_file);
 	graph.readGraph();
@@ -87,7 +88,8 @@ void testApriori(){
 }
 
 void testReliability(){
-	string graph_file = ".\\ReliablePaperImpl\\graph_file_certain.inf";
+	string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
+	// string graph_file = ".\\ReliablePaperImpl\\graph_file_certain.inf";
 	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
 	int numEdges = 11;
 	int numNodes = 11;
@@ -96,13 +98,14 @@ void testReliability(){
 	vector<vector<vector<int>>> samples = sample(graph, 2);
 	set<int> subgraph = {0,1};
 
-	double reliability = subgraphReliability(&samples, subgraph);
+	double reliability = subgraphReliability(samples, subgraph);
 	assert(reliability == 1);
 }
 
 //TODO test subgraph DFS
 void testSubgraphDFS(){
-		string graph_file = ".\\ReliablePaperImpl\\graph_file_certain.inf";
+	string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
+	// string graph_file = ".\\ReliablePaperImpl\\graph_file_certain.inf";
 	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
 	int numEdges = 11;
 	int numNodes = 11;
@@ -118,16 +121,20 @@ void testConnectedComponentsSubgraph(){
 
 
 void testPeeling(){
-	set<set<int>> res = runPeeling(".\\ReliablePaperImpl\\graph_file_certain.inf", 11, 11, 1, 0.5);
+	// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
+	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
+	string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
+	set<set<int>> res = runPeeling(graph_file, 11, 11, 1, 0.5, 0);
 	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
 	assert(res == expected);
 }
 
 void testFastPeeling(){
-	string path =".\\ReliablePaperImpl\\graph_file_certain.inf" ;
-	// string path = "/mnt/c/Users/mabet/OneDrive - Aarhus Universitet/Datalogi/Bachelor projekt/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
-	set<set<int>> resPeeling = runPeeling(path, 11, 11, 1, 0.5);
-	set<set<int>> resFastPeeling = runFastPeeling(path, 11, 11, 1, 0.5);
+	// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
+	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
+	string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
+	set<set<int>> resPeeling = runPeeling(graph_file, 11, 11, 1, 0.5, 0);
+	set<set<int>> resFastPeeling = runFastPeeling(graph_file, 11, 11, 1, 0.5);
 	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
 	assert(resPeeling == expected);
 	assert(resPeeling == resFastPeeling);
@@ -144,47 +151,56 @@ void testSetSorting(){
 
 //TODO FIX result
 void testPeelingNonDeterministic(){
-	set<set<int>> res = runPeeling(".\\ReliablePaperImpl\\graph_file3.inf", 7, 10, 100, 0.5);
-	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
-	assert(true);
+	// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
+	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
+	string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file3.inf";
+	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5, 0);
+	set<set<int>> expected = {{0, 2, 3, 5}, {4, 6}};
+	assert(res == expected);
 }
 
 void testFastPeelingNonDeterministic(){
-	set<set<int>> res = runPeeling(".\\ReliablePaperImpl\\graph_file.inf", 7, 10, 100, 0.5);
-	set<set<int>> resFastPeeling = runFastPeeling(".\\ReliablePaperImpl\\graph_file.inf", 7, 10, 100, 0.5);
-	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
-	assert(res == resFastPeeling);
+	// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
+	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
+	string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file3.inf";
+	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5, 0);
+	set<set<int>> resFastPeeling = runFastPeeling(graph_file, 7, 10, 100, 0.5);
+	set<set<int>> expected = {{0, 2, 3, 5}, {4, 6}};
+	assert(res == resFastPeeling && res == expected);  
+	std::cout << "finished\n";
+
 }
 
 void testPeelingFacebook(){
-	string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
+	// string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
+	string path = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	// string path = "/mnt/c/Users/mabet/OneDrive - Aarhus Universitet/Datalogi/Bachelor projekt/BSc_project/GraphsGeneration/processed_graphs/facebook_0.edges";
-	set<set<int>> res = runPeeling(path,199, 270, 100, 0.95);
+	set<set<int>> res = runPeeling(path,199, 270, 100, 0.95, 0);
 	set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.95);
 	assert(res == resFastPeeling);
 }
 
-void testTopKReliableFacebook(){
-	string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	// string path = "/mnt/c/Users/mabet/OneDrive - Aarhus Universitet/Datalogi/Bachelor projekt/BSc_project/GraphsGeneration/processed_graphs/facebook_0.edges";
-	vector<vector<int>> res = runTopKPeeling(path,199, 270, 100);
-	// set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.95);
-	// assert(res == resFastPeeling);
-}
+// void testTopKReliableFacebook(){
+// 	string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
+// 	// string path = "/mnt/c/Users/mabet/OneDrive - Aarhus Universitet/Datalogi/Bachelor projekt/BSc_project/GraphsGeneration/processed_graphs/facebook_0.edges";
+// 	vector<vector<int>> res = runTopKPeeling(path,199, 270, 100);
+// 	// set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.95);
+// 	// assert(res == resFastPeeling);
+// }
 
 void testAll(){
-    testPrune();
+    // testPrune();
 	// testApriori();
 	// testConnectedComponnets();
 	// testConnectedComponnets2();
 	// testReliability();
 	// testSampler();
 	// testPeeling();
-	// // testPeelingNonDeterministic();
+	// testPeelingNonDeterministic();
 	// testSetSorting();
-	//testFastPeeling();
+	// testFastPeeling();
 	// testFastPeelingNonDeterministic();
-	// testPeelingFacebook();
-	testTopKReliableFacebook();
+	testPeelingFacebook();
+	// testTopKReliableFacebook();
 }
 
