@@ -29,7 +29,6 @@ void testConnectedComponnets(){
 
 void testConnectedComponnets2(){
 		string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
-
 		// string graph_file = ".\\ReliablePaperImpl\\graph_file_certain.inf";
 		//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file_certain.inf";
 		int numEdges = 11;
@@ -121,15 +120,19 @@ void testConnectedComponentsSubgraph(){
 
 
 void testPeeling(){
+	// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
+	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
 	string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
-	set<set<int>> res = runPeeling(graph_file, 11, 11, 1, 0.5);
+	set<set<int>> res = runPeeling(graph_file, 11, 11, 1, 0.5, 0);
 	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
 	assert(res == expected);
 }
 
 void testFastPeeling(){
+	// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
+	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
 	string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
-	set<set<int>> resPeeling = runPeeling(graph_file, 11, 11, 1, 0.5);
+	set<set<int>> resPeeling = runPeeling(graph_file, 11, 11, 1, 0.5, 0);
 	set<set<int>> resFastPeeling = runFastPeeling(graph_file, 11, 11, 1, 0.5);
 	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
 	assert(resPeeling == expected);
@@ -146,33 +149,38 @@ void testSetSorting(){
 }
 //TODO FIX result
 void testPeelingNonDeterministic(){
+	// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
+	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
 	string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file3.inf";
-	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5);
-	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
-	assert(true);
+	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5, 0);
+	set<set<int>> expected = {{0, 2, 3, 5}, {1}, {4, 6}};
+	assert(res == expected);
 }
 
+// How is this test supposed to work? We sample from from an uncertain graph twice - We cannot expect them to be similar
 void testFastPeelingNonDeterministic(){
-	string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file.inf";
-	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5);
+	// string graph_file = ".\\ReliablePaperImpl\\graph_file2.inf";
+	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
+	string graph_file = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\ReliablePaperImpl\\graph_file3.inf";
+	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5, 0);
 	set<set<int>> resFastPeeling = runFastPeeling(graph_file, 7, 10, 100, 0.5);
-	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
-	assert(res == resFastPeeling);
+	set<set<int>> expected = {{0, 2, 3, 5}, {1}, {4, 6}};
+	assert(res == resFastPeeling && res == expected); // How is this test supposed to work? We sample from from an uncertain graph twice - We cannot expect them to be similar 
 	std::cout << "finished\n";
 
 }
 
 void testAll(){
-    testPrune();
-	testApriori();
-	testConnectedComponnets();
-	testConnectedComponnets2();
-	testReliability();
-	testSampler();
-	testPeeling();
+    // testPrune();
+	// testApriori();
+	// testConnectedComponnets();
+	// testConnectedComponnets2();
+	// testReliability();
+	// testSampler();
+	// testPeeling();
 	testPeelingNonDeterministic();
-	testSetSorting();
-	testFastPeeling();
+	// testSetSorting();
+	// testFastPeeling();
 	testFastPeelingNonDeterministic();
 }
 
