@@ -51,7 +51,9 @@ set<set<int>> fastPeeling(vector<vector<vector<int>>> graphSamples, set<set<int>
                 //no m' in MFCS where m is subset of m'
                 if(containsSupersetOfElem(MFCS, m)){
                     MFCS.insert(m);
-                    MFCS = prune(MFCS);
+                    vector<vector<int>> tempMFCS = setSetToVectorVector(MFCS);
+                    tempMFCS = pruneVector(tempMFCS);
+                    MFCS = vectorVectorToSetSet(tempMFCS);
                 }
             } else {
                 vector<vector<int>> components = transReduce(&graphSamples, m, P, MFCS);

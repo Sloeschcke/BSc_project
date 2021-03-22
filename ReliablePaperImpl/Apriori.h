@@ -141,11 +141,16 @@ public:
     }
 };
 
+
+
 set<set<int>> getMFI(vector<vector<int>> components, double threshold, int numSamples){
     Apriori apriori (components, threshold, numSamples);
     apriori.process();
     vector<vector<vector<int>>> result = apriori.getFrequentSet();
-    set<set<int>> FI = convertFrequentToSets(result);
-    return prune(FI); //MFI = MFLS 
+    vector<vector<int>> FI = flatten(result);
+    vector<vector<int>> MFI = pruneVector(FI);
+    set<set<int>> setMFI = vectorVectorToSetSet(MFI);
+    return setMFI; //MFI = MFLS 
+
 }
 #endif

@@ -23,7 +23,9 @@ void peeling(vector<vector<vector<int>>> graphSamples, set<set<int>> mfls, doubl
             //no m' in MFCS where m is subset of m'
             if(containsSupersetOfElem(*MFCS, m)){ 
                 (*MFCS).insert(m);
-                *MFCS = prune(*MFCS);
+                vector<vector<int>> tempMFCS = setSetToVectorVector(*MFCS);
+                tempMFCS = pruneVector(tempMFCS);
+                *MFCS = vectorVectorToSetSet(tempMFCS);
             }
         } else {
             vector<vector<int>> components = connectedComponentsSubgraph(&graphSamples, m);
@@ -32,6 +34,7 @@ void peeling(vector<vector<vector<int>>> graphSamples, set<set<int>> mfls, doubl
         }
     }
 }
+
 
 
 set<set<int>> runPeeling(string fileName, int numNodes, int numEdges, int numSamples, long double threshold){

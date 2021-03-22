@@ -128,7 +128,7 @@ vector<vector<vector<int>>> sample(Graph g, int number) {
     return samples;
 }
 
-vector<vector<int>> prune(vector<vector<int>>& original) {
+vector<vector<int>> pruneVector(vector<vector<int>>& original) {
 	bool foundSuperSet;
     vector<vector<int>> res = {};
 	for (auto it = original.begin(); it != original.end(); it++){
@@ -148,47 +148,53 @@ vector<vector<int>> prune(vector<vector<int>>& original) {
 	return res;
 }
 
-// set<set<int>> prune(set<set<int>> original) {
-// 	bool foundSuperSet;
-//     //vector<set<int>> 
+set<set<int>> prune(set<set<int>> original) {
+	bool foundSuperSet;
+    //vector<set<int>> 
     
-//     set<set<int>> res = original;
-// 	for (auto it = original.begin(); it != original.end(); it++){
-// 		foundSuperSet = false;
-// 		for (auto resultElem : original){
-//             if(foundSuperSet){
-//                 break;
-//             }
-// 			if(*it!=resultElem){
-// 				if(includes(resultElem.begin(), resultElem.end(), it->begin(), it->end())){
-// 					foundSuperSet = true;
-//                     break;
-// 				}
-// 			}
-// 		}
-// 		if(foundSuperSet){
-// 			res.erase((*it));
-// 		}
-// 	}
-// 	return res;
-// }
-
-
-
-
-
+    set<set<int>> res = original;
+	for (auto it = original.begin(); it != original.end(); it++){
+		foundSuperSet = false;
+		for (auto resultElem : original){
+            if(foundSuperSet){
+                break;
+            }
+			if(*it!=resultElem){
+				if(includes(resultElem.begin(), resultElem.end(), it->begin(), it->end())){
+					foundSuperSet = true;
+                    break;
+				}
+			}
+		}
+		if(foundSuperSet){
+			res.erase((*it));
+		}
+	}
+	return res;
+}
 
 // https://www.geeksforgeeks.org/how-to-convert-a-vector-to-set-in-c/
 // Function to convert Vector to Set 
-set<int> convertVectorToSet(vector<int> v) 
-{ 
+set<int> convertVectorToSet(vector<int> v) { 
     // Declaring the set 
     // using range of vector 
     set<int> s(v.begin(), v.end()); 
-  
     // Return the resultant Set 
     return s; 
 } 
+
+vector<int> convertSetToVector(set<int> s) {
+    vector<int> v(s.begin(), s.end());
+    return v;
+}
+
+set<set<int>> vectorVectorToSetSet (vector<vector<int>> vectorVector){
+    set<set<int>> res;
+    for(auto vector:vectorVector){
+        res.insert(convertVectorToSet(vector));
+    }
+    return res;
+}
 
 set<set<int>> convertFrequentToSets (vector<vector<vector<int>>> frequentList){
     set<set<int>> res;
@@ -200,7 +206,24 @@ set<set<int>> convertFrequentToSets (vector<vector<vector<int>>> frequentList){
     return res;
 }
 
+vector<vector<int>> setSetToVectorVector(set<set<int>> setSet){
+    vector<vector<int>> res;
+    for(auto set:setSet){
+        res.push_back(convertSetToVector(set));
+    }
+    return res;
+}
 
+vector<vector<int>> flatten(vector<std::vector<vector<int>>>& v) {
+    std::size_t total_size = 0;
+    for (const auto& sub : v)
+        total_size += sub.size(); // I wish there was a transform_accumulate
+    vector<vector<int>> result;
+    result.reserve(total_size);
+    for (const auto& sub : v)
+        result.insert(result.end(), sub.begin(), sub.end());
+    return result;
+}
 
 bool isInducedConnectedComponent(vector<vector<int>> G, set<int> subgraph ){
     auto it = subgraph.begin();
