@@ -189,7 +189,7 @@ set<set<int>> convertFrequentToSets (vector<vector<vector<int>>> frequentList){
 
 
 
-bool isInducedConnectedComponent(vector<vector<int>> G, set<int> subgraph ){
+bool isInducedConnectedComponent(vector<vector<int>>& G, set<int> subgraph ){
     auto it = subgraph.begin();
     vector<bool> visited(G.size());
     bool containsSubgraph = DFSToCheckConnectivityOfSubgraph(*it, &visited, &G, &subgraph, 0);

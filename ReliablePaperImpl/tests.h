@@ -3,6 +3,7 @@
 #include "apriori.h"
 #include "peeling.h"
 #include "fastPeeling.h"
+#include "TopKPeeling.h"
 
 using namespace std;
 
@@ -163,6 +164,14 @@ void testPeelingFacebook(){
 	assert(res == resFastPeeling);
 }
 
+void testTopKReliableFacebook(){
+	string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
+	// string path = "/mnt/c/Users/mabet/OneDrive - Aarhus Universitet/Datalogi/Bachelor projekt/BSc_project/GraphsGeneration/processed_graphs/facebook_0.edges";
+	vector<vector<int>> res = runTopKPeeling(path,199, 270, 100);
+	// set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.95);
+	// assert(res == resFastPeeling);
+}
+
 void testAll(){
     testPrune();
 	// testApriori();
@@ -175,6 +184,7 @@ void testAll(){
 	// testSetSorting();
 	//testFastPeeling();
 	// testFastPeelingNonDeterministic();
-	testPeelingFacebook();
+	// testPeelingFacebook();
+	testTopKReliableFacebook();
 }
 

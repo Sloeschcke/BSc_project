@@ -51,6 +51,7 @@ public:
                 frequentSet.push_back(L);
             }
     }
+
     vector<int> getElement(vector<vector<int> > itemset) {
         vector<int> element;
         set<int> s;
