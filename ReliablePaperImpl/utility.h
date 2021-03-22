@@ -158,6 +158,27 @@ vector<vector<int>> pruneVector(vector<vector<int>>& original) {
 	return res;
 }
 
+vector<vector<int>> pruneMatrix(vector<vector<vector<int>>>& original){
+    int size = original.size();
+    vector<vector<int>> res (original[size-1]);
+    bool foundSuperSet;
+    for (int n = original.size()-1; n > 0; n--){
+        for(auto it = original[n-1].begin(); it != original[n-1].end(); it++){
+            foundSuperSet = false;
+            for (auto resultElem : original[n]){
+                if(includes(resultElem.begin(), resultElem.end(), it->begin(), it->end())){
+                    foundSuperSet = true;
+                    break;
+                }
+            }
+            if(!foundSuperSet){
+                res.push_back(*it);
+            }
+        }
+    }
+    return res;
+}
+
 set<set<int>> prune(set<set<int>> original) {
 	bool foundSuperSet;
     clock_t start;
