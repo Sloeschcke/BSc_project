@@ -171,6 +171,11 @@ void testPeelingFacebook(){
 	assert(res == resFastPeeling);
 }
 
+void testIterApriori(){
+	vector<vector<int>> components = {{1,2}, {1,2,3}, {1,3},{1,4}};
+	
+}
+
 // void testTopKReliableFacebook(){
 	// string path = abspath + "\\BSc_project\\ReliablePaperImpl\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 // 	vector<vector<int>> res = runTopKPeeling(path,199, 270, 100);
