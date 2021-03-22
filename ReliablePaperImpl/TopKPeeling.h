@@ -12,7 +12,7 @@ vector<vector<int>> topKPeeling(vector<vector<vector<int>>> * graphSamples, vect
     IterApriori iApriori = IterApriori(components, theta);
     iApriori.generateNextC();
 
-    
+    return tMFCS;
 
 
 }
@@ -23,7 +23,7 @@ vector<vector<int>> runTopKPeeling(string fileName, int numNodes, int numEdges, 
     vector<vector<int>> components = connectedComponents(&graphSamples);
     return topKPeeling(&graphSamples, &components);
 }
-
+#endif
 class IterApriori {
 private:
     int nowStep;
@@ -34,10 +34,9 @@ private:
     clock_t start;
     double duration;
 public: 
-    Apriori (vector<vector<int> > * _transactions, long double _minSupport) {
+    IterApriori (vector<vector<int> > * _transactions, long double _minSupport) {
         nowStep=0;
-        numSamples = _numSamples;
-        for(auto&row:_transactions){
+        for(auto&row: (*_transactions)){
             sort(row.begin(), row.end());
             transactions.push_back(row);
         }
@@ -45,16 +44,16 @@ public:
     }
 
 
-    vector<vector<int> > generateNextC() {
-        if(nowStep==0) {
-            vector<vector<int> > ret;
-            vector<int> element = getElement(transactions);
-            for(auto&i:element) ret.push_back(vector<int>(1, i));
-            return ret;
-        } else {
-            return pruning(joining());
-        }
-    }
+    // vector<vector<int> > generateNextC() {
+    //     if(nowStep==0) {
+    //         vector<vector<int> > ret;
+    //         vector<int> element = getElement(transactions);
+    //         for(auto&i:element) ret.push_back(vector<int>(1, i));
+    //         return ret;
+    //     } else {
+    //         return pruning(joining());
+    //     }
+    // }
     
     vector<int> getElement(vector<vector<int> > itemset) {
         vector<int> element;
@@ -75,4 +74,3 @@ public:
 //     return topKPeeling(&graphSamples, numSamples);
 // }
 
-#endif

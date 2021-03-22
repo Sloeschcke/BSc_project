@@ -173,7 +173,7 @@ void testTopKReliableFacebook(){
 }
 
 void testAll(){
-    testPrune();
+    //testPrune();
 	// testApriori();
 	// testConnectedComponnets();
 	// testConnectedComponnets2();
@@ -184,7 +184,7 @@ void testAll(){
 	// testSetSorting();
 	//testFastPeeling();
 	// testFastPeelingNonDeterministic();
-	// testPeelingFacebook();
-	testTopKReliableFacebook();
+	testPeelingFacebook();
+	//testTopKReliableFacebook();
 }
 
