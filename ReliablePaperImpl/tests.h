@@ -18,6 +18,14 @@ void testPrune(){
 	assert(pruned==expected);
 }
 
+void testPruneMatrix(){
+	vector<vector<vector<int>>> vertices = {{{1}, {2}, {4}, {10}}, {{1,2}, {1,4}, {2,10}}, {{1,2,4}}};
+	vector<vector<int>> pruned = pruneMatrix(vertices);
+
+	vector<vector<int>> expected = {{2,10}, {1,2,4}};
+	assert(pruned==expected);
+}
+
 void testConnectedComponnets(){
 		string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file2.inf";
 		//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
@@ -167,7 +175,7 @@ void testPeelingFacebook(){
 	// string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	set<set<int>> res = runPeeling(path,199, 270, 100, 0.95, 0);
-	set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.95);
+	set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
 	assert(res == resFastPeeling);
 }
 
@@ -184,7 +192,8 @@ void testIterApriori(){
 // }
 
 void testAll(){
-    //testPrune();
+	// testPruneMatrix();
+    // testPrune();
 	// testApriori();
 	// testConnectedComponnets();
 	// testConnectedComponnets2();
