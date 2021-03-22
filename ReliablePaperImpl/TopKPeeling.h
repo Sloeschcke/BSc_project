@@ -20,44 +20,8 @@
 //     return topKPeeling(&graphSamples, &components);
 // }
 #endif
-class IterApriori {
-private:
-    int nowStep;
-    long double minSupport;
-    vector<vector<int> > transactions;
-    vector<vector<int> > C, L;
-    vector<vector<vector<int> > > frequentSet;
-    clock_t start;
-    double duration;
-public: 
-    IterApriori (vector<vector<int> > * _transactions, long double _minSupport) {
-        nowStep=0;
-        for(auto&row: (*_transactions)){
-            sort(row.begin(), row.end());
-            transactions.push_back(row);
-        }
-        frequentSet.push_back({{}});
-    }
 
 
-    // vector<vector<int> > generateNextC() {
-    //     if(nowStep==0) {
-    //         vector<vector<int> > ret;
-    //         vector<int> element = getElement(transactions);
-    //         for(auto&i:element) ret.push_back(vector<int>(1, i));
-    //         return ret;
-    //     } else {
-    //         return pruning(joining());
-    //     }
-    // }
-    
-//     vector<int> getElement(vector<vector<int> > itemset) {
-//         vector<int> element;
-//         set<int> s;
-//         for(auto&row:itemset) for(auto&col:row) s.insert(col);
-//         for(auto iter=s.begin(); iter != s.end(); iter++) element.push_back(*iter);
-//         return element;
-//     }
 
-};
+
 
