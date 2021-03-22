@@ -1,28 +1,24 @@
-#ifndef TopKPeeling.h
-#define TopKPeeling
+#ifndef TOPKPEELING_H
+#define TOPKPEELING_H
 #include "hoved.h"
 #include "graph.h"
 #include "utility.h"
 #include "apriori.h"
 
 
-vector<vector<int>> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<vector<int>> * components){
-    vector<vector<int>> tMFCS;
-    long double theta = 0;
-    IterApriori iApriori = IterApriori(components, theta);
-    iApriori.generateNextC();
-
-    return tMFCS;
-
-
-}
-vector<vector<int>> runTopKPeeling(string fileName, int numNodes, int numEdges, int numSamples){
-    Graph graph(numNodes, numEdges, fileName);
-    graph.readGraph();
-    vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
-    vector<vector<int>> components = connectedComponents(&graphSamples);
-    return topKPeeling(&graphSamples, &components);
-}
+// vector<vector<int>> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<vector<int>> * components){
+//     vector<vector<int>> tMFCS;
+//     long double theta = 0;
+//     IterApriori iApriori = IterApriori(components, theta);
+//     iApriori.generateNextC();
+// }
+// vector<vector<int>> runTopKPeeling(string fileName, int numNodes, int numEdges, int numSamples){
+//     Graph graph(numNodes, numEdges, fileName);
+//     graph.readGraph();
+//     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
+//     vector<vector<int>> components = connectedComponents(&graphSamples);
+//     return topKPeeling(&graphSamples, &components);
+// }
 #endif
 class IterApriori {
 private:
@@ -55,22 +51,13 @@ public:
     //     }
     // }
     
-    vector<int> getElement(vector<vector<int> > itemset) {
-        vector<int> element;
-        set<int> s;
-        for(auto&row:itemset) for(auto&col:row) s.insert(col);
-        for(auto iter=s.begin(); iter != s.end(); iter++) element.push_back(*iter);
-        return element;
-    }
+//     vector<int> getElement(vector<vector<int> > itemset) {
+//         vector<int> element;
+//         set<int> s;
+//         for(auto&row:itemset) for(auto&col:row) s.insert(col);
+//         for(auto iter=s.begin(); iter != s.end(); iter++) element.push_back(*iter);
+//         return element;
+//     }
 
-}
-
-// vector<vector<int>> runTopKPeeling(string fileName, int numNodes, int numEdges, int numSamples, long double threshold){
-//     Graph graph (numNodes, numEdges, fileName);
-// 	graph.readGraph();
-//     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
-//     vector<vector<int>> components = connectedComponents(&graphSamples);
-//     vector<vector<int>> filteredComponents = removeLen1Components(&components);
-//     return topKPeeling(&graphSamples, numSamples);
-// }
+};
 
