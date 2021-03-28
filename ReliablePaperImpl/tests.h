@@ -4,7 +4,7 @@
 #include "peeling.h"
 #include "fastPeeling.h"
 #include "TopKPeeling.h"
-
+#include "IterApriori.h"
 using namespace std;
 
 
@@ -180,8 +180,58 @@ void testPeelingFacebook(){
 }
 
 void testIterApriori(){
-	vector<vector<int>> components = {{1,2}, {1,2,3}, {1,3},{1,4}};
-	
+	vector<vector<int>> components = {{1,2}, {1,2,3},{1,4}};
+	IterApriori iAp = IterApriori(&components, 3);
+	for(int i = 0; i<4; i++){
+		if(iAp.hasNext()){
+			vector<int> frequentSet = iAp.getNextFrequentItemset();
+			for (auto i : frequentSet){
+				cout << i << ",";
+			}
+			cout << "\n";
+		}
+	}
+	iAp.setMinSupport(0.1);
+	for(int i = 0; i<10; i++){
+		if(iAp.hasNext()){
+			vector<int> frequentSet = iAp.getNextFrequentItemset();
+			for (auto i : frequentSet){
+				cout << i << ",";
+			}
+			cout << "\n";
+		}
+	}
+}
+void testIterApriori2(){
+	vector<vector<int>> components = {{1,2}, {1,2,3},{1,4}};
+	IterApriori iAp = IterApriori(&components, 3);
+	for(int i = 0; i<4; i++){
+		if(iAp.hasNext()){
+			vector<int> frequentSet = iAp.getNextFrequentItemset();
+			for (auto i : frequentSet){
+				cout << i << ",";
+			}
+			cout << "\n";
+		}
+	}
+	iAp.setMinSupport(0.1);
+	for(int i = 0; i<4; i++){
+		if(iAp.hasNext()){
+			vector<int> frequentSet = iAp.getNextFrequentItemset();
+			for (auto i : frequentSet){
+				cout << i << ",";
+			}
+			cout << "\n";
+		}
+	}
+	iAp.setMinSupport(0.5);
+	if(iAp.hasNext()){
+			vector<int> frequentSet = iAp.getNextFrequentItemset();
+			for (auto i : frequentSet){
+				cout << i << ",";
+			}
+			cout << "\n";
+	}
 }
 
 // void testTopKReliableFacebook(){
@@ -204,7 +254,8 @@ void testAll(){
 	// testSetSorting();
 	// testFastPeeling();
 	// testFastPeelingNonDeterministic();
-	testPeelingFacebook();
+	// testPeelingFacebook();
 	// testTopKReliableFacebook();
+	testIterApriori2();
 }
 
