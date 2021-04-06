@@ -10,7 +10,7 @@ struct Candidate {
     Candidate(vector<int> _nodes, double long _support){
         nodes = _nodes;
         support = _support;
-    }
+    } 
 };
 
 class IterApriori {
@@ -21,7 +21,6 @@ private:
     vector<vector<int>> C;
     vector<Candidate> nextL;
     vector<Candidate>  L;
-    vector<vector<Candidate>> frequentSet;
     clock_t start;
     double duration;
     int curr_i;
@@ -35,10 +34,9 @@ public:
         minSupport = 0;
         curr_i = curr_j = 0;
         for(auto&row: (*_transactions)){
-            sort(row.begin(), row.end());
+            sort(row.begin(), row.end()); // TODO find out why - similarity reasons
             transactions.push_back(row);
         }
-        frequentSet.push_back({{}});
         generateInitialElements();
     }
 
@@ -53,6 +51,7 @@ public:
         minSupport = _minSupport;
     }
 
+    // inspired by https://github.com/bowbowbow/Apriori/blob/master/apriori.cpp
     long double getSupport(vector<int> *item) {
         int ret = 0;
         for(auto&row:transactions){
@@ -72,67 +71,81 @@ public:
     bool hasNext(){
         return (L.size()>0) || nowStep==0;
     }
+
     vector<int> getNextFrequentItemset(){
+        //TODO loop
+        vector<int> candidate;
+        while ( candidate.empty() ||  candidate.size()!=0 ){
             vector<int> candidate = getNextCandidate();
             if(candidate.size()==0){
-                return candidate;
+                 cout << "Had a zero length candidate";
             }
             //TODO check if candidate is used before
             long double support = getSupport(&candidate);
             if(support >= minSupport){
-                nextL.push_back(Candidate(candidate, support));
-                return candidate;
+                if(candidate.size() == nowStep+1){
+                    nextL.push_back(Candidate(candidate, support));
+                    return candidate;
+                }
             } 
-            return getNextFrequentItemset();
+        } 
+        return candidate;
     }
 
 
     vector<int> getNextCandidate(){
-        curr_j++;
-        if(nowStep == 0){
-            if(curr_j>C.size()){
-                curr_j = curr_i +1;
-                L=nextL;
-                nextL.clear();
-                nowStep++;
-            } else{
-                return C[curr_j-1];
-            }
-        }
-
-        if(curr_j >= L.size()){
-            curr_i++;
-            curr_j = curr_i+1;
-            if (curr_i+1 >= L.size()){
-                nowStep++;
-                L=nextL;
-                if(nextL.size()<1){
-                    return vector<int>();
+        double long lsize;
+        while(L.size()>=1||nowStep==0){
+            curr_j++;
+            if(nowStep == 0){
+                if(curr_j>C.size()){
+                    curr_j = curr_i +1;
+                    L=nextL;
+                    nextL.clear();
+                    nowStep++;
+                } else{
+                    return C[curr_j-1];
                 }
-                nextL.clear();
-                curr_i = 0;
+            }
+            // // vector<Candidate> copyL = L;
+            // if(lsize != L.size()){
+            //     lsize = L.size();
+            //     cout << "size \n" << lsize ;
+            // }
+            if(curr_j >= L.size()){
+                curr_i++;
                 curr_j = curr_i+1;
-            }
-        }
-        if(L[curr_i].support>=minSupport && L[curr_j].support>=minSupport){
-            int k;
-            for(k=0;k<nowStep-1; k++) {
-                if(L[curr_i].nodes[k] != L[curr_j].nodes[k]) break;
-            }
-            if(k==nowStep-1){
-                vector<int> tmp;
-                for(int k=0;k<nowStep-1; k++) {
-                    tmp.push_back(L[curr_i].nodes[k]);
+                if (curr_i+1 >= L.size()){
+                    nowStep++;
+                    L=nextL;
+                    if(nextL.size()<1){
+                        return vector<int>();
+                    }
+                    nextL.clear();
+                    curr_i = 0;
+                    curr_j = curr_i+1;
                 }
-                int a = L[curr_i].nodes[nowStep-1];
-                int b = L[curr_j].nodes[nowStep-1];
-                if(a>b) swap(a,b);
-                tmp.push_back(a), tmp.push_back(b);
-                // ret.push_back(tmp);
-                return tmp;
+            }
+            if(L[curr_i].support>=minSupport && L[curr_j].support>=minSupport){
+                int k;
+                for(k=0;k<nowStep-1; k++) {
+                    if(L[curr_i].nodes[k] != L[curr_j].nodes[k]) break;
+                }
+                if(k==nowStep-1){
+                    vector<int> tmp;
+                    for(int k=0;k<nowStep-1; k++) {
+                        tmp.push_back(L[curr_i].nodes[k]);
+                    }
+                    int a = L[curr_i].nodes[nowStep-1];
+                    int b = L[curr_j].nodes[nowStep-1];
+                    if(a>b) swap(a,b);
+                    tmp.push_back(a), tmp.push_back(b);
+                    // ret.push_back(tmp);
+                    return tmp;
+                }
             }
         }
-        return getNextCandidate();
+        return vector<int>();
     }
 
     // vector<vector<int> > generateNextC() {
