@@ -234,10 +234,14 @@ void testIterApriori2(){
 	}
 }
 void testTopKgraph3(){
+	clock_t start;
+	start = clock();
 	// string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file4.inf";
 	vector<Candidate> res = runTopKPeeling(path,7, 10, 100, 1);
 	vector<int> mostLikely = {2, 3, 5};
+	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+    cout << "Time in topKFacebook: " << duration << "\n";
 	assert(res[0].nodes == mostLikely);
 	// set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
 	// assert(res == resFastPeeling);
@@ -245,10 +249,14 @@ void testTopKgraph3(){
 }
 
 void testTopKPeelingFacebook(){
+	clock_t start;
+	start = clock();
 	// string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	vector<Candidate> res = runTopKPeeling(path,199, 270, 100, 1);
 	vector<int> mostLikely = {75,103,48};
+	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+    cout << "Time in topKFacebook: " << duration << "\n";
 	assert(res[0].nodes == mostLikely);
 	// set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
 	// assert(res == resFastPeeling);
@@ -277,7 +285,7 @@ void testAll(){
 	// testPeelingFacebook();
 	// testTopKReliableFacebook();
 	// testIterApriori2();
-	//testTopKgraph3();
-	testTopKPeelingFacebook();
+	testTopKgraph3();
+	//testTopKPeelingFacebook();
 }
 

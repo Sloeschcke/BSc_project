@@ -88,7 +88,7 @@ set<set<int>> runFastPeeling(string fileName, int numNodes, int numEdges, int nu
 	graph.readGraph();
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     vector<vector<int>> components = connectedComponents(&graphSamples);
-    vector<vector<int>> filteredComponents = removeLen1Components(&components);
+    vector<vector<int>> filteredComponents = removeLenKComponents(&components,2);
 
     set<set<int>> maximalFI = getMFI(filteredComponents, threshold, numSamples);
     set<set<int>> res = fastPeeling(graphSamples, maximalFI, threshold, {}, numSamples);

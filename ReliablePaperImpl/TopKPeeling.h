@@ -33,7 +33,6 @@ Candidate getNextCandidateAndCheckReliability(IterApriori & iApriori,vector<vect
 }
 
 long double getThresholdOfRandomDFS(vector<vector<vector<int>>> * graphSamples, vector<vector<int>> * components){
-    auto firstGraph = (*graphSamples)[0];
     auto firstComponent = (*components)[0];
     return subgraphReliability(*graphSamples, convertVectorToSet(firstComponent));
 }
@@ -69,7 +68,7 @@ vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector
         Candidate canCandidate = getNextCandidateAndCheckReliability(iApriori, graphSamples);
         if(canCandidate.nodes.size()==0){
             return tMFCS;
-        }
+        } 
         if (canCandidate.support > theta){
             cout << "Found new best with reliability: " << canCandidate.support<< "\n";
             replaceLowestReliabilityMFCS(&tMFCS, canCandidate);
@@ -87,6 +86,8 @@ vector<Candidate> runTopKPeeling(string fileName, int numNodes, int numEdges, in
     graph.readGraph();
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     vector<vector<int>> components = connectedComponents(&graphSamples);
+    vector<vector<int>> filteredComponents = removeLenKComponents(&components, 2);
+
     return topKPeeling(&graphSamples, &components, numSamples, k);
 }
 #endif

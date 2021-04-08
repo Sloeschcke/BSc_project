@@ -170,7 +170,7 @@ set<set<int>> getMFI(vector<vector<int>> components, double threshold, int numSa
     //TODO: fix here
     vector<vector<vector<int>>> filteredRes;
     for (auto res: result){
-        filteredRes.push_back(removeLen1Components(&res));
+        filteredRes.push_back(removeLenKComponents(&res,2));
     }
     
     vector<vector<int>> MFI = pruneMatrix(filteredRes);

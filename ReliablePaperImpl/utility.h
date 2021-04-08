@@ -22,10 +22,10 @@ void DFS(int v, vector<bool> *visited, vector<int> *component, vector<vector<int
     }
 }
 
-vector<vector<int>> removeLen1Components ( vector<vector<int>> * components){
+vector<vector<int>> removeLenKComponents ( vector<vector<int>> * components, int k){
     vector<vector<int>> res = {};
     for (auto component : *components){
-        if (component.size()>1){
+        if (component.size()>k){
             res.push_back(component);
         }
     }
@@ -257,7 +257,7 @@ vector<vector<int>> flatten(vector<std::vector<vector<int>>>& v) {
     return result;
 }
 
-bool isInducedConnectedComponent(vector<vector<int>>& G, set<int> subgraph ){
+bool isInducedConnectedComponent(vector<vector<int>>& G, set<int>  subgraph ){
     auto it = subgraph.begin();
     vector<bool> visited(G.size());
     bool containsSubgraph = DFSToCheckConnectivityOfSubgraph(*it, &visited, &G, &subgraph, 0);

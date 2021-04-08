@@ -77,8 +77,9 @@ public:
         vector<int> candidate;
         while ( candidate.empty() ||  candidate.size()!=0 ){
             vector<int> candidate = getNextCandidate();
-            if(candidate.size()==0){
+            if(candidate.size()==0 && nowStep!=0){
                  cout << "Had a zero length candidate";
+                 break;
             }
             //TODO check if candidate is used before
             long double support = getSupport(&candidate);
@@ -116,6 +117,7 @@ public:
                 curr_i++;
                 curr_j = curr_i+1;
                 if (curr_i+1 >= L.size()){
+                    cout << "Increasing nowStep\n";
                     nowStep++;
                     L=nextL;
                     if(nextL.size()<1){

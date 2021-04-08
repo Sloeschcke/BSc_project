@@ -51,7 +51,7 @@ set<set<int>> runPeeling(string fileName, int numNodes, int numEdges, int numSam
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     vector<vector<vector<int>>> graphSamples2 = sample(graph, numSamples);
     vector<vector<int>> components = connectedComponents(&graphSamples);
-    vector<vector<int>> filteredComponents = removeLen1Components(&components);
+    vector<vector<int>> filteredComponents = removeLenKComponents(&components, 1);
 
     
     set<set<int>> maximalFI = getMFI(filteredComponents, threshold-eps, numSamples);
