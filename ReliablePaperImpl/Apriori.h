@@ -166,14 +166,8 @@ set<set<int>> getMFI(vector<vector<int>> components, double threshold, int numSa
     apriori.process();
     cout << "processing done\n";
     vector<vector<vector<int>>> result = apriori.getFrequentSet();
-
-    //TODO: fix here
-    vector<vector<vector<int>>> filteredRes;
-    for (auto res: result){
-        filteredRes.push_back(removeLenKComponents(&res,2));
-    }
     
-    vector<vector<int>> MFI = pruneMatrix(filteredRes);
+    vector<vector<int>> MFI = pruneMatrix(result);
     cout << "finished pruning";
     set<set<int>> setMFI = vectorVectorToSetSet(MFI);
     return setMFI; //MFI = MFLS 
