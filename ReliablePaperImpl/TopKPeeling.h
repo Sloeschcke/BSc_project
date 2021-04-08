@@ -27,6 +27,9 @@ void replaceLowestReliabilityMFCS(vector<Candidate>* tMFCS, Candidate& replacee)
 
 Candidate getNextCandidateAndCheckReliability(IterApriori & iApriori,vector<vector<vector<int>>> * graphSamples ){
     vector<int> candidate = iApriori.getNextFrequentItemset();
+    if(candidate.size() ==0){
+        return Candidate(candidate, 0);
+    }
     double long reliability = subgraphReliability(*graphSamples, candidate);
     return Candidate(candidate, reliability);
 }
