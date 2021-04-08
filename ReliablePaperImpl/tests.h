@@ -19,8 +19,8 @@ void printMFCS(vector<Candidate> MFCS){
 	
 }
 
-// string abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt";
-string abspath = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project";
+string abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt";
+// string abspath = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project";
 void testPrune(){
 	vector<vector<int>> vertices = {{1},{1,2}, {1,2,3}, {1,4},{2,3,5},{2,3}};
 	vector<vector<int>> pruned = pruneVector(vertices);
@@ -112,7 +112,7 @@ void testReliability(){
 	Graph graph (numNodes,numEdges, graph_file);
 	graph.readGraph();
 	vector<vector<vector<int>>> samples = sample(graph, 2);
-	set<int> subgraph = {0,1};
+	vector<int> subgraph = {0,1};
 
 	double reliability = subgraphReliability(samples, subgraph);
 	assert(reliability == 1);
@@ -135,60 +135,60 @@ void testConnectedComponentsSubgraph(){
 }
 
 
-void testPeeling(){
-	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
-	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
-	set<set<int>> res = runPeeling(graph_file, 11, 11, 1, 0.5, 0);
-	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
-	assert(res == expected);
-}
+// void testPeeling(){
+// 	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
+// 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
+// 	set<set<int>> res = runPeeling(graph_file, 11, 11, 1, 0.5, 0);
+// 	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
+// 	assert(res == expected);
+// }
 
-void testFastPeeling(){
-	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
-	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
-	set<set<int>> resPeeling = runPeeling(graph_file, 11, 11, 1, 0.5, 0);
-	set<set<int>> resFastPeeling = runFastPeeling(graph_file, 11, 11, 1, 0.5);
-	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
-	assert(resPeeling == expected);
-	assert(resPeeling == resFastPeeling);
-}
+// void testFastPeeling(){
+// 	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
+// 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
+// 	set<set<int>> resPeeling = runPeeling(graph_file, 11, 11, 1, 0.5, 0);
+// 	set<set<int>> resFastPeeling = runFastPeeling(graph_file, 11, 11, 1, 0.5);
+// 	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
+// 	assert(resPeeling == expected);
+// 	assert(resPeeling == resFastPeeling);
+// }
 
-void testSetSorting(){
-	set<set<int>> unSorted = {{1,2},  {6,7,8},{3,4,5}};
-	set<int> tofind = {1,2,3};
-	int count = unSorted.count(tofind);
-	set<set<int>, customCompareLength> sorted;
-	copy(unSorted.begin(), unSorted.end(), inserter(sorted, sorted.begin()));
-	assert(sorted == sorted);
-}
+// void testSetSorting(){
+// 	set<set<int>> unSorted = {{1,2},  {6,7,8},{3,4,5}};
+// 	set<int> tofind = {1,2,3};
+// 	int count = unSorted.count(tofind);
+// 	set<set<int>, customCompareLength> sorted;
+// 	copy(unSorted.begin(), unSorted.end(), inserter(sorted, sorted.begin()));
+// 	assert(sorted == sorted);
+// }
 
-//TODO FIX result
-void testPeelingNonDeterministic(){
-	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
-	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file3.inf";
-	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5, 0);
-	set<set<int>> expected = {{0, 2, 3, 5}, {4, 6}};
-	assert(res == expected);
-}
+// //TODO FIX result
+// void testPeelingNonDeterministic(){
+// 	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
+// 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file3.inf";
+// 	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5, 0);
+// 	set<set<int>> expected = {{0, 2, 3, 5}, {4, 6}};
+// 	assert(res == expected);
+// }
 
-void testFastPeelingNonDeterministic(){
-	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
-	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file3.inf";
-	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5, 0);
-	set<set<int>> resFastPeeling = runFastPeeling(graph_file, 7, 10, 100, 0.5);
-	set<set<int>> expected = {{0, 2, 3, 5}, {4, 6}};
-	assert(res == resFastPeeling && res == expected);  
-	std::cout << "finished\n";
+// void testFastPeelingNonDeterministic(){
+// 	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
+// 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file3.inf";
+// 	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5, 0);
+// 	set<set<int>> resFastPeeling = runFastPeeling(graph_file, 7, 10, 100, 0.5);
+// 	set<set<int>> expected = {{0, 2, 3, 5}, {4, 6}};
+// 	assert(res == resFastPeeling && res == expected);  
+// 	std::cout << "finished\n";
 
-}
+// }
 
-void testPeelingFacebook(){
-	// string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	set<set<int>> res = runPeeling(path,199, 270, 100, 0.95, 0);
-	set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
-	assert(res == resFastPeeling);
-}
+// void testPeelingFacebook(){
+// 	// string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
+// 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
+// 	set<set<int>> res = runPeeling(path,199, 270, 100, 0.95, 0);
+// 	set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
+// 	assert(res == resFastPeeling);
+// }
 
 void testIterApriori(){
 	vector<vector<int>> components = {{1,2}, {1,2,3},{1,4}};

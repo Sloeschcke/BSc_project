@@ -27,14 +27,13 @@ void replaceLowestReliabilityMFCS(vector<Candidate>* tMFCS, Candidate& replacee)
 
 Candidate getNextCandidateAndCheckReliability(IterApriori & iApriori,vector<vector<vector<int>>> * graphSamples ){
     vector<int> candidate = iApriori.getNextFrequentItemset();
-    set<int> candidateSet = convertVectorToSet(candidate);
-    double long reliability = subgraphReliability(*graphSamples, candidateSet);
+    double long reliability = subgraphReliability(*graphSamples, candidate);
     return Candidate(candidate, reliability);
 }
 
 long double getThresholdOfRandomDFS(vector<vector<vector<int>>> * graphSamples, vector<vector<int>> * components){
     auto firstComponent = (*components)[0];
-    return subgraphReliability(*graphSamples, convertVectorToSet(firstComponent));
+    return subgraphReliability(*graphSamples, firstComponent);
 }
 
 vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<vector<int>> * components, int numSamples, int k){
@@ -51,8 +50,7 @@ vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector
             cout << " 10000 iterations\n";
         }
         if(candidate.size()>2){
-            set<int> candidateSet = convertVectorToSet(candidate);
-            double long reliability = subgraphReliability(*graphSamples, candidateSet);
+            double long reliability = subgraphReliability(*graphSamples, candidate);
             cout << "adding candidate\n";
             tMFCS.push_back(Candidate(candidate, reliability));
         }
