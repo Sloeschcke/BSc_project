@@ -8,6 +8,17 @@
 using namespace std;
 
 
+void printMFCS(vector<Candidate> MFCS){
+	for (auto elem: MFCS)
+	{
+		for(auto elem2: elem.nodes){
+			cout << elem2 << ",";
+		}
+		cout << "/n";
+	}
+	
+}
+
 // string abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt";
 string abspath = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project";
 void testPrune(){
@@ -257,7 +268,9 @@ void testTopKPeelingFacebook(){
 	vector<int> mostLikely = {75,103,48};
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in topKFacebook: " << duration << "\n";
-	assert(res[0].nodes == mostLikely);
+	cout << "FINAL TOP MOST RELIABLE PATTERN \n";
+	printMFCS(res);
+	// assert(res[0].nodes == mostLikely);
 	// set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
 	// assert(res == resFastPeeling);
 }
