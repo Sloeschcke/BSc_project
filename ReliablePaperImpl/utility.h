@@ -162,7 +162,7 @@ vector<vector<int>> pruneMatrix(vector<vector<vector<int>>>& original){
     int size = original.size();
     vector<vector<int>> res (original[size-1]);
     bool foundSuperSet;
-    for (int n = original.size()-1; n > 0; n--){
+    for (int n = original.size()-1; n > 1; n--){
         for(auto it = original[n-1].begin(); it != original[n-1].end(); it++){
             foundSuperSet = false;
             for (auto resultElem : original[n]){
@@ -179,7 +179,7 @@ vector<vector<int>> pruneMatrix(vector<vector<vector<int>>>& original){
     return res;
 }
 
-set<set<int>> prune(set<set<int>> original) {
+set<set<int>> prune(set<set<int>>& original) {
 	bool foundSuperSet;
     clock_t start;
     double duration;
@@ -207,7 +207,7 @@ set<set<int>> prune(set<set<int>> original) {
 
 // https://www.geeksforgeeks.org/how-to-convert-a-vector-to-set-in-c/
 // Function to convert Vector to Set 
-set<int> convertVectorToSet(vector<int> v) { 
+set<int> convertVectorToSet(vector<int>& v) { 
     // Declaring the set 
     // using range of vector 
     set<int> s(v.begin(), v.end()); 
@@ -215,12 +215,12 @@ set<int> convertVectorToSet(vector<int> v) {
     return s; 
 } 
 
-vector<int> convertSetToVector(set<int> s) {
+vector<int> convertSetToVector(set<int>& s) {
     vector<int> v(s.begin(), s.end());
     return v;
 }
 
-set<set<int>> vectorVectorToSetSet (vector<vector<int>> vectorVector){
+set<set<int>> vectorVectorToSetSet (vector<vector<int>>& vectorVector){
     set<set<int>> res;
     for(auto vector:vectorVector){
         res.insert(convertVectorToSet(vector));
@@ -228,7 +228,7 @@ set<set<int>> vectorVectorToSetSet (vector<vector<int>> vectorVector){
     return res;
 }
 
-set<set<int>> convertFrequentToSets (vector<vector<vector<int>>> frequentList){
+set<set<int>> convertFrequentToSets (vector<vector<vector<int>>>& frequentList){
     set<set<int>> res;
     for (auto elem1:frequentList){
         for (auto elem2:elem1){
@@ -238,7 +238,7 @@ set<set<int>> convertFrequentToSets (vector<vector<vector<int>>> frequentList){
     return res;
 }
 
-vector<vector<int>> setSetToVectorVector(set<set<int>> setSet){
+vector<vector<int>> setSetToVectorVector(set<set<int>>& setSet){
     vector<vector<int>> res;
     for(auto set:setSet){
         res.push_back(convertSetToVector(set));
@@ -246,7 +246,7 @@ vector<vector<int>> setSetToVectorVector(set<set<int>> setSet){
     return res;
 }
 
-vector<vector<int>> flatten(vector<std::vector<vector<int>>>& v) {
+vector<vector<int>> flatten(vector<vector<vector<int>>>& v) {
     std::size_t total_size = 0;
     for (const auto& sub : v)
         total_size += sub.size(); // I wish there was a transform_accumulate

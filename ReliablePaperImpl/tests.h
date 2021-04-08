@@ -8,8 +8,19 @@
 using namespace std;
 
 
-string abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt";
-// string abspath = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project";
+void printMFCS(vector<Candidate> MFCS){
+	for (auto elem: MFCS)
+	{
+		for(auto elem2: elem.nodes){
+			cout << elem2 << ",";
+		}
+		cout << "/n";
+	}
+	
+}
+
+// string abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt";
+string abspath = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project";
 void testPrune(){
 	vector<vector<int>> vertices = {{1},{1,2}, {1,2,3}, {1,4},{2,3,5},{2,3}};
 	vector<vector<int>> pruned = pruneVector(vertices);
@@ -238,7 +249,7 @@ void testTopKgraph3(){
 	start = clock();
 	// string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file4.inf";
-	vector<Candidate> res = runTopKPeeling(path,7, 10, 100, 1);
+	vector<Candidate> res = runTopKPeeling(path,7, 10, 1000, 1);
 	vector<int> mostLikely = {2, 3, 5};
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in topKFacebook: " << duration << "\n";
@@ -257,7 +268,9 @@ void testTopKPeelingFacebook(){
 	vector<int> mostLikely = {75,103,48};
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in topKFacebook: " << duration << "\n";
-	assert(res[0].nodes == mostLikely);
+	cout << "FINAL TOP MOST RELIABLE PATTERN \n";
+	printMFCS(res);
+	// assert(res[0].nodes == mostLikely);
 	// set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
 	// assert(res == resFastPeeling);
 }
@@ -285,7 +298,7 @@ void testAll(){
 	// testPeelingFacebook();
 	// testTopKReliableFacebook();
 	// testIterApriori2();
-	//testTopKgraph3();
+	// testTopKgraph3();
 	testTopKPeelingFacebook();
 }
 
