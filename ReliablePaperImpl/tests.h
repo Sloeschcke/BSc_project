@@ -285,7 +285,7 @@ void testAll(){
 	// testPeelingFacebook();
 	// testTopKReliableFacebook();
 	// testIterApriori2();
-	testTopKgraph3();
-	//testTopKPeelingFacebook();
+	//testTopKgraph3();
+	testTopKPeelingFacebook();
 }
 

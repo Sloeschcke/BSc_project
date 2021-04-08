@@ -5,7 +5,7 @@
 #include "utility.h"
 #include "IterApriori.h"
 
-int getMinSupportIndex(vector<Candidate> tMFCS){
+int getMinSupportIndex(vector<Candidate> & tMFCS){
     long double minIndex;
     long double minSupport=1.1;
     for (int i = 0; i<tMFCS.size(); i++){
@@ -18,7 +18,7 @@ int getMinSupportIndex(vector<Candidate> tMFCS){
 }
 
 
-void replaceLowestReliabilityMFCS(vector<Candidate>* tMFCS, Candidate replacee){
+void replaceLowestReliabilityMFCS(vector<Candidate>* tMFCS, Candidate & replacee){
     int minIndex = getMinSupportIndex(*tMFCS);
     if(replacee.support > (*tMFCS)[minIndex].support){
         (*tMFCS)[minIndex] = replacee;
