@@ -62,8 +62,8 @@ vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector
 
     while(iApriori.hasNext()){
         counter++;
-        if(counter % 100 == 0){
-            cout << " 100 iterations in iApriori.hasNext() \n";
+        if(counter % 2000 == 0){
+            cout << " 2000 iterations in iApriori.hasNext() \n";
         }
         Candidate canCandidate = getNextCandidateAndCheckReliability(iApriori, graphSamples);
         if(canCandidate.nodes.size()==0){

@@ -10,7 +10,7 @@ struct Candidate {
     Candidate(vector<int> _nodes, double long _support){
         nodes = _nodes;
         support = _support;
-    } 
+    }
 };
 
 class IterApriori {
