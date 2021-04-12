@@ -310,7 +310,7 @@ void testNaiveTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
-	set<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 500, 2, 0.3, 0.02);
+	set<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 1000, 2, 0.3, 0.02);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in NaiveTopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
