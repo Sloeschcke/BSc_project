@@ -33,7 +33,6 @@ public:
             int a, b;
             double p;
             int c = fscanf(fin, "%d%d%lf", &a, &b, &p);
-
             hasNode[a] = true;
             hasNode[b] = true;
             add_edge(a, b, p);

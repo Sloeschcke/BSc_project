@@ -22,6 +22,16 @@ void DFS(int v, vector<bool> *visited, vector<int> *component, vector<vector<int
     }
 }
 
+vector<vector<int>> removeLenKComponents ( vector<vector<int>> * components, int k){
+    vector<vector<int>> res = {};
+    for (auto component : *components){
+        if (component.size()>k){
+            res.push_back(component);
+        }
+    }
+    return res;
+}
+
 // https://www.geeksforgeeks.org/connected-components-in-an-undirected-graph/ 
 // Method to print connected components in an undirected graph
 vector<vector<int>> connectedComponents(vector<vector<vector<int>>> *samples)
@@ -62,11 +72,11 @@ void DFSOnSubgraph(int v, vector<bool> *visited, vector<int> * component, vector
 
 // https://www.geeksforgeeks.org/connected-components-in-an-undirected-graph/ 
 // Method to print connected components in an undirected graph
-vector<vector<int>> connectedComponentsSubgraph(vector<vector<vector<int>>> *samples, set<int> subgraph)
+vector<vector<int>> connectedComponentsSubgraph(vector<vector<vector<int>>>& samples, set<int> subgraph)
 {
     vector<vector<int>> vectorOfComponents;
-    for (int i = 0; i < (*samples).size(); i++){
-        vector<vector<int>> sample = (*samples)[i];
+    for (int i = 0; i < samples.size(); i++){
+        vector<vector<int>> sample = samples[i];
         vector<bool> visited;
         int numNodes = (sample).size();
         // Mark all the vertices as not visited
@@ -148,34 +158,59 @@ vector<vector<int>> pruneVector(vector<vector<int>>& original) {
 	return res;
 }
 
-set<set<int>> prune(set<set<int>> original) {
+vector<vector<int>> pruneMatrix(vector<vector<vector<int>>>& original){
+    int size = original.size();
+    if(size <= 3){
+        return {};
+    }
+    vector<vector<int>> res = original[size-1];
+    bool foundSuperSet;
+    for (int n = original.size()-2; n > 2; n--){
+        for(auto it = original[n].begin(); it != original[n].end(); it++){
+            foundSuperSet = false;
+            for (auto resultElem : original[n+1]){
+                if(includes(resultElem.begin(), resultElem.end(), it->begin(), it->end())){
+                    foundSuperSet = true;
+                    break;
+                }
+            }
+            if(!foundSuperSet){
+                res.push_back(*it);
+            }
+        }
+    }
+    return res;
+}
+
+set<set<int>> prune(set<set<int>>& original) {
 	bool foundSuperSet;
-    //vector<set<int>> 
-    
+    clock_t start;
+    double duration;
+    start = clock();
+
     set<set<int>> res = original;
 	for (auto it = original.begin(); it != original.end(); it++){
 		foundSuperSet = false;
 		for (auto resultElem : original){
-            if(foundSuperSet){
-                break;
-            }
-			if(*it!=resultElem){
 				if(includes(resultElem.begin(), resultElem.end(), it->begin(), it->end())){
-					foundSuperSet = true;
-                    break;
+                    if(*it!=resultElem){
+                        foundSuperSet = true;
+                        break;
+                    }
 				}
 			}
-		}
 		if(foundSuperSet){
 			res.erase((*it));
 		}
 	}
+    // duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+    // cout << "Time in prune: " << duration << "\n";
 	return res;
 }
 
 // https://www.geeksforgeeks.org/how-to-convert-a-vector-to-set-in-c/
 // Function to convert Vector to Set 
-set<int> convertVectorToSet(vector<int> v) { 
+set<int> convertVectorToSet(vector<int>& v) { 
     // Declaring the set 
     // using range of vector 
     set<int> s(v.begin(), v.end()); 
@@ -183,12 +218,12 @@ set<int> convertVectorToSet(vector<int> v) {
     return s; 
 } 
 
-vector<int> convertSetToVector(set<int> s) {
+vector<int> convertSetToVector(set<int>& s) {
     vector<int> v(s.begin(), s.end());
     return v;
 }
 
-set<set<int>> vectorVectorToSetSet (vector<vector<int>> vectorVector){
+set<set<int>> vectorVectorToSetSet (vector<vector<int>>& vectorVector){
     set<set<int>> res;
     for(auto vector:vectorVector){
         res.insert(convertVectorToSet(vector));
@@ -196,7 +231,7 @@ set<set<int>> vectorVectorToSetSet (vector<vector<int>> vectorVector){
     return res;
 }
 
-set<set<int>> convertFrequentToSets (vector<vector<vector<int>>> frequentList){
+set<set<int>> convertFrequentToSets (vector<vector<vector<int>>>& frequentList){
     set<set<int>> res;
     for (auto elem1:frequentList){
         for (auto elem2:elem1){
@@ -206,7 +241,7 @@ set<set<int>> convertFrequentToSets (vector<vector<vector<int>>> frequentList){
     return res;
 }
 
-vector<vector<int>> setSetToVectorVector(set<set<int>> setSet){
+vector<vector<int>> setSetToVectorVector(set<set<int>>& setSet){
     vector<vector<int>> res;
     for(auto set:setSet){
         res.push_back(convertSetToVector(set));
@@ -214,7 +249,7 @@ vector<vector<int>> setSetToVectorVector(set<set<int>> setSet){
     return res;
 }
 
-vector<vector<int>> flatten(vector<std::vector<vector<int>>>& v) {
+vector<vector<int>> flatten(vector<vector<vector<int>>>& v) {
     std::size_t total_size = 0;
     for (const auto& sub : v)
         total_size += sub.size(); // I wish there was a transform_accumulate
@@ -225,14 +260,14 @@ vector<vector<int>> flatten(vector<std::vector<vector<int>>>& v) {
     return result;
 }
 
-bool isInducedConnectedComponent(vector<vector<int>> G, set<int> subgraph ){
+bool isInducedConnectedComponent(vector<vector<int>>& G, set<int>  subgraph ){
     auto it = subgraph.begin();
     vector<bool> visited(G.size());
     bool containsSubgraph = DFSToCheckConnectivityOfSubgraph(*it, &visited, &G, &subgraph, 0);
     return containsSubgraph;
 }
 
-double subgraphReliability( vector<vector<vector<int>>> samples, set<int> subgraph){
+double subgraphReliability( vector<vector<vector<int>>>& samples, set<int> subgraph){
     double counter = 0;
     for (auto G: samples){
         bool isInduced = isInducedConnectedComponent(G,subgraph);

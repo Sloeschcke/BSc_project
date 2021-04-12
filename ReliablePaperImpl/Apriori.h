@@ -22,6 +22,8 @@ private:
     vector<vector<int> > C, L;
     vector<vector<vector<int> > > frequentSet;
     int numSamples;
+    clock_t start;
+    double duration;
 public:
     
     Apriori (vector<vector<int> > _transactions, long double _minSupport, int _numSamples) {
@@ -41,6 +43,7 @@ public:
     void process() {
             while(true) {
                 C = generateNextC();
+                int C_size = C.size();
                 if(C.size()==0) break;
                 nowStep++;
                 
@@ -48,6 +51,7 @@ public:
                 frequentSet.push_back(L);
             }
     }
+
     vector<int> getElement(vector<vector<int> > itemset) {
         vector<int> element;
         set<int> s;
@@ -68,7 +72,8 @@ public:
         }
     }
     
-    vector<vector<int> > joining () {
+    vector<vector<int>> joining () {
+        start = clock();
         vector<vector<int> > ret;
         for(int i=0;i<L.size();i++){
             for(int j=i+1;j<L.size(); j++) {
@@ -89,10 +94,14 @@ public:
                 }
             }
         }
+        duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+        // cout << "Time in joining: " << duration << "\n";
         return ret;
     }
     
-    vector<vector<int> > pruning (vector<vector<int> > joined) {
+    vector<vector<int>> pruning (vector<vector<int>> joined) {
+        start = clock();
+
         vector<vector<int> > ret;
         
         set<vector<int> > lSet;
@@ -111,32 +120,41 @@ public:
                 ret.push_back(row);
             }
         }
+        duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+        // cout << "Time in pruning: " << duration << "\n";
         return ret;
     }
     
-    long double getSupport(vector<int> item) {
+    //TODO refactor
+    long double getSupport(vector<int> *item) {
         int ret = 0;
         for(auto&row:transactions){
             int i, j;
-            if(row.size() < item.size()) continue;
+            if(row.size() < (*item).size()) continue;
             for(i=0, j=0; i < row.size();i++) {
-                if(j==item.size()) break;
-                if(row[i] == item[j]) j++;
+                if(j==(*item).size()) break;
+                if(row[i] == (*item)[j]) j++;
             }
-            if(j==item.size()){
+            if(j==(*item).size()){
                 ret++;
             }
         }
-        return (long double)ret/numSamples;
+        return ((long double)ret)/numSamples;
     }
     
     vector<vector<int> > generateL() {
+        // cout << "Size of C: "<< C.size() << "\n";
+        start = clock();
         vector<vector<int> > ret;
         for(auto&row:C){
-            long double support = getSupport(row);
+            long double support = getSupport(&row);
             if(round(support, 2) < minSupport) continue;
             ret.push_back(row);
         }
+        duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+        // cout << "Time in generateL" << duration << "\n";
+        // cout << "Size of L: "<< ret.size() << "\n";
+
         return ret;
     }
 };
@@ -146,9 +164,11 @@ public:
 set<set<int>> getMFI(vector<vector<int>> components, double threshold, int numSamples){
     Apriori apriori (components, threshold, numSamples);
     apriori.process();
+    // cout << "processing done\n";
     vector<vector<vector<int>>> result = apriori.getFrequentSet();
-    vector<vector<int>> FI = flatten(result);
-    vector<vector<int>> MFI = pruneVector(FI);
+    
+    vector<vector<int>> MFI = pruneMatrix(result);
+    // cout << "finished pruning";
     set<set<int>> setMFI = vectorVectorToSetSet(MFI);
     return setMFI; //MFI = MFLS 
 

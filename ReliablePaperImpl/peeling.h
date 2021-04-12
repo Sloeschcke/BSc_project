@@ -36,7 +36,7 @@ void peeling(vector<vector<vector<int>>> graphSamples, set<set<int>> mfls, doubl
                 *MFCS = vectorVectorToSetSet(tempMFCS);
             }
         } else {
-            vector<vector<int>> components = connectedComponentsSubgraph(&graphSamples, m);
+            vector<vector<int>> components = connectedComponentsSubgraph(graphSamples, m);
             set<set<int>> maximalFI = getMFI(components, threshold, numSamples);
             peeling(graphSamples, maximalFI, threshold, MFCS, numSamples);
         }
@@ -51,8 +51,10 @@ set<set<int>> runPeeling(string fileName, int numNodes, int numEdges, int numSam
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     vector<vector<vector<int>>> graphSamples2 = sample(graph, numSamples);
     vector<vector<int>> components = connectedComponents(&graphSamples);
+    vector<vector<int>> filteredComponents = removeLenKComponents(&components, 1);
+
     
-    set<set<int>> maximalFI = getMFI(components, threshold-eps, numSamples);
+    set<set<int>> maximalFI = getMFI(filteredComponents, threshold-eps, numSamples);
     set<set<int>> MFCS;
     peeling(graphSamples, maximalFI, threshold, &MFCS, numSamples);
 
