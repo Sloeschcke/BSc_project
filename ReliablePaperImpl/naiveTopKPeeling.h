@@ -15,6 +15,9 @@ set<NodesAndReliability> naiveTopKPeeling(vector<vector<vector<int>>>& graphSamp
         set<set<int>> maximalFI = getMFI(filteredComponents, currentThreshold, numSamples);
         tempRes = fastPeeling(graphSamples, maximalFI, currentThreshold, numSamples);
         currentThreshold = initialThreshold - stepSize* pow(2,counter);
+        if(currentThreshold < 0){
+            currentThreshold = 0;
+        }
         counter++;
     }
     if(tempRes.size() <= k){

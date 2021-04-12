@@ -269,7 +269,7 @@ bool isInducedConnectedComponent(vector<vector<int>>& G, set<int>  subgraph ){
 
 double subgraphReliability( vector<vector<vector<int>>>& samples, set<int> subgraph){
     double counter = 0;
-    for (auto G: samples){
+    for (auto &G: samples){
         bool isInduced = isInducedConnectedComponent(G,subgraph);
         if (isInduced){
             counter++;

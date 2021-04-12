@@ -77,8 +77,8 @@ set<NodesAndReliability> fastPeeling(vector<vector<vector<int>>>& graphSamples, 
     set<NodesAndReliability> nodesAndReliability = {};
     while(L.size() != 0){
         counter ++;
-        if(counter % 100 == 0){
-            cout << "100 iterations!";
+        if(counter % 1000 == 0){
+            cout << "1000 iterations!\n";
         }
         set<set<int>> P = {};
         for (auto m : L){
