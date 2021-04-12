@@ -1,8 +1,14 @@
 import random
-file_ending = "698"
-r = open(f"Raw_graphs/{file_ending}.edges", "r")
-w = open(f"processed_graphs/facebook_{file_ending}.edges", "w")
-prop = open(f"processed_graphs/facebook_{file_ending}.prop", "w")
+# file_ending = "698"
+# r = open(f"Raw_graphs/{file_ending}.edges", "r")
+# w = open(f"processed_graphs/facebook_{file_ending}.edges", "w")
+# prop = open(f"processed_graphs/facebook_{file_ending}.prop", "w")
+
+file_ending = "syn_graph_seed0_n40_m80"
+r = open(f"Raw_graphs/{file_ending}.inf", "r")
+w = open(f"processed_graphs/{file_ending}.edges", "w")
+prop = open(f"processed_graphs/{file_ending}.prop", "w")
+
 
 lines = r.readlines()
 num_nodes = 0
