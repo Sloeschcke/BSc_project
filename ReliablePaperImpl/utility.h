@@ -24,7 +24,7 @@ void DFS(int v, vector<bool> *visited, vector<int> *component, vector<vector<int
 
 vector<vector<int>> removeLenKComponents ( vector<vector<int>> * components, int k){
     vector<vector<int>> res = {};
-    for (auto component : *components){
+    for (auto & component : *components){
         if (component.size()>k){
             res.push_back(component);
         }
@@ -81,7 +81,7 @@ vector<vector<int>> connectedComponentsSubgraph(vector<vector<vector<int>>>& sam
         int numNodes = (sample).size();
         // Mark all the vertices as not visited
         visited = vector<bool> (numNodes);
-        for (auto node : subgraph) {
+        for (auto & node : subgraph) {
             vector<int> component;
             if (visited[node] == false) {
                 // print all reachable vertices from n
@@ -143,7 +143,7 @@ vector<vector<int>> pruneVector(vector<vector<int>>& original) {
     vector<vector<int>> res = {};
 	for (auto it = original.begin(); it != original.end(); it++){
 		foundSuperSet = false;
-		for (auto resultElem : original){
+		for (auto & resultElem : original){
 			if(*it!=resultElem){
 				if(includes(resultElem.begin(), resultElem.end(), it->begin(), it->end())){
 					foundSuperSet = true;
@@ -168,7 +168,7 @@ vector<vector<int>> pruneMatrix(vector<vector<vector<int>>>& original){
     for (int n = original.size()-2; n > 2; n--){
         for(auto it = original[n].begin(); it != original[n].end(); it++){
             foundSuperSet = false;
-            for (auto resultElem : original[n+1]){
+            for (auto & resultElem : original[n+1]){
                 if(includes(resultElem.begin(), resultElem.end(), it->begin(), it->end())){
                     foundSuperSet = true;
                     break;
@@ -191,7 +191,7 @@ set<set<int>> prune(set<set<int>>& original) {
     set<set<int>> res = original;
 	for (auto it = original.begin(); it != original.end(); it++){
 		foundSuperSet = false;
-		for (auto resultElem : original){
+		for (auto & resultElem : original){
 				if(includes(resultElem.begin(), resultElem.end(), it->begin(), it->end())){
                     if(*it!=resultElem){
                         foundSuperSet = true;
@@ -233,8 +233,8 @@ set<set<int>> vectorVectorToSetSet (vector<vector<int>>& vectorVector){
 
 set<set<int>> convertFrequentToSets (vector<vector<vector<int>>>& frequentList){
     set<set<int>> res;
-    for (auto elem1:frequentList){
-        for (auto elem2:elem1){
+    for (auto & elem1:frequentList){
+        for (auto & elem2:elem1){
             res.insert(convertVectorToSet(elem2));
         }
     }
