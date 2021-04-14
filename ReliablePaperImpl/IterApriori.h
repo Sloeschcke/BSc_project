@@ -133,15 +133,16 @@ public:
                     if(L[curr_i].nodes[k] != L[curr_j].nodes[k]) break;
                 }
                 if(k==nowStep-1){
-                    vector<int> tmp;
-                    for(int k=0;k<nowStep-1; k++) {
-                        tmp.push_back(L[curr_i].nodes[k]);
+                    vector<int> tmp (nowStep + 1);
+                    int q;
+                    for(q=0;q<nowStep-1; q++) {
+                        tmp[q] = L[curr_i].nodes[q];
                     }
                     int a = L[curr_i].nodes[nowStep-1];
                     int b = L[curr_j].nodes[nowStep-1];
                     if(a>b) swap(a,b);
-                    tmp.push_back(a), tmp.push_back(b);
-                    // ret.push_back(tmp);
+                    tmp[q] = a;
+                    tmp[q+1] = b;
                     return tmp;
                 }
             }

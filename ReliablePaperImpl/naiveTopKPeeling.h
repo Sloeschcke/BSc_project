@@ -14,8 +14,8 @@ set<NodesAndReliability> naiveTopKPeeling(vector<vector<vector<int>>>& graphSamp
         cout << "running naiv top k with " << currentThreshold << "\n";
         set<set<int>> maximalFI = getMFI(filteredComponents, currentThreshold, numSamples);
         tempRes = fastPeeling(graphSamples, maximalFI, currentThreshold, numSamples);
-        currentThreshold = initialThreshold - stepSize* pow(2,counter);
         counter++;
+        currentThreshold = initialThreshold - stepSize* pow(2,counter);
     }
     if(tempRes.size() <= k){
         return tempRes;
@@ -33,7 +33,7 @@ set<NodesAndReliability> naiveTopKPeeling(vector<vector<vector<int>>>& graphSamp
 set<NodesAndReliability> runNaiveTopKPeeling(string fileName, int numNodes, int numEdges, int numSamples, int k, long double initialThreshold, long double stepSize){
     Graph graph (numNodes, numEdges, fileName);
 	graph.readGraph();
-    vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
+    vector<vector<vector<int>>> graphSamples = sample(graph, numSamples);
     vector<vector<int>> components = connectedComponents(&graphSamples);
     vector<vector<int>> filteredComponents = removeLenKComponents(&components,2);
 

@@ -28,8 +28,8 @@ void printMFCSWhichAreNodesAndReliability(set<NodesAndReliability> MFCS){
 	}
 }
 
-string abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt";
-// string abspath = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project";
+// string abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt";
+string abspath = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project";
 void testPrune(){
 	vector<vector<int>> vertices = {{1},{1,2}, {1,2,3}, {1,4},{2,3,5},{2,3}};
 	vector<vector<int>> pruned = pruneVector(vertices);
@@ -299,10 +299,10 @@ void testNaiveTopKPeelingFaceBook() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	set<NodesAndReliability> res = runNaiveTopKPeeling(path,199, 270, 100, 2, 0.97, 0.02);
+	set<NodesAndReliability> res = runNaiveTopKPeeling(path,199, 270, 100, 1, 0.97, 0.02);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in NaiveTopKPeelingFaceBook: " << duration << "\n";
-	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
+	cout << "FINAL TOP MOST RELIABLE PATTERNS \n";
 	printMFCSWhichAreNodesAndReliability(res);
 }
 
@@ -330,9 +330,9 @@ void testAll(){
 	// testTopKReliableFacebook();
 	// testIterApriori2();
 	// testTopKgraph3();
-	testTopKPeelingFacebook();
+	// testTopKPeelingFacebook();
 	// testNaiveTopKPeelingGraph3();
-	// testNaiveTopKPeelingFaceBook();
+	testNaiveTopKPeelingFaceBook();
 
 }
 
