@@ -116,7 +116,8 @@ bool DFSToCheckConnectivityOfSubgraph(int v, vector<bool> *visited, vector<vecto
     return true;
 }
 vector<vector<vector<int>>> sample(Graph g, int number) {
-    default_random_engine eng(static_cast<long unsigned int>(time(0)));
+    // default_random_engine eng(static_cast<long unsigned int>(time(0)));
+    default_random_engine eng(2);
     uniform_real_distribution<> distr(0, 1);
     vector<vector<double>> probs = g.probs;
     vector<vector<int>> adjList = g.adjList;
