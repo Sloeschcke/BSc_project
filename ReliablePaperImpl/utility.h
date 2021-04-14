@@ -160,12 +160,15 @@ vector<vector<int>> pruneVector(vector<vector<int>>& original) {
 
 vector<vector<int>> pruneMatrix(vector<vector<vector<int>>>& original){
     int size = original.size();
-    vector<vector<int>> res (original[size-1]);
+    if(size <= 3){
+        return {};
+    }
+    vector<vector<int>> res = original[size-1];
     bool foundSuperSet;
-    for (int n = original.size()-1; n > 1; n--){
-        for(auto it = original[n-1].begin(); it != original[n-1].end(); it++){
+    for (int n = original.size()-2; n > 2; n--){
+        for(auto it = original[n].begin(); it != original[n].end(); it++){
             foundSuperSet = false;
-            for (auto resultElem : original[n]){
+            for (auto resultElem : original[n+1]){
                 if(includes(resultElem.begin(), resultElem.end(), it->begin(), it->end())){
                     foundSuperSet = true;
                     break;

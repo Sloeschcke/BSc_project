@@ -5,6 +5,7 @@
 #include "fastPeeling.h"
 #include "TopKPeeling.h"
 #include "IterApriori.h"
+#include "naiveTopKPeeling.h"
 using namespace std;
 
 
@@ -16,7 +17,15 @@ void printMFCS(vector<Candidate> MFCS){
 		}
 		cout << "/n";
 	}
-	
+}
+
+void printMFCSWhichAreNodesAndReliability(set<NodesAndReliability> MFCS){
+	for(auto elem: MFCS){
+		for(auto elem2: elem.nodes){
+			cout << elem2 << ",";
+		}
+		cout << "/n";
+	}
 }
 
 string abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt";
@@ -147,7 +156,7 @@ void testFastPeeling(){
 	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
 	set<set<int>> resPeeling = runPeeling(graph_file, 11, 11, 1, 0.5, 0);
-	set<set<int>> resFastPeeling = runFastPeeling(graph_file, 11, 11, 1, 0.5);
+	set<set<int>>  resFastPeeling = runFastPeeling(graph_file, 11, 11, 1, 0.5);
 	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
 	assert(resPeeling == expected);
 	assert(resPeeling == resFastPeeling);
@@ -175,9 +184,10 @@ void testFastPeelingNonDeterministic(){
 	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file3.inf";
 	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5, 0);
-	set<set<int>> resFastPeeling = runFastPeeling(graph_file, 7, 10, 100, 0.5);
+	set<set<int>> resFastPeeling = runFastPeeling(graph_file, 7, 10, 1000, 0.95);
 	set<set<int>> expected = {{0, 2, 3, 5}, {4, 6}};
-	assert(res == resFastPeeling && res == expected);  
+	assert(res == expected);
+	assert(res == resFastPeeling);
 	std::cout << "finished\n";
 
 }
@@ -186,7 +196,7 @@ void testPeelingFacebook(){
 	// string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	set<set<int>> res = runPeeling(path,199, 270, 100, 0.95, 0);
-	set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
+	set<set<int>>  resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
 	assert(res == resFastPeeling);
 }
 
@@ -264,7 +274,7 @@ void testTopKPeelingFacebook(){
 	start = clock();
 	// string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	vector<Candidate> res = runTopKPeeling(path,199, 270, 1000, 1);
+	vector<Candidate> res = runTopKPeeling(path,199, 270, 100, 2);
 	vector<int> mostLikely = {75,103,48};
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in topKFacebook: " << duration << "\n";
@@ -273,6 +283,27 @@ void testTopKPeelingFacebook(){
 	// assert(res[0].nodes == mostLikely);
 	// set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
 	// assert(res == resFastPeeling);
+}
+
+void testNaiveTopKPeelingGraph3() {
+	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file4.inf";
+	set<NodesAndReliability> res = runNaiveTopKPeeling(path,7, 10, 1000, 2, 0.95, 0.02);
+	set<int> mostLikely = {2, 3, 5};
+	// assert(*res.begin() == mostLikely);
+	// set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
+	// assert(res == resFastPeeling);
+	// {0, 2, 3, 5}, {4, 6}
+}
+
+void testNaiveTopKPeelingFaceBook() {
+	clock_t start;
+	start = clock();
+	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
+	set<NodesAndReliability> res = runNaiveTopKPeeling(path,199, 270, 100, 2, 0.97, 0.02);
+	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+    cout << "Time in NaiveTopKPeelingFaceBook: " << duration << "\n";
+	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
+	printMFCSWhichAreNodesAndReliability(res);
 }
 
 // void testTopKReliableFacebook(){
@@ -300,5 +331,8 @@ void testAll(){
 	// testIterApriori2();
 	// testTopKgraph3();
 	testTopKPeelingFacebook();
+	// testNaiveTopKPeelingGraph3();
+	// testNaiveTopKPeelingFaceBook();
+
 }
 
