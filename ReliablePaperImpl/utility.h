@@ -15,7 +15,7 @@ void DFS(int v, vector<bool> *visited, vector<int> *component, vector<vector<int
     // cout << v << " ";
     (*component).push_back(v);
     // Recur on all adjacent vertices
-    for(auto u : (*sample)[v]){
+    for(auto &u : (*sample)[v]){
         if(!(*visited)[u]){
             DFS(u, visited, component, sample);
         }
@@ -63,7 +63,7 @@ void DFSOnSubgraph(int v, vector<bool> *visited, vector<int> * component, vector
     (*visited)[v] = true;
     (*component).push_back(v);
     // Recur on all adjacent vertices
-    for(auto u : (*sample)[v]){
+    for(auto & u : (*sample)[v]){
         if((*subgraph).count(u) == 1 && !(*visited)[u]){
             DFSOnSubgraph(u, visited, component, sample, subgraph);
         }
@@ -103,12 +103,12 @@ bool DFSToCheckConnectivityOfSubgraph(int v, vector<bool> *visited, vector<vecto
         return true;
     }
     // Recur on all adjacent vertices
-    for(auto u : (*sample)[v]){
+    for(auto & u : (*sample)[v]){
         if((*subgraph).count(u) == 1 && !(*visited)[u]){
             DFSToCheckConnectivityOfSubgraph(u, visited, sample, subgraph, counter++);
         }
     }
-    for(auto s: *subgraph){
+    for(auto & s: *subgraph){
         if(!(*visited)[s]) {
             return false;
         }
@@ -222,7 +222,7 @@ vector<int> convertSetToVector(set<int>& s) {
 
 set<set<int>> vectorVectorToSetSet (vector<vector<int>>& vectorVector){
     set<set<int>> res;
-    for(auto vector:vectorVector){
+    for(auto & vector:vectorVector){
         res.insert(convertVectorToSet(vector));
     }
     return res;
@@ -257,17 +257,17 @@ vector<vector<int>> flatten(vector<vector<vector<int>>>& v) {
     return result;
 }
 
-bool isInducedConnectedComponent(vector<vector<int>>& G, set<int>  subgraph ){
-    auto it = subgraph.begin();
+bool isInducedConnectedComponent(vector<vector<int>>& G, set<int> * subgraph ){
+    auto it = (*subgraph).begin();
     vector<bool> visited(G.size());
-    bool containsSubgraph = DFSToCheckConnectivityOfSubgraph(*it, &visited, &G, &subgraph, 0);
+    bool containsSubgraph = DFSToCheckConnectivityOfSubgraph(*it, &visited, &G, subgraph, 0);
     return containsSubgraph;
 }
 
-double subgraphReliability( vector<vector<vector<int>>>& samples, set<int> subgraph){
+double subgraphReliability( vector<vector<vector<int>>>& samples, set<int> * subgraph){
     double counter = 0;
-    for (auto G: samples){
-        bool isInduced = isInducedConnectedComponent(G,subgraph);
+    for (auto & G: samples){
+        bool isInduced = isInducedConnectedComponent(G, subgraph);
         if (isInduced){
             counter++;
         }

@@ -23,8 +23,8 @@ private:
     vector<Candidate>  L;
     clock_t start;
     double duration;
-    int curr_i;
-    int curr_j;
+    long int curr_i;
+    long int curr_j;
     int numSamples;
 public: 
 
@@ -95,7 +95,6 @@ public:
 
 
     vector<int> getNextCandidate(){
-        double long lsize;
         while(L.size()>=1||nowStep==0){
             curr_j++;
             if(nowStep == 0){
@@ -169,4 +168,5 @@ public:
         return element;
     }
 };
+
 #endif
