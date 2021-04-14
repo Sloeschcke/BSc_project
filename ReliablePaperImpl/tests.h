@@ -15,7 +15,7 @@ void printMFCS(vector<Candidate> MFCS){
 		for(auto elem2: elem.nodes){
 			cout << elem2 << ",";
 		}
-		cout << "/n";
+		cout << "\n";
 	}
 }
 
@@ -24,7 +24,7 @@ void printMFCSWhichAreNodesAndReliability(set<NodesAndReliability> MFCS){
 		for(auto elem2: elem.nodes){
 			cout << elem2 << ",";
 		}
-		cout << "/n";
+		cout << "\n";
 	}
 }
 
@@ -299,7 +299,7 @@ void testNaiveTopKPeelingFaceBook() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	set<NodesAndReliability> res = runNaiveTopKPeeling(path,199, 270, 100, 1, 0.97, 0.02);
+	set<NodesAndReliability> res = runNaiveTopKPeeling(path,199, 270, 100, 1, 0.97, 0.1);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in NaiveTopKPeelingFaceBook: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNS \n";
@@ -310,7 +310,7 @@ void testNaiveTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
-	set<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 100, 2, 0.97, 0.02);
+	set<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 100, 2, 0.97, 0.1);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in NaiveTopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
@@ -352,10 +352,10 @@ void testAll(){
 	// testTopKReliableFacebook();
 	// testIterApriori2();
 	// testTopKgraph3();
-	// testTopKPeelingFacebook();
+	testTopKPeelingFacebook();
 	// testNaiveTopKPeelingGraph3();
-	// testNaiveTopKPeelingFaceBook();
-	testNaiveTopKPeelingSynthetic();
-	testTopKPeelingSynthetic();
+	testNaiveTopKPeelingFaceBook();
+	// testNaiveTopKPeelingSynthetic();
+	// testTopKPeelingSynthetic();
 }
 

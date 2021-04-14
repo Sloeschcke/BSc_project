@@ -32,14 +32,21 @@ Candidate getNextCandidateAndCheckReliability(IterApriori & iApriori,vector<vect
     return Candidate(candidate, reliability);
 }
 
-long double getThresholdOfRandomDFS(vector<vector<vector<int>>> * graphSamples, vector<vector<int>> * components){
-    set<int> firstComponent = convertVectorToSet((*components)[0]);
-    return subgraphReliability(*graphSamples, &firstComponent);
+long double getThresholdOfRandomDFS(vector<vector<vector<int>>> * graphSamples, vector<vector<int>> * components, int k){
+    long double lowestBest = 1;
+    for(int i = 0; i < k ; i++){
+        set<int> firstComponent = convertVectorToSet((*components)[i]);
+        long double res = subgraphReliability(*graphSamples, &firstComponent);
+        if(res < lowestBest){
+            lowestBest = res;
+        }
+    }
+    return lowestBest;
 }
 
 vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<vector<int>> * components, int numSamples, int k){
     vector<Candidate> tMFCS;
-    long double theta = getThresholdOfRandomDFS(graphSamples, components)-0.00001;
+    long double theta = getThresholdOfRandomDFS(graphSamples, components, k)-0.00001;
     IterApriori iApriori = IterApriori(components, numSamples);
     iApriori.setMinSupport(theta);
     cout << "adding initial candidates\n";
