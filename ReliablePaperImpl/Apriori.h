@@ -82,14 +82,19 @@ public:
                     if(L[i][k] != L[j][k]) break;
                 }
                 if(k == nowStep-1) {
-                    vector<int> tmp;
-                    for(int k=0;k<nowStep-1; k++) {
-                        tmp.push_back(L[i][k]);
+                    vector<int> tmp (nowStep+1);
+                    int j;
+                    for(j=0;j<nowStep-1; j++) {
+                        tmp[j] = L[i][j];
+
+                        //tmp.push_back(L[i][k]);
                     }
                     int a = L[i][nowStep-1];
                     int b = L[j][nowStep-1];
                     if(a>b) swap(a,b);
-                    tmp.push_back(a), tmp.push_back(b);
+                    tmp[j] = a;
+                    tmp[j + 1] = b;
+                    //tmp.push_back(a), tmp.push_back(b);
                     ret.push_back(tmp);
                 }
             }

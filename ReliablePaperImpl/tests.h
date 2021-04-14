@@ -274,7 +274,7 @@ void testTopKPeelingFacebook(){
 	start = clock();
 	// string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	vector<Candidate> res = runTopKPeeling(path,199, 270, 100, 1);
+	vector<Candidate> res = runTopKPeeling(path,199, 270, 100, 2);
 	vector<int> mostLikely = {75,103,48};
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in topKFacebook: " << duration << "\n";
@@ -287,7 +287,7 @@ void testTopKPeelingFacebook(){
 
 void testNaiveTopKPeelingGraph3() {
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file4.inf";
-	set<NodesAndReliability> res = runNaiveTopKPeeling(path,7, 10, 1000, 2, 0.95, 0.02);
+	set<NodesAndReliability> res = runNaiveTopKPeeling(path,7, 10, 1000, 1, 0.95, 0.02);
 	set<int> mostLikely = {2, 3, 5};
 	// assert(*res.begin() == mostLikely);
 	// set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
@@ -329,10 +329,10 @@ void testAll(){
 	// testPeelingFacebook();
 	// testTopKReliableFacebook();
 	// testIterApriori2();
-	// testTopKgraph3();
+	//testTopKgraph3();
 	testTopKPeelingFacebook();
-	// testNaiveTopKPeelingGraph3();
-	// testNaiveTopKPeelingFaceBook();
+	 //testNaiveTopKPeelingGraph3();
+	 testNaiveTopKPeelingFaceBook();
 
 }
 
