@@ -306,6 +306,28 @@ void testNaiveTopKPeelingFaceBook() {
 	printMFCSWhichAreNodesAndReliability(res);
 }
 
+void testNaiveTopKPeelingSynthetic() {
+	clock_t start;
+	start = clock();
+	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
+	set<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 100, 2, 0.97, 0.02);
+	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+    cout << "Time in NaiveTopKSynthetic: " << duration << "\n";
+	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
+	printMFCSWhichAreNodesAndReliability(res);
+}
+
+void testTopKPeelingSynthetic() {
+	clock_t start;
+	start = clock();
+	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
+	vector<Candidate> res = runTopKPeeling(path,40, 80, 100, 2);
+	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+    cout << "Time in TopKSynthetic: " << duration << "\n";
+	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
+	printMFCS(res);
+}
+
 // void testTopKReliableFacebook(){
 	// string path = abspath + "\\BSc_project\\ReliablePaperImpl\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 // 	vector<vector<int>> res = runTopKPeeling(path,199, 270, 100);
@@ -332,7 +354,8 @@ void testAll(){
 	// testTopKgraph3();
 	// testTopKPeelingFacebook();
 	// testNaiveTopKPeelingGraph3();
-	testNaiveTopKPeelingFaceBook();
-
+	// testNaiveTopKPeelingFaceBook();
+	testNaiveTopKPeelingSynthetic();
+	testTopKPeelingSynthetic();
 }
 
