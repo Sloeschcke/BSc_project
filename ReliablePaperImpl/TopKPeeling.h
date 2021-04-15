@@ -88,14 +88,23 @@ vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector
     return tMFCS;
 }
 
-vector<Candidate> runTopKPeeling(string fileName, int numNodes, int numEdges, int numSamples, int k){
-    Graph graph(numNodes, numEdges, fileName);
-    graph.readGraph();
+vector<Candidate> runTopKPeelingWithoutSampling(Graph graph, int numSamples, int k){
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     vector<vector<int>> components = connectedComponents(&graphSamples);
     vector<vector<int>> filteredComponents = removeLenKComponents(&components, 2);
 
     return topKPeeling(&graphSamples, &components, numSamples, k);
+}
+
+vector<Candidate> runTopKPeeling(string fileName, int numNodes, int numEdges, int numSamples, int k){
+    Graph graph(numNodes, numEdges, fileName);
+    graph.readGraph();
+    // return runTopKPeelingWithoutSampling(graph, numSamples, k);
+    // vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
+    // vector<vector<int>> components = connectedComponents(&graphSamples);
+    // vector<vector<int>> filteredComponents = removeLenKComponents(&components, 2);
+
+    // return topKPeeling(&graphSamples, &components, numSamples, k);
 }
 #endif
 

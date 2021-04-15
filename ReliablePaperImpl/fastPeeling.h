@@ -114,7 +114,6 @@ set<NodesAndReliability> fastPeeling(vector<vector<vector<int>>>& graphSamples, 
 }
 
 
-
 set<set<int>> runFastPeeling(string fileName, int numNodes, int numEdges, int numSamples, long double threshold){
     Graph graph (numNodes, numEdges, fileName);
 	graph.readGraph();
