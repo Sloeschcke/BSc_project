@@ -25,10 +25,10 @@ void replaceLowestReliabilityMFCS(vector<Candidate>* tMFCS, Candidate& replacee)
     }
 }
 
-Candidate getNextCandidateAndCheckReliability(IterApriori & iApriori,vector<vector<vector<int>>> * graphSamples ){
+Candidate getNextCandidateAndCheckReliability(IterApriori & iApriori,vector<vector<vector<int>>> * graphSamples, long double threshold){
     vector<int> candidate = iApriori.getNextFrequentItemset();
     set<int> candidateSet = convertVectorToSet(candidate);
-    double long reliability = subgraphReliability(*graphSamples, &candidateSet);
+    double long reliability = subgraphReliability(*graphSamples, &candidateSet, threshold);
     return Candidate(candidate, reliability);
 }
 
@@ -36,7 +36,7 @@ long double getThresholdOfRandomDFS(vector<vector<vector<int>>> * graphSamples, 
     long double lowestBest = 1;
     for(int i = 0; i < k ; i++){
         set<int> firstComponent = convertVectorToSet((*components)[i]);
-        long double res = subgraphReliability(*graphSamples, &firstComponent);
+        long double res = subgraphReliability(*graphSamples, &firstComponent, 0);
         if(res < lowestBest){
             lowestBest = res;
         }
@@ -59,7 +59,7 @@ vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector
         }
         if(candidate.size()>2){
             set<int> candidateSet = convertVectorToSet(candidate);
-            double long reliability = subgraphReliability(*graphSamples, &candidateSet);
+            double long reliability = subgraphReliability(*graphSamples, &candidateSet, theta);
             cout << "adding candidate\n";
             tMFCS.push_back(Candidate(candidate, reliability));
         }
@@ -72,7 +72,7 @@ vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector
         //if(counter % 2000 == 0){
         //    //cout << " 2000 iterations in iApriori.hasNext() \n";
         //}
-        Candidate canCandidate = getNextCandidateAndCheckReliability(iApriori, graphSamples);
+        Candidate canCandidate = getNextCandidateAndCheckReliability(iApriori, graphSamples, theta);
         if(canCandidate.nodes.size()==0){
             return tMFCS;
         } 

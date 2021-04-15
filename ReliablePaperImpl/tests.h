@@ -124,7 +124,7 @@ void testReliability(){
 	vector<vector<vector<int>>> samples = sample(graph, 2);
 	set<int> subgraph = {0,1};
 
-	double reliability = subgraphReliability(samples, &subgraph);
+	double reliability = subgraphReliability(samples, &subgraph, 0);
 	assert(reliability == 1);
 }
 
