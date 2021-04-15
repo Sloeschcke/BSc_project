@@ -5,11 +5,11 @@ from pathlib import Path
 
 
 def main():
-    generate_edge_degree_graphs()
-    # generate_numNodes_graphs()
+    # generate_edge_degree_graphs()
+    generate_numNodes_graphs()
     
 def get_relative_path(value_for_plot):
-    relative_path = Path("C:/Users/mabet/OneDrive - Aarhus Universitet/Datalogi/Bachelor projekt/BSc_project/GraphsGeneration/random-graph-generator")
+    relative_path = Path("C:/Users/mabet/OneDrive - Aarhus Universitet/Datalogi/Bachelor projekt/BSc_project/GraphsGeneration/processed_graphs")
     print(os.path)
     path = relative_path/value_for_plot
     if not os.path.exists(path):
@@ -30,8 +30,7 @@ def generate_edge_degree_graphs():
     value_for_plot = "edge_degree"
     relative_path_processed = get_relative_path(value_for_plot)
     nodes = 80
-    edges = [5]
-    # edges = [80,120,160,200,240,280,320]
+    edges = [80,120,160,200,240,280,320]
     for index,i in enumerate(edges):
         value = i/nodes
         create_processed_graph_file(relative_path_processed, index, nodes, i, 1, value_for_plot, value)
@@ -39,37 +38,23 @@ def generate_edge_degree_graphs():
 def create_processed_graph_file(path, index, nodes, edges, seed, value_for_plot,value):
     filename = str(index)
     create_graph_file( nodes, edges, filename, seed=seed)
+    
     r = open(filename, "r")
     first_line = r.readline()
     
     filename_processed = path/f"{str(index)}.txt"
     w = open(filename_processed, "w+")
-    lines = r.readlines()[1:]
-
     
-    lowest = 99999999
+    lines = r.readlines()
 
-    edgesSet = set()
-
-    for line in lines:
-        numbers = [int(n) for n in line.split()]
-        lowest = min(lowest, min(numbers))
-    random.seed(seed) 
-    for line in lines:
-        numbers = [int(n) for n in line.split()]
-        numbers = sorted([x-lowest for x in numbers])
-        edgesSet.add(tuple(numbers))
-    
-    w.write(first_line.rstrip("\n") +" "+value_for_plot + " " + str(value))
-    a = open(filename_processed, "a")
-    for node1, node2 in edgesSet:
-        editedLine = f"{node1} {node2} {str(random.uniform(0,1))}\n"
-        a.write(editedLine)
+    w.write(first_line.rstrip("\n") +" "+value_for_plot + " " + str(value)+"\n")
+    for nodes in lines:
+        editedLine = f"{nodes.rstrip()} {str(random.uniform(0,1))}\n"
+        w.write(editedLine)
 
     w.close()
-    a.close()
     r.close()
-    # os.remove(filename)
+    os.remove(filename)
 
 def create_graph_file( nodes, edges, filename , seed):
     command_nodes_and_edges = "python gen_graph.py -grnm -n " + str(nodes) + " -m " + str(edges) + " --seed "+ str(seed) + " --out " + filename
