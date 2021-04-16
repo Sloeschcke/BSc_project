@@ -49,29 +49,29 @@ vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector
     long double theta = getThresholdOfRandomDFS(graphSamples, components, k)-0.00001;
     IterApriori iApriori = IterApriori(components, numSamples);
     iApriori.setMinSupport(theta);
-    cout << "adding initial candidates\n";
+    // cout << "adding initial candidates\n";
     int counter = 0;
     while (tMFCS.size() < k){
         vector<int> candidate = iApriori.getNextFrequentItemset();
         counter ++;
-        if(counter % 10000 == 0){
-            cout << " 10000 iterations\n";
+        if(counter % 4000 == 0){
+            cout << " 4000 iterations\n";
         }
         if(candidate.size()>2){
             set<int> candidateSet = convertVectorToSet(candidate);
             double long reliability = subgraphReliability(*graphSamples, &candidateSet, theta);
-            cout << "adding candidate\n";
+            // cout << "adding candidate\n";
             tMFCS.push_back(Candidate(candidate, reliability));
         }
     }
     theta = tMFCS[getMinSupportIndex(tMFCS)].support;
-    cout << "done adding initial candidates\n";
+    // cout << "done adding initial candidates\n";
 
     while(iApriori.hasNext()){
-        //counter++;
-        //if(counter % 2000 == 0){
-        //    //cout << " 2000 iterations in iApriori.hasNext() \n";
-        //}
+        counter++;
+        if(counter % 40000 == 0){
+           cout << " 40000 iterations in iApriori.hasNext() \n";
+        }
         Candidate canCandidate = getNextCandidateAndCheckReliability(iApriori, graphSamples, theta);
         if(canCandidate.nodes.size()==0){
             return tMFCS;
@@ -99,12 +99,7 @@ vector<Candidate> runTopKPeelingWithoutSampling(Graph graph, int numSamples, int
 vector<Candidate> runTopKPeeling(string fileName, int numNodes, int numEdges, int numSamples, int k){
     Graph graph(numNodes, numEdges, fileName);
     graph.readGraph();
-    // return runTopKPeelingWithoutSampling(graph, numSamples, k);
-    // vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
-    // vector<vector<int>> components = connectedComponents(&graphSamples);
-    // vector<vector<int>> filteredComponents = removeLenKComponents(&components, 2);
-
-    // return topKPeeling(&graphSamples, &components, numSamples, k);
+    return runTopKPeelingWithoutSampling(graph, numSamples, k);
 }
 #endif
 

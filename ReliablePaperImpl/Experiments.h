@@ -17,24 +17,30 @@ struct ValueTime {
     }
 };
 
-ValueTime runExperiment(string path){
+ValueTime runExperiment(string path, int numSamples, int k){
     string line;
     string firstLine;
+    string numNodes, numEdges;
+    string problem;
+    string value;
     ifstream graphFile (path);
-    if(graphFile.is_open()){
-        getline(graphFile, firstLine);
-        cout << firstLine;
-        while( getline(graphFile, line)){
-            cout << line <<"\n";
-        }
-    }
-    return ValueTime(0, 0);
+    assert(graphFile.is_open());
+    graphFile >> numNodes >> numEdges >> problem >> value;
+    cout << value;
+    Graph graph = Graph(stoi(numNodes), stoi(numEdges), "");
+    graph.readGraphfile(&graphFile);
+    clock_t start;
+    vector<Candidate> result = runTopKPeelingWithoutSampling(graph, numSamples, k);
+    double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+    return ValueTime(duration, stod(value));
+
 }
 
 void runNumNodesExperiment(){
-    string FolderPath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\edge_degree";
-    for (int i = 0; i<1; i++){
+    string FolderPath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes_edgedegree2";
+    for (int i = 6; i<7; i++){
         string filePath = FolderPath + "\\"+ to_string(i)+".txt";
-        ValueTime time = runExperiment(filePath);
+        ValueTime valTime = runExperiment(filePath, 100, 1);
+        cout << "finished value: "<< valTime.value << " in time: " << valTime.time <<"\n";
     }
 }

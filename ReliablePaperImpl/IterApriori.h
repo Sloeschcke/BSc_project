@@ -78,7 +78,7 @@ public:
         while ( candidate.empty() ||  candidate.size()!=0 ){
             vector<int> candidate = getNextCandidate();
             if(candidate.size()==0 && nowStep!=0){
-                 cout << "Had a zero length candidate";
+                //  cout << "Had a zero length candidate";
                  break;
             }
             //TODO check if candidate is used before
@@ -93,8 +93,18 @@ public:
         return candidate;
     }
 
-
+    void cleanLFromRedundant(){
+        vector<Candidate> tmp;
+        for (auto & candidate : L){
+            if(candidate.support >= minSupport){
+                tmp.push_back(candidate);
+            }
+        }
+        cout << "Pruned L from size: " << L.size() << " to: " <<tmp.size()<< "\n";
+        L = tmp;
+    }
     vector<int> getNextCandidate(){
+        int redundantCounter = 0;
         while(L.size()>=1||nowStep==0){
             curr_j++;
             if(nowStep == 0){
@@ -116,7 +126,7 @@ public:
                 curr_i++;
                 curr_j = curr_i+1;
                 if (curr_i+1 >= L.size()){
-                    cout << "Increasing nowStep\n";
+                    cout << "Increasing nowStep: " << nowStep << "having L.size() " << nextL.size() << "\n";
                     nowStep++;
                     L=nextL;
                     if(nextL.size()<1){
@@ -144,6 +154,12 @@ public:
                     tmp[q] = a;
                     tmp[q+1] = b;
                     return tmp;
+                }
+            } else {
+                redundantCounter++;
+                if(redundantCounter%10000000 == 0){ 
+                    cleanLFromRedundant();
+                    cout << "Had 1000000000 redundant combinations\n";
                 }
             }
         }
