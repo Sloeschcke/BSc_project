@@ -312,7 +312,7 @@ void testNaiveTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
-	set<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 100, 2, 0.97, 0.1);
+	set<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 100, 10, 0.97, 0.1);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in NaiveTopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
@@ -354,10 +354,10 @@ void testAll(){
 	// testTopKReliableFacebook();
 	// testIterApriori2();
 	// testTopKgraph3();
-	testTopKPeelingFacebook();
+	// testTopKPeelingFacebook();
 	// testNaiveTopKPeelingGraph3();
-	testNaiveTopKPeelingFaceBook();
-	// testNaiveTopKPeelingSynthetic();
+	// testNaiveTopKPeelingFaceBook();
+	testNaiveTopKPeelingSynthetic();
 	// testTopKPeelingSynthetic();
 }
 
