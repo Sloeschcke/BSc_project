@@ -21,45 +21,66 @@ vector<vector<int>> vertexMFCSIDs(Graph& uncertain, vector<vector<int>>& MFCS){
 }
 
 vector<int> getintersectionOfMFCSIDs(vector<int>& currentMFCSIDs, int newlyAddedVertex, vector<vector<int>>& vertexMFCSIDs){
-    vector<int> newlyAddedMFCSIDs = vertexMFCSIds[newlyAddedVertex];
+    vector<int> newlyAddedMFCSIDs = vertexMFCSIDs[newlyAddedVertex];
 
     sort(currentMFCSIDs.begin(), currentMFCSIDs.end());
     sort(newlyAddedMFCSIDs.begin(), newlyAddedMFCSIDs.end());
 
     vector<int> intersection;
 
-    set_intersection(currentMFCSIDs.begin(), currentMFcurrentMFCSIDs.end(),
+    set_intersection(currentMFCSIDs.begin(), currentMFCSIDs.end(),
                      newlyAddedMFCSIDs.begin(), newlyAddedMFCSIDs.end(),
                      back_inserter(intersection));
     
     return intersection;
 }
 
+vector<int> getDifferenceOfVectors(vector<int> vector1, vector<int> vector2){
+    vector<int> diff;
 
+    set_difference(vector1.begin(), vector2.end(),
+                   vector2.begin(), vector2.end(),
+                   back_inserter(diff));
+
+    return diff;
+}
+
+vector<int> getVectorFrom1toN(int n){
+    vector<int> v( n );
+    iota( std::begin( v ), std::end( v ), n );
+    return v
+}
 
 vector<vector<int>> runNonMaximal(vector<vector<vector<int>>>& graphSamples, Graph& uncertain, vector<vector<int>>& MFCSs){
-    vector<vector<int>> vertexMfcsIDs = vertexMFCSIDs( uncertain, MFCSs);
-    
-    for (int i=0; i<MFCSs.size(); i++){
-        vector<int> exclusionList(MFCSs[i].size()); //allocate size of MFCS
-        vector<int> vertexSet(MFCSs[i].size());
-        vector<bool> con(uncertain.numNodes, false); 
-        for(int j=0;j <MFCSs[i].size(); j++) {
-            int vertex = MFCSs[j];
-            exclusionList[j]= vertex;
-            vertexSet[j] = vertex;
-            MiningNonMaximal(graphSamples, vertex, vertexSet, vertexMfcsIDs[vertex], con, uncertain.adjList[vertex], exlusionList);
-        }
-    
+    vector<vector<int>> FCS;
+    vector<vector<int>> allMFCSIDs = vertexMFCSIDs(uncertain, MFCSs);
+    int numNodes = uncertain.adjList.size();
+    vector<vector<int>> adjList = uncertain.adjList;
+    vector<int> nodes = getVectorFrom1toN(numNodes);
+    vector<int> exclusionList(numNodes); //allocate size of MFCS
+    while (exclusionList.size() < numNodes ){
+        vector<int> diff = getDifferenceOfVectors(nodes, exclusionList);
+        int chosenNode = diff[0];
+        vector<bool> con(graphSamples.size(), false);
+        exclusionList.push_back(chosenNode);
+        vector<int> vertexSet(numNodes);
+        vertexSet[0] = diff[0];
+        MiningNonMaximal(graphSamples, chosenNode, vertexSet, allMFCSIDs[chosenNode], con, adjList[chosenNode], &exclusionList, &FCS, allMFCSIDs);
+    }
+    return FCS;
+}
+
+vector<vector<int>> MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode, vector<int> vertexSet, vector<int> MFCSIDs, vector<bool> con, vector<int> neighbours, vector<int>* exclusionList, vector<vector<int>>* FCS, vector<vector<int>> allMFCSIDs){
+    for (int i =0; i<graphSamples.size(); i++){
+        // vertexset is connected in G_i
+    }
     return {}
 }
 
-vector<vector<int>> MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, vector<int> MFCS){
-    
-    for (int i =0; i<graphSamples.size(), i++){
-        if // vertexset is connected in G_i
-    }
-    return {}
+
+
+vector<int> vector_uninon (vector<vector<int>>& MFCSs){
+     return {} // TODO
 }
 
 #endif
