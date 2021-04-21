@@ -76,7 +76,7 @@ vector<vector<int>> sortMFCS(vector<vector<int>> unsorted){
 
 vector<vector<int>> runNonMaximal(vector<vector<vector<int>>>& graphSamples, Graph& uncertain, vector<vector<int>>& MFCSs, long double threshold){
     vector<vector<int>> sortedMFCSs = sortMFCS(MFCSs);
-    vector<vector<int>> FCS = {};
+    vector<NodesAndReliability> FCS = {};
     vector<vector<int>> allMFCSIDs = vertexMFCSIDs(uncertain, sortedMFCSs);
     int numNodes = uncertain.adjList.size();
     vector<vector<int>> adjList = uncertain.adjList;
