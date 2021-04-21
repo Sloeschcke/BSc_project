@@ -67,5 +67,7 @@ void runNumNodesExperiment(){
 }
 
 void runKExperiment(){
+    string path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\Varying K\\1";
+    vector<ValueTime> results;
     
 }
