@@ -28,9 +28,9 @@ struct customCompareLength final{
 // };
 
 struct NodesAndReliability final{
-    set<int> nodes;
+    vector<int> nodes;
     long double reliability;
-    NodesAndReliability(set<int> _nodes, long double _reliability){
+    NodesAndReliability(vector<int> _nodes, long double _reliability){
         nodes = _nodes;
         reliability = _reliability;
     }
@@ -40,10 +40,10 @@ struct NodesAndReliability final{
     }
 };
 
-set<set<int>> extractNodes(set<NodesAndReliability>& nodesAndReliability){
-    set<set<int>> res = {};
+vector<vector<int>> extractNodes(vector<NodesAndReliability>& nodesAndReliability){
+    vector<vector<int>> res = {};
     for(auto ele : nodesAndReliability){
-        res.insert(ele.nodes);
+        res.push_back(ele.nodes);
     }
     return res;
 }
@@ -68,13 +68,13 @@ vector<vector<int>> transReduce(vector<vector<vector<int>>>& graphSamples, set<i
     };
     return result;
 }
-set<NodesAndReliability> fastPeeling(vector<vector<vector<int>>>& graphSamples, set<set<int>> mfls, double threshold, int numSamples){
+vector<NodesAndReliability> fastPeeling(vector<vector<vector<int>>>& graphSamples, set<set<int>> mfls, double threshold, int numSamples){
     int counter = 0;
     set<set<int>, customCompareLength> L;
 	copy(mfls.begin(), mfls.end(), inserter(L, L.begin()));
     set<set<int>> newLayer = {};
     set<set<int>> MFCS = {};
-    set<NodesAndReliability> nodesAndReliability = {};
+    vector<NodesAndReliability> nodesAndReliability = {};
     while(L.size() != 0){
         counter ++;
         if(counter % 1000 == 0){
@@ -86,7 +86,8 @@ set<NodesAndReliability> fastPeeling(vector<vector<vector<int>>>& graphSamples, 
             if(reliability >= threshold){ //check if m is a frequent cohesive set
                 //no m' in MFCS where m is subset of m'
                 if(containsSupersetOfElem(MFCS, m)){
-                    nodesAndReliability.insert(NodesAndReliability(m, reliability));
+                    vector<int> vector_m = convertSetToVector(m);
+                    nodesAndReliability.push_back(NodesAndReliability(vector_m, reliability));
                     MFCS.insert(m);
                     vector<vector<int>> tempMFCS = setSetToVectorVector(MFCS);
                     tempMFCS = pruneVector(tempMFCS);
@@ -115,7 +116,7 @@ set<NodesAndReliability> fastPeeling(vector<vector<vector<int>>>& graphSamples, 
 
 
 
-set<set<int>> runFastPeeling(string fileName, int numNodes, int numEdges, int numSamples, long double threshold){
+vector<vector<int>> runFastPeeling(string fileName, int numNodes, int numEdges, int numSamples, long double threshold){
     Graph graph (numNodes, numEdges, fileName);
 	graph.readGraph();
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
@@ -123,8 +124,8 @@ set<set<int>> runFastPeeling(string fileName, int numNodes, int numEdges, int nu
     vector<vector<int>> filteredComponents = removeLenKComponents(&components,2);
 
     set<set<int>> maximalFI = getMFI(filteredComponents, threshold, numSamples);
-    set<NodesAndReliability> peelingRes = fastPeeling(graphSamples, maximalFI, threshold, numSamples);
-    set<set<int>> res = extractNodes(peelingRes);
+    vector<NodesAndReliability> peelingRes = fastPeeling(graphSamples, maximalFI, threshold, numSamples);
+    vector<vector<int>> res = extractNodes(peelingRes);
     return res;
 }
 
