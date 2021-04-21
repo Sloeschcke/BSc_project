@@ -28,7 +28,8 @@
 #include <time.h>
 #include <random>
 #include <stdlib.h>  
-#include <ctime>   
+#include <ctime>
+#include <numeric>
 using namespace std;
 typedef unsigned int uint;
 typedef unsigned char uint8;
