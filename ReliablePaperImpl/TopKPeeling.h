@@ -55,7 +55,7 @@ vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector
         vector<int> candidate = iApriori.getNextFrequentItemset();
         counter ++;
         if(counter % 4000 == 0){
-            cout << " 4000 iterations\n";
+            // cout << " 4000 iterations\n";
         }
         if(candidate.size()>2){
             set<int> candidateSet = convertVectorToSet(candidate);
@@ -70,7 +70,7 @@ vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector
     while(iApriori.hasNext()){
         counter++;
         if(counter % 40000 == 0){
-           cout << " 40000 iterations in iApriori.hasNext() \n";
+        //    cout << " 40000 iterations in iApriori.hasNext() \n";
         }
         Candidate canCandidate = getNextCandidateAndCheckReliability(iApriori, graphSamples, theta);
         if(canCandidate.nodes.size()==0){

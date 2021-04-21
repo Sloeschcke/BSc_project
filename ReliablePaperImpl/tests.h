@@ -190,7 +190,6 @@ void testFastPeelingNonDeterministic(){
 	assert(res == expected);
 	assert(res == resFastPeeling);
 	std::cout << "finished\n";
-
 }
 
 void testPeelingFacebook(){
@@ -276,7 +275,7 @@ void testTopKPeelingFacebook(){
 	// string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	// string path = abspath + "/BSc_project/GraphsGeneration/processed_graphs/facebook_698.edges";
-	vector<Candidate> res = runTopKPeeling(path,199, 270, 100, 1);
+	vector<Candidate> res = runTopKPeeling(path,199, 270, 100, 2);
 	vector<int> mostLikely = {75,103,48};
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in topKFacebook: " << duration << "\n";
