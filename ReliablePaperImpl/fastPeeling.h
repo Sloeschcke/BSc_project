@@ -116,7 +116,7 @@ vector<NodesAndReliability> fastPeeling(vector<vector<vector<int>>>& graphSample
 
 
 
-vector<vector<int>> runFastPeeling(string fileName, int numNodes, int numEdges, int numSamples, long double threshold){
+vector<NodesAndReliability> runFastPeeling(string fileName, int numNodes, int numEdges, int numSamples, long double threshold){
     Graph graph (numNodes, numEdges, fileName);
 	graph.readGraph();
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
@@ -124,8 +124,8 @@ vector<vector<int>> runFastPeeling(string fileName, int numNodes, int numEdges, 
     vector<vector<int>> filteredComponents = removeLenKComponents(&components,2);
 
     set<set<int>> maximalFI = getMFI(filteredComponents, threshold, numSamples);
-    vector<NodesAndReliability> peelingRes = fastPeeling(graphSamples, maximalFI, threshold, numSamples);
-    vector<vector<int>> res = extractNodes(peelingRes);
+    vector<NodesAndReliability> res = fastPeeling(graphSamples, maximalFI, threshold, numSamples);
+    // vector<vector<int>> res = extractNodes(peelingRes);
     return res;
 }
 

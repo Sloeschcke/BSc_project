@@ -77,12 +77,12 @@ vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector
             return tMFCS;
         } 
         if (canCandidate.support > theta){
-            cout << "Found new best with reliability: " << canCandidate.support<< "\n";
             replaceLowestReliabilityMFCS(&tMFCS, canCandidate);
             int minIndex = getMinSupportIndex(tMFCS);
             long double minSupport = tMFCS[minIndex].support;
             theta = minSupport;
             iApriori.setMinSupport(minSupport);
+            cout << "Set new threshold: " << theta<< "\n";
         }
     }
     return tMFCS;

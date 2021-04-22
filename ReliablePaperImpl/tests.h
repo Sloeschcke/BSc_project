@@ -157,8 +157,9 @@ void testFastPeeling(){
 	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file_certain.inf";
 	set<set<int>> resPeeling = runPeeling(graph_file, 11, 11, 1, 0.5, 0);
-	vector<vector<int>>  resFastPeeling = runFastPeeling(graph_file, 11, 11, 1, 0.5);
-	set<set<int>> resFastPeelingSet = vectorVectorToSetSet(resFastPeeling);
+	vector<NodesAndReliability>  resFastPeeling = runFastPeeling(graph_file, 11, 11, 1, 0.5);
+	vector<vector<int>> resFastPeelingVector = extractNodes(resFastPeeling);
+	set<set<int>> resFastPeelingSet = vectorVectorToSetSet(resFastPeelingVector);
 	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
 	assert(resPeeling == expected);
 	assert(resPeeling == resFastPeelingSet);
@@ -186,8 +187,9 @@ void testFastPeelingNonDeterministic(){
 	//string graph_file = "/Users/sebastianloeschcke/Desktop/6.semester/BSc/BSc_project/ReliablePaperImpl/graph_file2.inf";
 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file3.inf";
 	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5, 0);
-	vector<vector<int>> resFastPeeling = runFastPeeling(graph_file, 7, 10, 1000, 0.95);
-	set<set<int>> resFastPeelingSet = vectorVectorToSetSet(resFastPeeling);
+	vector<NodesAndReliability> resFastPeeling = runFastPeeling(graph_file, 7, 10, 1000, 0.95);
+	vector<vector<int>> resFastPeelingVector = extractNodes(resFastPeeling);
+	set<set<int>> resFastPeelingSet = vectorVectorToSetSet(resFastPeelingVector);
 	set<set<int>> expected = {{0, 2, 3, 5}, {4, 6}};
 	assert(res == expected);
 	assert(res == resFastPeelingSet);
@@ -199,8 +201,9 @@ void testPeelingFacebook(){
 	// string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
 	set<set<int>> res = runPeeling(path,199, 270, 100, 0.95, 0);
-	vector<vector<int>>  resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
-	set<set<int>> resFastPeelingSet = vectorVectorToSetSet(resFastPeeling);
+	vector<NodesAndReliability>  resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
+	vector<vector<int>> resFastPeelingVector = extractNodes(resFastPeeling);
+	set<set<int>> resFastPeelingSet = vectorVectorToSetSet(resFastPeelingVector);
 	assert(res == resFastPeelingSet);
 }
 
@@ -316,7 +319,7 @@ void testNaiveTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
-	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 100, 10);
+	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 500, 5);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in NaiveTopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
@@ -327,11 +330,43 @@ void testTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
-	vector<Candidate> res = runTopKPeeling(path,40, 80, 100, 10);
+	vector<Candidate> res = runTopKPeeling(path,40, 80, 100, 5);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
 	printMFCS(res);
+}
+
+void testFastPeelingSynthetic() {
+	clock_t start;
+	start = clock();
+	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
+	vector<Candidate> res1 = runTopKPeeling(path,40, 80, 100, 5);
+	printMFCS(res1);
+	vector<NodesAndReliability> res = runFastPeeling(path,40, 80, 100, 0.24);
+	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+    cout << "Time in TopKSynthetic: " << duration << "\n";
+	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
+	printMFCSWhichAreNodesAndReliability(res);
+}
+
+void testBothTopKPeelingSynthetic(){
+	clock_t start1;
+	start1 = clock();
+	string path1 = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
+	vector<Candidate> res1 = runTopKPeeling(path1,40, 80, 100, 10);
+	double duration1 = ( clock() - start1 ) / (double) CLOCKS_PER_SEC;
+    cout << "Time in TopKSynthetic: " << duration1 << "\n";
+	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
+	printMFCS(res1);
+	clock_t start2;
+	start2 = clock();
+	string path2 = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
+	vector<NodesAndReliability> res2 = runNaiveTopKPeeling(path2,40, 80, 100, 10);
+	double duration2 = ( clock() - start2 ) / (double) CLOCKS_PER_SEC;
+    cout << "Time in NaiveTopKSynthetic: " << duration2 << "\n";
+	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
+	printMFCSWhichAreNodesAndReliability(res2);
 }
 
 // void testTopKReliableFacebook(){
@@ -358,10 +393,12 @@ void testAll(){
 	// testTopKReliableFacebook();
 	// testIterApriori2();
 	// testTopKgraph3();
-	testTopKPeelingFacebook();
+	// testTopKPeelingFacebook();
 	// testNaiveTopKPeelingGraph3();
-	testNaiveTopKPeelingFaceBook();
+	// testNaiveTopKPeelingFaceBook();
 	// testNaiveTopKPeelingSynthetic();
+	testFastPeelingSynthetic();
 	// testTopKPeelingSynthetic();
+	// testBothTopKPeelingSynthetic();
 }
 
