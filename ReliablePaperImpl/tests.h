@@ -292,7 +292,7 @@ void testTopKPeelingFacebook(){
 
 void testNaiveTopKPeelingGraph3() {
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file4.inf";
-	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,7, 10, 1000, 2, 1, 0.1);
+	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,7, 10, 1000, 2);
 	vector<int> mostLikely = {2, 3, 5};
 	printMFCSWhichAreNodesAndReliability(res);
 	// assert(*res.begin() == mostLikely);
@@ -305,7 +305,7 @@ void testNaiveTopKPeelingFaceBook() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,199, 270, 100, 3, 1, 0.1);
+	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,199, 270, 100, 1);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in NaiveTopKPeelingFaceBook: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNS \n";
@@ -316,7 +316,7 @@ void testNaiveTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
-	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 100, 2, 1, 0.1);
+	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 100, 10);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in NaiveTopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
@@ -327,7 +327,7 @@ void testTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
-	vector<Candidate> res = runTopKPeeling(path,40, 80, 100, 2);
+	vector<Candidate> res = runTopKPeeling(path,40, 80, 100, 10);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
@@ -358,10 +358,10 @@ void testAll(){
 	// testTopKReliableFacebook();
 	// testIterApriori2();
 	// testTopKgraph3();
-	// testTopKPeelingFacebook();
+	testTopKPeelingFacebook();
 	// testNaiveTopKPeelingGraph3();
-	// testNaiveTopKPeelingFaceBook();
-	testNaiveTopKPeelingSynthetic();
-	testTopKPeelingSynthetic();
+	testNaiveTopKPeelingFaceBook();
+	// testNaiveTopKPeelingSynthetic();
+	// testTopKPeelingSynthetic();
 }
 
