@@ -112,9 +112,6 @@ vector<vector<int>> sortMFCS(vector<vector<int>> unsorted){
 }
 
 void MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode, vector<int> vertexSet, vector<int> MFCSIDs, vector<bool> con, vector<int> neighbours, vector<int>* exclusionList, vector<NodesAndReliability>* FCS, vector<vector<int>>& allMFCSIDs, long double threshold, vector<vector<int>>& MFCS, Graph& uncertain){
-    if (count(vertexSet.begin(), vertexSet.end(), chosenNode) == 0) {
-        vertexSet.push_back(chosenNode);
-    }
     sort(vertexSet.begin(), vertexSet.end());
     for (int i =0; i<graphSamples.size(); i++){
         if (con[i]){
@@ -136,6 +133,10 @@ void MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode,
         if(FCS_ele.nodes.size() >= 3){
             (*FCS).push_back(FCS_ele);
         }
+    }
+
+    if (count(vertexSet.begin(), vertexSet.end(), chosenNode) == 0) {
+        vertexSet.push_back(chosenNode);
     }
 
     vector<int> difference = getDifferenceOfVectors(neighbours, *exclusionList);
