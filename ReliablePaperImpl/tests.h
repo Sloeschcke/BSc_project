@@ -295,9 +295,20 @@ void testTopKPeelingFacebook(){
 
 void testNaiveTopKPeelingGraph3() {
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file4.inf";
-	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,7, 10, 1000, 2);
+	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,7, 10, 100, 2);
 	vector<int> mostLikely = {2, 3, 5};
 	printMFCSWhichAreNodesAndReliability(res);
+	// assert(*res.begin() == mostLikely);
+	// set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
+	// assert(res == resFastPeeling);
+	// {0, 2, 3, 5}, {4, 6}
+}
+
+void testTopKPeelingGraph3() {
+	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file4.inf";
+	vector<Candidate> res = runTopKPeeling(path,7, 10, 100, 2);
+	vector<int> mostLikely = {2, 3, 5};
+	printMFCS(res);
 	// assert(*res.begin() == mostLikely);
 	// set<set<int>> resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
 	// assert(res == resFastPeeling);
@@ -354,7 +365,7 @@ void testBothTopKPeelingSynthetic(){
 	clock_t start1;
 	start1 = clock();
 	string path1 = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
-	vector<Candidate> res1 = runTopKPeeling(path1,40, 80, 100, 10);
+	vector<Candidate> res1 = runTopKPeeling(path1,40, 80, 100, 5);
 	double duration1 = ( clock() - start1 ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration1 << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
@@ -362,7 +373,7 @@ void testBothTopKPeelingSynthetic(){
 	clock_t start2;
 	start2 = clock();
 	string path2 = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
-	vector<NodesAndReliability> res2 = runNaiveTopKPeeling(path2,40, 80, 100, 10);
+	vector<NodesAndReliability> res2 = runNaiveTopKPeeling(path2,40, 80, 100, 5);
 	double duration2 = ( clock() - start2 ) / (double) CLOCKS_PER_SEC;
     cout << "Time in NaiveTopKSynthetic: " << duration2 << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
@@ -394,10 +405,11 @@ void testAll(){
 	// testIterApriori2();
 	// testTopKgraph3();
 	// testTopKPeelingFacebook();
-	// testNaiveTopKPeelingGraph3();
+	testNaiveTopKPeelingGraph3();
+	testTopKPeelingGraph3();
 	// testNaiveTopKPeelingFaceBook();
 	// testNaiveTopKPeelingSynthetic();
-	testFastPeelingSynthetic();
+	// testFastPeelingSynthetic();
 	// testTopKPeelingSynthetic();
 	// testBothTopKPeelingSynthetic();
 }
