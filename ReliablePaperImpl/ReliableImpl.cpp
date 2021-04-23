@@ -12,7 +12,7 @@ int main(int argc, char const *argv[])
 	std::cout << "Hello ze world \n";
 	// testAll();
 	runNumNodesExperiment();
-
+	//runKExperiment();
 	return 0;
 }
 	

@@ -45,13 +45,13 @@ def generate_edge_degree_graphs():
         create_processed_graph_files(relative_path_processed, index, nodes, i, 1, value_for_plot, value)
 
 def generate_data_for_vary_k():
-    value_for_plot = "Varying K"
+    value_for_plot = "Varying_K"
     relative_path_processed = get_relative_path(value_for_plot)
     nodes = 60
     edges = 2*nodes
     numSamples = 5
     for file_index in range(numSamples):
-        create_processed_graph_files(relative_path_processed, 1, file_index, nodes, edges, 1, value_for_plot, "k")
+        create_processed_graph_files(relative_path_processed, 1, file_index, nodes, edges, 1, value_for_plot, 0)
         
 def create_processed_graph_files(path,folderIndex, index, nodes, edges, seed, value_for_plot,value):
     subFolder = path/str(folderIndex)

@@ -67,7 +67,23 @@ void runNumNodesExperiment(){
 }
 
 void runKExperiment(){
-    string path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\Varying K\\1";
+    string path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\Varying_K\\1";
     vector<ValueTime> results;
-    
+    cout << "1";
+    int numRepetitions = 5;
+    vector<int> kExperiments = {1,2,3,4,5,6,7,8,9,10};
+    cout << "2";
+    for (auto & k : kExperiments ){
+        for (int i=0; i<numRepetitions; i++){
+            cout << "3";
+            string filePath = path + "\\" + to_string(i) + ".txt";
+            ValueTime valTime = runExperiment(filePath, 1000,k);
+            valTime.value = k;
+            cout << "finished value: "<< valTime.value << " in time: " << valTime.time <<"\n";
+            results.push_back(valTime);
+            cout << "============================\n";
+        }
+    }
+    writeListOfResultsToFile(path+"/output/results.txt", results, "Vary k", "k");
+
 }
