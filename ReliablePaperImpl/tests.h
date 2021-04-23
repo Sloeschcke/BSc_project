@@ -194,7 +194,6 @@ void testFastPeelingNonDeterministic(){
 	assert(res == expected);
 	assert(res == resFastPeelingSet);
 	std::cout << "finished\n";
-
 }
 
 void testPeelingFacebook(){
@@ -280,9 +279,9 @@ void testTopKPeelingFacebook(){
 	clock_t start;
 	start = clock();
 	// string path = ".\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	// string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	string path = abspath + "/BSc_project/GraphsGeneration/processed_graphs/facebook_698.edges";
-	vector<Candidate> res = runTopKPeeling(path,199, 270, 100, 1);
+	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
+	// string path = abspath + "/BSc_project/GraphsGeneration/processed_graphs/facebook_698.edges";
+	vector<Candidate> res = runTopKPeeling(path,199, 270, 100, 2);
 	vector<int> mostLikely = {75,103,48};
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in topKFacebook: " << duration << "\n";
@@ -293,7 +292,7 @@ void testTopKPeelingFacebook(){
 	// assert(res == resFastPeeling);
 }
 
-void testNaiveTopKPeelingGraph3() {
+void testNaiveTopKPeelingGraph4() {
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file4.inf";
 	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,7, 10, 100, 2);
 	vector<int> mostLikely = {2, 3, 5};
@@ -304,7 +303,7 @@ void testNaiveTopKPeelingGraph3() {
 	// {0, 2, 3, 5}, {4, 6}
 }
 
-void testTopKPeelingGraph3() {
+void testTopKPeelingGraph4() {
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\graph_file4.inf";
 	vector<Candidate> res = runTopKPeeling(path,7, 10, 100, 2);
 	vector<int> mostLikely = {2, 3, 5};
@@ -405,8 +404,8 @@ void testAll(){
 	// testIterApriori2();
 	// testTopKgraph3();
 	// testTopKPeelingFacebook();
-	testNaiveTopKPeelingGraph3();
-	testTopKPeelingGraph3();
+	testNaiveTopKPeelingGraph4();
+	testTopKPeelingGraph4();
 	// testNaiveTopKPeelingFaceBook();
 	// testNaiveTopKPeelingSynthetic();
 	// testFastPeelingSynthetic();

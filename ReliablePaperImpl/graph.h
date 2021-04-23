@@ -3,6 +3,7 @@
 #include <cassert>
 #include "hoved.h"
 
+using namespace std;
 class Graph
 {
 public:
@@ -38,6 +39,18 @@ public:
             add_edge(a, b, p);
         };
         fclose(fin);
+    }
+    
+    void readGraphfile(ifstream * fileStream){
+        string a, b;
+        string p;
+        while (*fileStream >> a >> b >> p){
+            int ai = stoi(a);
+            int bi = stoi(b);
+            hasNode[ai] = true;
+            hasNode[bi] = true;
+            add_edge(ai, bi, stod(p));
+        }
     }
 
     void add_edge(int a, int b, double p)
