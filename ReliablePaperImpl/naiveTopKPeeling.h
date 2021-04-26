@@ -31,7 +31,7 @@ vector<NodesAndReliability> naiveTopKPeeling(vector<vector<vector<int>>>& graphS
         vector<vector<int>> MFCSNodes = extractNodes(MFCS);
         if(MFCSNodes.size() > 0){
             tempRes = runNonMaximal(graphSamples, uncertain, MFCSNodes, thetaMid);
-            // tempRes.insert(tempRes.end(), MFCS.begin(), MFCS.end());
+            tempRes.insert(tempRes.end(), MFCS.begin(), MFCS.end());
         } 
         thetaHigh = thetaMid;
     }

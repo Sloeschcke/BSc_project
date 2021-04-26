@@ -112,10 +112,6 @@ vector<vector<int>> sortMFCS(vector<vector<int>> unsorted){
 }
 
 void MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode, vector<int> vertexSet, vector<int> MFCSIDs, vector<bool> con, vector<int> neighbours, vector<int> exclusionList, vector<NodesAndReliability>* FCS, vector<vector<int>>& allMFCSIDs, long double threshold, vector<vector<int>>& MFCS, Graph& uncertain){
-    if (count(vertexSet.begin(), vertexSet.end(), chosenNode) == 0) {
-        vertexSet.push_back(chosenNode);
-    }
-
     sort(vertexSet.begin(), vertexSet.end());
     for (int i =0; i<graphSamples.size(); i++){
         if (con[i]){
@@ -143,13 +139,19 @@ void MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode,
     vector<int> difference = getDifferenceOfVectors(neighbours, exclusionList);
 
     for (auto & w : difference){
+        vector<int> vertexSet2 = vertexSet;
+        if (count(vertexSet2.begin(), vertexSet2.end(), w) == 0) {
+            vertexSet2.push_back(w);
+        } else {
+            cout << "already contained \n";
+        }
         vector<int> newID = getintersectionOfMFCSIDs(MFCSIDs, w, allMFCSIDs);
         exclusionList.push_back(w);
         int newIdSize = newID.size();
-        if(newIdSize > 1 || (newIdSize==1 && !isVertexSetAnMFCS(vertexSet, MFCS)) ){
+        if(newIdSize > 1 || (newIdSize==1 && !isVertexSetAnMFCS(vertexSet2, MFCS)) ){
             vector<int> neighbours_w = uncertain.adjList[w];
             vector<int> u = vector_union(neighbours, neighbours_w);
-            MiningNonMaximal(graphSamples, w, vertexSet, newID, con, u,exclusionList, FCS, allMFCSIDs,  threshold, MFCS, uncertain);
+            MiningNonMaximal(graphSamples, w, vertexSet2, newID, con, u,exclusionList, FCS, allMFCSIDs,  threshold, MFCS, uncertain);
         }
     }
 }

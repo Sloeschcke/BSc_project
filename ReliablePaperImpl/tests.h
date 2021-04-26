@@ -404,12 +404,12 @@ void testAll(){
 	// testIterApriori2();
 	// testTopKgraph3();
 	// testTopKPeelingFacebook();
-	// testTopKPeelingGraph4();
-	// testNaiveTopKPeelingGraph4();
+	testTopKPeelingGraph4();
+	testNaiveTopKPeelingGraph4();
 	// testNaiveTopKPeelingFaceBook();
 	// testTopKPeelingSynthetic();
 	// testNaiveTopKPeelingSynthetic();
 	// testFastPeelingSynthetic();
-	testBothTopKPeelingSynthetic();
+	// testBothTopKPeelingSynthetic();
 }
 
