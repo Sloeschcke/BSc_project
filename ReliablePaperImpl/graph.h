@@ -16,29 +16,50 @@ public:
     Graph(int n, int m, string fileName) : graph_file(fileName){ 
         numNodes = n;
         numEdges = m;
-        hasNode = vector<bool> (numNodes);
-        adjList = vector<vector<int> > (n);
-        probs = vector<vector<double> > (n);
+        // hasNode = vector<bool> (numNodes);
+        // adjList = vector<vector<int> > (n);
+        // probs = vector<vector<double> > (n);
     }
     vector<int> inDeg;
 
-    void readGraph()
-    {
-        FILE* fin;
-        fin = fopen((graph_file).c_str(), "r");
-        assert(fin!=NULL);
-        int readCnt = 0;
-        for (int i = 0; i < numEdges; i++)
-        {
-            readCnt++;
-            int a, b;
-            double p;
-            int c = fscanf(fin, "%d%d%lf", &a, &b, &p);
-            hasNode[a] = true;
-            hasNode[b] = true;
-            add_edge(a, b, p);
-        };
-        fclose(fin);
+    // void readGraph()
+    // {
+    //     FILE* fin;
+    //     fin = fopen((graph_file).c_str(), "r");
+    //     assert(fin!=NULL);
+    //     int readCnt = 0;
+    //     for (int i = 0; i < numEdges; i++)
+    //     {
+    //         readCnt++;
+    //         int a, b;
+    //         double p;
+    //         int c = fscanf(fin, "%d%d%lf", &a, &b, &p);
+    //         hasNode[a] = true;
+    //         hasNode[b] = true;
+    //         add_edge(a, b, p);
+    //     };
+    //     fclose(fin);
+    // }
+
+    void readGraph(){
+
+        ifstream fileStream (graph_file);
+        assert(fileStream.is_open());
+        string problem, value;
+        fileStream >> numNodes >> numEdges >> problem >> value;
+        hasNode = vector<bool> (numNodes);
+        adjList = vector<vector<int> > (numNodes);
+        probs = vector<vector<double> > (numEdges);
+
+        string a, b;
+        string p;
+        while (fileStream >> a >> b >> p){
+            int ai = stoi(a);
+            int bi = stoi(b);
+            hasNode[ai] = true;
+            hasNode[bi] = true;
+            add_edge(ai, bi, stod(p));
+        }
     }
     
     void readGraphfile(ifstream * fileStream){

@@ -111,7 +111,11 @@ vector<vector<int>> sortMFCS(vector<vector<int>> unsorted){
     return sorted;
 }
 
-void MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode, vector<int> vertexSet, vector<int> MFCSIDs, vector<bool> con, vector<int> neighbours, vector<int>* exclusionList, vector<NodesAndReliability>* FCS, vector<vector<int>>& allMFCSIDs, long double threshold, vector<vector<int>>& MFCS, Graph& uncertain){
+void MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode, vector<int> vertexSet, vector<int> MFCSIDs, vector<bool> con, vector<int> neighbours, vector<int> exclusionList, vector<NodesAndReliability>* FCS, vector<vector<int>>& allMFCSIDs, long double threshold, vector<vector<int>>& MFCS, Graph& uncertain){
+    if (count(vertexSet.begin(), vertexSet.end(), chosenNode) == 0) {
+        vertexSet.push_back(chosenNode);
+    }
+
     sort(vertexSet.begin(), vertexSet.end());
     for (int i =0; i<graphSamples.size(); i++){
         if (con[i]){
@@ -127,6 +131,7 @@ void MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode,
             con[i] = isInducedConnectedComponent(graphSamples[i], &setVertexSet);
         }
     }
+
     long double reliability = static_cast<double>(accumulate(con.begin(), con.end(), 0))/con.size();
     if (reliability > threshold){
         NodesAndReliability FCS_ele = NodesAndReliability(vertexSet, reliability);
@@ -135,15 +140,11 @@ void MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode,
         }
     }
 
-    if (count(vertexSet.begin(), vertexSet.end(), chosenNode) == 0) {
-        vertexSet.push_back(chosenNode);
-    }
-
-    vector<int> difference = getDifferenceOfVectors(neighbours, *exclusionList);
+    vector<int> difference = getDifferenceOfVectors(neighbours, exclusionList);
 
     for (auto & w : difference){
         vector<int> newID = getintersectionOfMFCSIDs(MFCSIDs, w, allMFCSIDs);
-        (*exclusionList).push_back(w);
+        exclusionList.push_back(w);
         int newIdSize = newID.size();
         if(newIdSize > 1 || (newIdSize==1 && !isVertexSetAnMFCS(vertexSet, MFCS)) ){
             vector<int> neighbours_w = uncertain.adjList[w];
@@ -160,20 +161,17 @@ vector<NodesAndReliability> runNonMaximal(vector<vector<vector<int>>>& graphSamp
     vector<vector<int>> allMFCSIDs = vertexMFCSIDs(uncertain, sortedMFCSs);
     int numNodes = uncertain.adjList.size();
     vector<vector<int>> adjList = uncertain.adjList;
-    // vector<int> nodes = getVectorFrom1toN(numNodes);
     bool finished = false;
-    // while (!finished){
-    for(int i = 0 ; i < nodes.size() ; i++){    
-        vector<int> exclusionList = {};
+    vector<int> exclusionList = {};
+    while (!finished){
         vector<int> diff = getDifferenceOfVectors(nodes, exclusionList);
-        // int chosenNode = diff[0];
-        int chosenNode = nodes[i];
+        int chosenNode = diff[0];
         exclusionList.push_back(chosenNode);
         vector<bool> con(graphSamples.size(), false);
         vector<int> vertexSet = {};
         vertexSet.push_back(chosenNode);
-        MiningNonMaximal(graphSamples, chosenNode, vertexSet, allMFCSIDs[chosenNode], con, adjList[chosenNode], &exclusionList, &FCS, allMFCSIDs, threshold, sortedMFCSs, uncertain);
-        // finished = doesVectorContainVector(exclusionList, nodes);
+        MiningNonMaximal(graphSamples, chosenNode, vertexSet, allMFCSIDs[chosenNode], con, adjList[chosenNode], exclusionList, &FCS, allMFCSIDs, threshold, sortedMFCSs, uncertain);
+        finished = doesVectorContainVector(exclusionList, nodes);
     }
     return FCS;
 }

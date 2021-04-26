@@ -158,7 +158,7 @@ public:
                 }
                 else {
                     curr_i++;
-                    curr_j = curr_i + 1;
+                    curr_j = curr_i; //+ 1;
                     // stupidJoin++;
                     // if (stupidJoin % 10 == 0) {
                     //     cout << "Had 10 stupidJoins\n";

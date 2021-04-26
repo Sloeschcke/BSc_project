@@ -68,7 +68,7 @@ vector<vector<int>> transReduce(vector<vector<vector<int>>>& graphSamples, set<i
     };
     return result;
 }
-vector<NodesAndReliability> fastPeeling(vector<vector<vector<int>>>& graphSamples, set<set<int>> mfls, double threshold, int numSamples){
+vector<NodesAndReliability> fastPeeling(vector<vector<vector<int>>>& graphSamples, set<set<int>>& mfls, double threshold, int numSamples){
     int counter = 0;
     set<set<int>, customCompareLength> L;
 	copy(mfls.begin(), mfls.end(), inserter(L, L.begin()));
