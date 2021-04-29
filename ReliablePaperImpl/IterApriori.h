@@ -118,11 +118,7 @@ public:
                     return C[curr_j-1];
                 }
             }
-            // // vector<Candidate> copyL = L;
-            // if(lsize != L.size()){
-            //     lsize = L.size();
-            //     cout << "size \n" << lsize ;
-            // }
+
             if(curr_j >= L.size()){
                 curr_i++;
                 curr_j = curr_i+1;
@@ -158,33 +154,17 @@ public:
                 }
                 else {
                     curr_i++;
-                    curr_j = curr_i; //+ 1;
-                    // stupidJoin++;
-                    // if (stupidJoin % 10 == 0) {
-                    //     cout << "Had 10 stupidJoins\n";
-                    // }
+                    curr_j = curr_i;
                 }
             } else {
                 redundantCounter++;
                 if(redundantCounter%2000 == 0){ 
                     cleanLFromRedundant();
-                    // cout << "Had 1000000000 redundant combinations\n";
                 }
             }
         }
         return vector<int>();
     }
-
-    // vector<vector<int> > generateNextC() {
-    //     if(nowStep==0) {
-    //         vector<vector<int> > ret;
-    //         vector<int> element = getElement(transactions);
-    //         for(auto&i:element) ret.push_back(vector<int>(1, i));
-    //         return ret;
-    //     } else {
-    //         return pruning(joining());
-    //     }
-    // }
     
     vector<int> getElement(vector<vector<int>> itemset) {
         vector<int> element;

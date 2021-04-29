@@ -18,15 +18,6 @@ struct customCompareLength final{
     }
 };
 
-// struct NodesAndReliability final{
-//     set<set<int>> setsOfNodes;
-//     set<long double> reliabilities;
-//         NodesAndReliability(set<set<int>> _nodes, set<double long> _reliability){
-//             setsOfNodes = _nodes;
-//             reliabilities = _reliability;
-//     } 
-// };
-
 struct NodesAndReliability final{
     vector<int> nodes;
     long double reliability;
@@ -49,7 +40,6 @@ vector<vector<int>> extractNodes(vector<NodesAndReliability>& nodesAndReliabilit
 }
 
 bool isContainedInPrevious(vector<int> component, set<set<int>> previous){
-    //TODO, make components list of sets.
     set<int> componentSet(component.begin(), component.end());
     int count = previous.count(componentSet);
     return (count != 0);
@@ -106,7 +96,6 @@ vector<NodesAndReliability> fastPeeling(vector<vector<vector<int>>>& graphSample
         for (auto m : MFCS){
             newLayer.erase(m);
         }
-        //TODO make newlayer of customCompareLength
         L = {};
         copy(newLayer.begin(), newLayer.end(), inserter(L, L.begin()));
         newLayer = {};
@@ -125,7 +114,6 @@ vector<NodesAndReliability> runFastPeeling(string fileName, int numNodes, int nu
 
     set<set<int>> maximalFI = getMFI(filteredComponents, threshold, numSamples);
     vector<NodesAndReliability> res = fastPeeling(graphSamples, maximalFI, threshold, numSamples);
-    // vector<vector<int>> res = extractNodes(peelingRes);
     return res;
 }
 

@@ -84,9 +84,7 @@ vector<vector<int>> connectedComponentsSubgraph(vector<vector<vector<int>>>& sam
         for (auto & node : subgraph) {
             vector<int> component;
             if (visited[node] == false) {
-                // print all reachable vertices from n
                 DFSOnSubgraph(node, &visited, &component, &sample, &subgraph);
-                // cout << "\n";
                 vectorOfComponents.push_back(component);
             } 
         }
@@ -204,8 +202,6 @@ set<set<int>> prune(set<set<int>>& original) {
 			res.erase((*it));
 		}
 	}
-    // duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
-    // cout << "Time in prune: " << duration << "\n";
 	return res;
 }
 
@@ -253,7 +249,7 @@ vector<vector<int>> setSetToVectorVector(set<set<int>>& setSet){
 vector<vector<int>> flatten(vector<vector<vector<int>>>& v) {
     std::size_t total_size = 0;
     for (const auto& sub : v)
-        total_size += sub.size(); // I wish there was a transform_accumulate
+        total_size += sub.size();
     vector<vector<int>> result;
     result.reserve(total_size);
     for (const auto& sub : v)
@@ -279,7 +275,6 @@ double subgraphReliability( vector<vector<vector<int>>>& samples, set<int> * sub
         }
         counter++;
         if (samples.size() - counter < required - inducedCounter){
-            // cout << "early stopping";
             break;
         }
     }
