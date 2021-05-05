@@ -29,9 +29,10 @@ ValueTime runExperiment(string path, int numSamples, int k){
     cout << value << "\n";
     Graph graph = Graph(stoi(numNodes), stoi(numEdges), "");
     graph.readGraphfile(&graphFile);
+    vector<vector<vector<int>>> samples = sample(graph, numSamples);
     clock_t start;
     start = clock();
-    vector<Candidate> result = runTopKPeelingWithoutSampling(graph, numSamples, k);
+    vector<Candidate> result = runTopKPeelingWithoutSampling(samples, numSamples, k);
     double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     return ValueTime(duration, stod(value));
 
