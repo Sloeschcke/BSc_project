@@ -8,6 +8,10 @@
 #include "naiveTopKPeeling.h"
 using namespace std;
 
+// string abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt";
+// string abspath = "/Users/sebastianloeschcke/Desktop/6.semester/BSc";
+// string abspath = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project";
+
 struct ValueTime {
     double long time;
     double long value;

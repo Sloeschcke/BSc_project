@@ -26,7 +26,7 @@ private:
     double duration;
 public:
     
-    Apriori (vector<vector<int> > _transactions, long double _minSupport, int _numSamples) {
+    Apriori (vector<vector<int>> _transactions, long double _minSupport, int _numSamples) {
         nowStep=0;
         numSamples = _numSamples;
         minSupport = _minSupport;

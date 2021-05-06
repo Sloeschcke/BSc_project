@@ -44,7 +44,7 @@ long double getThresholdOfRandomDFS(vector<vector<vector<int>>> * graphSamples, 
     return lowestBest;
 }
 
-vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<vector<int>> * components, int numSamples, int k){
+vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<AggConComps> *components, int numSamples, int k){
     vector<Candidate> tMFCS;
     long double theta = 0;
     IterApriori iApriori = IterApriori(components, numSamples);
@@ -87,8 +87,8 @@ vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector
 vector<Candidate> runTopKPeelingWithoutSampling(vector<vector<vector<int>>>& samples, int numSamples, int k){
     vector<vector<int>> components = connectedComponents(&samples);
     vector<vector<int>> filteredComponents = removeLenKComponents(&components, 2);
-
-    return topKPeeling(&samples, &components, numSamples, k);
+    vector<AggConComps> aggregatedComponents = aggregateConnectedComponents(filteredComponents);
+    return topKPeeling(&samples, &aggregatedComponents, numSamples, k);
 }
 
 vector<Candidate> runTopKPeeling(string fileName, int numNodes, int numEdges, int numSamples, int k){

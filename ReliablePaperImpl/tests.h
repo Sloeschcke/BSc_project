@@ -50,12 +50,21 @@ void testPruneMatrix(){
 
 void testConnectedComponnets(){
 		string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file2.inf";
-		int numEdges = 4;
-		int numNodes = 6;
-		Graph graph (numNodes,numEdges, graph_file);
+		Graph graph (6, 4, graph_file);
 		graph.readGraph();
 		vector<vector<vector<int>>> samples = sample(graph, 3);
 		vector<vector<int>> cC = connectedComponents(&samples);
+    }
+
+void testAggConnectedComponnetsV2(){
+		string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file5.inf";
+		Graph graph (7, 10, graph_file);
+		graph.readGraph();
+		vector<vector<vector<int>>> samples = sample(graph, 100);
+		vector<vector<int>> cC = connectedComponents(&samples);
+		vector<vector<int>> fCC = removeLenKComponents(&cC, 2);
+		vector<AggConComps> aCC = aggregateConnectedComponents(fCC);
+		assert(aCC.size() < 10);
     }
 
 void testConnectedComponnets2(){
@@ -182,7 +191,8 @@ void testPeelingFacebook(){
 
 void testIterApriori(){
 	vector<vector<int>> components = {{1,2}, {1,2,3},{1,4}};
-	IterApriori iAp = IterApriori(&components, 3);
+	vector<AggConComps> aggComps = aggregateConnectedComponents(components);
+	IterApriori iAp = IterApriori(&aggComps, 3);
 	for(int i = 0; i<4; i++){
 		if(iAp.hasNext()){
 			vector<int> frequentSet = iAp.getNextFrequentItemset();
@@ -205,7 +215,8 @@ void testIterApriori(){
 }
 void testIterApriori2(){
 	vector<vector<int>> components = {{1,2}, {1,2,3},{1,4}};
-	IterApriori iAp = IterApriori(&components, 3);
+	vector<AggConComps> aggComps = aggregateConnectedComponents(components);
+	IterApriori iAp = IterApriori(&aggComps, 3);
 	for(int i = 0; i<4; i++){
 		if(iAp.hasNext()){
 			vector<int> frequentSet = iAp.getNextFrequentItemset();
@@ -335,6 +346,11 @@ void testBothTopKPeelingSynthetic(){
 	printMFCSWhichAreNodesAndReliability(res2);
 }
 
+void testFastPeelingOnRapportGraph(){
+	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file5.inf";
+	vector<NodesAndReliability> res = runFastPeeling(path, 7, 10, 100, 0.5);
+}
+
 void testAll(){
 	// testPruneMatrix();
     // testPrune();
@@ -352,12 +368,14 @@ void testAll(){
 	// testIterApriori2();
 	// testTopKgraph3();
 	// testTopKPeelingFacebook();
-	testTopKPeelingGraph4();
-	testNaiveTopKPeelingGraph4();
+	// testTopKPeelingGraph4();
+	// testNaiveTopKPeelingGraph4();
 	// testNaiveTopKPeelingFaceBook();
-	// testTopKPeelingSynthetic();
+	testTopKPeelingSynthetic();
 	// testNaiveTopKPeelingSynthetic();
 	// testFastPeelingSynthetic();
 	// testBothTopKPeelingSynthetic();
+	// testFastPeelingOnRapportGraph();
+	// testAggConnectedComponnetsV2();
 }
 

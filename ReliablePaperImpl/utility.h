@@ -6,6 +6,32 @@
 
 using namespace std;
 
+struct AggConComps {
+    int number;
+    vector<int> nodes;
+    AggConComps(vector<int> _nodes, int _number){
+        nodes = _nodes;
+        number = _number;
+    }
+};
+
+vector<AggConComps> aggregateConnectedComponents(vector<vector<int>>& connectedComponents){
+    vector<AggConComps> res = {};
+    for (auto & comp : connectedComponents){
+        sort(comp.begin(), comp.end());
+        auto pred = [comp](const AggConComps & item) {
+            return item.nodes == comp;
+        };
+        auto it = find_if(res.begin(), res.end(), pred);
+        if(it != res.end()){
+            (*it).number++;
+        } else {
+            res.push_back(AggConComps(comp, 1));
+        }
+    }
+    return res;
+}
+
 // https://www.geeksforgeeks.org/connected-components-in-an-undirected-graph/ 
 // return: sets af sets for hvert CC call
 void DFS(int v, vector<bool> *visited, vector<int> *component, vector<vector<int>> *sample)
