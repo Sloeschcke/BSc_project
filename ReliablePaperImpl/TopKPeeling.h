@@ -88,7 +88,7 @@ vector<Candidate> runTopKPeelingWithoutSampling(vector<vector<vector<int>>>& sam
     vector<vector<int>> components = connectedComponents(&samples);
     vector<vector<int>> filteredComponents = removeLenKComponents(&components, 2);
 
-    return topKPeeling(&samples, &components, numSamples, k);
+    return topKPeeling(&samples, &filteredComponents, numSamples, k);
 }
 
 vector<Candidate> runTopKPeeling(string fileName, int numNodes, int numEdges, int numSamples, int k){
