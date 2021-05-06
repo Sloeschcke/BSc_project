@@ -29,6 +29,10 @@ vector<AggConComps> aggregateConnectedComponents(vector<vector<int>>& connectedC
             res.push_back(AggConComps(comp, 1));
         }
     }
+    int scc = connectedComponents.size();
+    int sacc = res.size();
+    cout << scc << "\n";
+    cout << sacc << "\n";
     return res;
 }
 

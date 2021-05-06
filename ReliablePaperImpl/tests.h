@@ -307,7 +307,7 @@ void testNaiveTopKPeelingSynthetic() {
 void testTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
-	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
+	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes_edgedegree2\\1\\0.txt";
 	vector<Candidate> res = runTopKPeeling(path,40, 80, 100000, 5);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration << "\n";

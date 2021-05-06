@@ -87,6 +87,7 @@ vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector
 vector<Candidate> runTopKPeelingWithoutSampling(vector<vector<vector<int>>>& samples, int numSamples, int k){
     vector<vector<int>> components = connectedComponents(&samples);
     vector<vector<int>> filteredComponents = removeLenKComponents(&components, 2);
+    int s = filteredComponents.size();
     vector<AggConComps> aggregatedComponents = aggregateConnectedComponents(filteredComponents);
     return topKPeeling(&samples, &aggregatedComponents, numSamples, k);
 }
