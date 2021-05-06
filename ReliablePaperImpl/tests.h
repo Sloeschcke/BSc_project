@@ -297,7 +297,7 @@ void testNaiveTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
-	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 1000, 5);
+	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 10000, 5);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in NaiveTopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
@@ -308,7 +308,7 @@ void testTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
-	vector<Candidate> res = runTopKPeeling(path,40, 80, 1000, 5);
+	vector<Candidate> res = runTopKPeeling(path,40, 80, 100000, 5);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
