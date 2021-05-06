@@ -308,7 +308,7 @@ void testTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes_edgedegree2\\1\\0.txt";
-	vector<Candidate> res = runTopKPeeling(path,40, 80, 100000, 5);
+	vector<Candidate> res = runTopKPeeling(path,40, 80, 10000, 5);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
