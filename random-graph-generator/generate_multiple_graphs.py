@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 def main():
-    valency_probs = [0.4, 0.6, 0.8]
+    valency_probs = [0.1, 0.3, 0.5, 0.7, 0.9]
     # generate_edge_degree_graphs()
     # generate_edge_degree_graphs(valency= valency_probs)
     # generate_numNodes_graphs()
@@ -30,35 +30,40 @@ def get_relative_path(value_for_plot):
         os.makedirs(outputPath)
     return path
 
-def generate_numNodes_graphs(Valency = None):
-    num_nodes = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+def generate_numNodes_graphs(valency = None):
+    num_nodes = [40, 50, 60, 70, 80, 90, 100, 110, 120, 130]
     edge_degree = 2
     num_samples = 5
-    value_for_plot = "num_nodes_edgedegree2"
+    value_for_plot = "num_nodes"
     path = get_relative_path(value_for_plot)
     for folder_index, nodes in enumerate(num_nodes):
         for sample_index in range(num_samples):
             edges = edge_degree*nodes
-            create_processed_graph_files(path, folder_index, sample_index, nodes, edges, 1, value_for_plot, nodes, Valency)
+            create_processed_graph_files(path, folder_index, sample_index, nodes, edges, 1, value_for_plot, nodes, valency)
 
     
 def generate_edge_degree_graphs(valency = None):
     value_for_plot = "edge_degree"
-    relative_path_processed = get_relative_path(value_for_plot)
+    path = get_relative_path(value_for_plot)
+    num_samples = 5
     nodes = 80
-    edges = [80,120,160,200,240,280,320]
-    for index,i in enumerate(edges):
-        value = i/nodes
-        create_processed_graph_files(relative_path_processed, index, nodes, i, 1, value_for_plot, value, valency)
+    edges = [40,80,120,160,200,240,280,320,360,400]
+    for folder_index, edges in enumerate(edges):
+        for sample_index in range(num_samples):
+            value = edges/nodes
+            create_processed_graph_files(path, folder_index, sample_index, nodes, edges, 1, value_for_plot, value, valency)
 
 def generate_data_for_vary_k(valency = None):
     value_for_plot = "Varying K"
     relative_path_processed = get_relative_path(value_for_plot)
-    nodes = 60
+    nodes = 80
     edges = 2*nodes
     numSamples = 5
-    for file_index in range(numSamples):
-        create_processed_graph_files(relative_path_processed, 1, file_index, nodes, edges, 1, value_for_plot, "k", valency)
+    k = 10
+    for folder_index in range(k):
+        for sample_index in range(numSamples):
+            value = k + 1
+            create_processed_graph_files(relative_path_processed, folder_index, sample_index, nodes, edges, 1, value_for_plot, value, valency)
         
 def create_processed_graph_files(path, folderIndex, index, nodes, edges, seed, value_for_plot, value, valency = None):
     subFolder = path/str(folderIndex)

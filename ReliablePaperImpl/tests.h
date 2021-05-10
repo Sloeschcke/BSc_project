@@ -371,11 +371,11 @@ void testAll(){
 	// testTopKPeelingGraph4();
 	// testNaiveTopKPeelingGraph4();
 	// testNaiveTopKPeelingFaceBook();
-	testTopKPeelingSynthetic();
+	// testTopKPeelingSynthetic();
 	// testNaiveTopKPeelingSynthetic();
 	// testFastPeelingSynthetic();
 	// testBothTopKPeelingSynthetic();
-	// testFastPeelingOnRapportGraph();
+	testFastPeelingOnRapportGraph();
 	// testAggConnectedComponnetsV2();
 }
 
