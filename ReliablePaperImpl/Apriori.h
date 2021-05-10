@@ -26,7 +26,7 @@ private:
     double duration;
 public:
     
-    Apriori (vector<vector<int> > _transactions, long double _minSupport, int _numSamples) {
+    Apriori (vector<vector<int>> _transactions, long double _minSupport, int _numSamples) {
         nowStep=0;
         numSamples = _numSamples;
         minSupport = _minSupport;
@@ -97,7 +97,6 @@ public:
             }
         }
         duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
-        // cout << "Time in joining: " << duration << "\n";
         return ret;
     }
     
@@ -123,11 +122,9 @@ public:
             }
         }
         duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
-        // cout << "Time in pruning: " << duration << "\n";
         return ret;
     }
     
-    //TODO refactor
     long double getSupport(vector<int> *item) {
         int ret = 0;
         for(auto&row:transactions){
@@ -145,7 +142,6 @@ public:
     }
     
     vector<vector<int> > generateL() {
-        // cout << "Size of C: "<< C.size() << "\n";
         start = clock();
         vector<vector<int> > ret;
         for(auto&row:C){
@@ -154,8 +150,6 @@ public:
             ret.push_back(row);
         }
         duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
-        // cout << "Time in generateL" << duration << "\n";
-        // cout << "Size of L: "<< ret.size() << "\n";
 
         return ret;
     }
@@ -166,13 +160,11 @@ public:
 set<set<int>> getMFI(vector<vector<int>> components, double threshold, int numSamples){
     Apriori apriori (components, threshold, numSamples);
     apriori.process();
-    // cout << "processing done\n";
     vector<vector<vector<int>>> result = apriori.getFrequentSet();
     
     vector<vector<int>> MFI = pruneMatrix(result);
-    // cout << "finished pruning";
     set<set<int>> setMFI = vectorVectorToSetSet(MFI);
-    return setMFI; //MFI = MFLS 
+    return setMFI; 
 
 }
 #endif

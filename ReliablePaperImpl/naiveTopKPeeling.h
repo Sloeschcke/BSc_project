@@ -20,8 +20,8 @@ vector<NodesAndReliability> extractMax(vector<NodesAndReliability> tempRes, int 
 }
 
 vector<NodesAndReliability> naiveTopKPeeling(vector<vector<vector<int>>>& graphSamples, vector<vector<int>>& filteredComponents, int numSamples, int k, Graph& uncertain){
-    long double thetaLow = 0.15;
-    long double thetaHigh = 0.15;
+    long double thetaLow = 0;
+    long double thetaHigh = 1;
     vector<NodesAndReliability> tempRes = {};
     while(tempRes.size() < k){
         long double thetaMid = (thetaHigh + thetaLow)/2;
@@ -31,7 +31,7 @@ vector<NodesAndReliability> naiveTopKPeeling(vector<vector<vector<int>>>& graphS
         vector<vector<int>> MFCSNodes = extractNodes(MFCS);
         if(MFCSNodes.size() > 0){
             tempRes = runNonMaximal(graphSamples, uncertain, MFCSNodes, thetaMid);
-            // tempRes.insert(tempRes.end(), MFCS.begin(), MFCS.end());
+            tempRes.insert(tempRes.end(), MFCS.begin(), MFCS.end());
         } 
         thetaHigh = thetaMid;
     }
@@ -39,9 +39,8 @@ vector<NodesAndReliability> naiveTopKPeeling(vector<vector<vector<int>>>& graphS
     return res;
 }
 
-vector<NodesAndReliability> runNaiveTopKPeeling(string fileName, int numNodes, int numEdges, int numSamples, int k){
-    Graph graph (numNodes, numEdges, fileName);
-	graph.readGraph();
+vector<NodesAndReliability> runNaiveTopKPeeling(string fileName, int numSamples, int k){
+    Graph graph (fileName);
     vector<vector<vector<int>>> graphSamples = sample(graph, numSamples);
     vector<vector<int>> components = connectedComponents(&graphSamples);
     vector<vector<int>> filteredComponents = removeLenKComponents(&components,2);

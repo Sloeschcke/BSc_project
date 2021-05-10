@@ -5,6 +5,19 @@
 #include "utility.h"
 #include "IterApriori.h"
 
+struct resultMFCS{
+    vector<Candidate> MFCS;
+    vector<Candidate> MFCSBuffer;
+    long double theta;
+    long double thetaRelaxed;
+    resultMFCS( vector<Candidate> _MFCS,  vector<Candidate> _MFCSBuffer, long double _theta, long double _thetaRelaxed){
+            MFCS = _MFCS;
+            MFCSBuffer = _MFCSBuffer;
+            theta = _theta;
+            thetaRelaxed = _thetaRelaxed;
+    }
+};
+
 int getMinSupportIndex(vector<Candidate>& tMFCS){
     long double minIndex;
     long double minSupport=1.1;
@@ -44,63 +57,68 @@ long double getThresholdOfRandomDFS(vector<vector<vector<int>>> * graphSamples, 
     return lowestBest;
 }
 
-vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<vector<int>> * components, int numSamples, int k){
+resultMFCS topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<AggConComps> *components, int numSamples, int k, long double eps){
     vector<Candidate> tMFCS;
-    //TODO add 3 set constraint
-    long double theta = getThresholdOfRandomDFS(graphSamples, components, k)-0.00001;
+    long double theta = 0;
+    long double thetaRelaxed=0;
+    vector<Candidate> candidateBuffer;
     IterApriori iApriori = IterApriori(components, numSamples);
-    iApriori.setMinSupport(theta);
-    // cout << "adding initial candidates\n";
+    iApriori.setMinSupport(thetaRelaxed);
     int counter = 0;
     while (tMFCS.size() < k){
         vector<int> candidate = iApriori.getNextFrequentItemset();
         counter ++;
         if(counter % 4000 == 0){
-            // cout << " 4000 iterations\n";
         }
         if(candidate.size()>2){
             set<int> candidateSet = convertVectorToSet(candidate);
             double long reliability = subgraphReliability(*graphSamples, &candidateSet, theta);
-            // cout << "adding candidate\n";
-            tMFCS.push_back(Candidate(candidate, reliability));
+            if(reliability >= theta){
+                tMFCS.push_back(Candidate(candidate, reliability));
+            }
         }
     }
     theta = tMFCS[getMinSupportIndex(tMFCS)].support;
-    // cout << "done adding initial candidates\n";
-
+    thetaRelaxed = max((long double)0.0,theta-2*eps);
+    
     while(iApriori.hasNext()){
         counter++;
         if(counter % 40000 == 0){
-        //    cout << " 40000 iterations in iApriori.hasNext() \n";
         }
         Candidate canCandidate = getNextCandidateAndCheckReliability(iApriori, graphSamples, theta);
         if(canCandidate.nodes.size()==0){
-            return tMFCS;
+            return resultMFCS(tMFCS, candidateBuffer, theta, thetaRelaxed);
         } 
         if (canCandidate.support > theta){
             replaceLowestReliabilityMFCS(&tMFCS, canCandidate);
             int minIndex = getMinSupportIndex(tMFCS);
             long double minSupport = tMFCS[minIndex].support;
             theta = minSupport;
-            iApriori.setMinSupport(minSupport);
-            cout << "Set new threshold: " << theta<< "\n";
+            thetaRelaxed = max((long double)0.0,theta-2*eps);
+            
+            iApriori.setMinSupport(thetaRelaxed);
+        }
+        else if(canCandidate.support > thetaRelaxed){
+            candidateBuffer.push_back(canCandidate);
         }
     }
-    return tMFCS;
+    resultMFCS result = resultMFCS(tMFCS, candidateBuffer, theta, thetaRelaxed);
+    return result;
 }
 
-vector<Candidate> runTopKPeelingWithoutSampling(Graph graph, int numSamples, int k){
-    vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
-    vector<vector<int>> components = connectedComponents(&graphSamples);
+resultMFCS runTopKPeelingWithoutSampling(vector<vector<vector<int>>>& samples, int numSamples, int k, long double eps){
+    vector<vector<int>> components = connectedComponents(&samples);
     vector<vector<int>> filteredComponents = removeLenKComponents(&components, 2);
-
-    return topKPeeling(&graphSamples, &components, numSamples, k);
+    int s = filteredComponents.size();
+    vector<AggConComps> aggregatedComponents = aggregateConnectedComponents(filteredComponents);
+    return topKPeeling(&samples, &aggregatedComponents, numSamples, k, eps);
 }
 
-vector<Candidate> runTopKPeeling(string fileName, int numNodes, int numEdges, int numSamples, int k){
-    Graph graph(numNodes, numEdges, fileName);
+resultMFCS runTopKPeeling(string fileName, int numSamples, int k, long double eps){
+    Graph graph(fileName);
     graph.readGraph();
-    return runTopKPeelingWithoutSampling(graph, numSamples, k);
+    vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
+    return runTopKPeelingWithoutSampling(graphSamples, numSamples, k, eps);
 }
 #endif
 

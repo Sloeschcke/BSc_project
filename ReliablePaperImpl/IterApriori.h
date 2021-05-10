@@ -17,7 +17,7 @@ class IterApriori {
 private:
     int nowStep;
     long double minSupport;
-    vector<vector<int> > transactions;
+    vector<AggConComps> transactions;
     vector<vector<int>> C;
     vector<Candidate> nextL;
     vector<Candidate>  L;
@@ -28,15 +28,12 @@ private:
     int numSamples;
 public: 
 
-    IterApriori (vector<vector<int> > * _transactions, int _numSamples) {
+    IterApriori (vector<AggConComps>* _transactions, int _numSamples) {
         nowStep=0;
         numSamples = _numSamples;
         minSupport = 0;
         curr_i = curr_j = 0;
-        for(auto&row: (*_transactions)){
-            sort(row.begin(), row.end()); // TODO find out why - similarity reasons
-            transactions.push_back(row);
-        }
+        transactions = *_transactions;
         generateInitialElements();
     }
 
@@ -56,13 +53,13 @@ public:
         int ret = 0;
         for(auto&row:transactions){
             int i, j;
-            if(row.size() < (*item).size()) continue;
-            for(i=0, j=0; i < row.size();i++) {
+            if(row.nodes.size() < (*item).size()) continue;
+            for(i=0, j=0; i < row.nodes.size();i++) {
                 if(j==(*item).size()) break;
-                if(row[i] == (*item)[j]) j++;
+                if(row.nodes[i] == (*item)[j]) j++;
             }
             if(j==(*item).size()){
-                ret++;
+                ret += row.number;
             }
         }
         return ((long double)ret)/numSamples;
@@ -118,11 +115,7 @@ public:
                     return C[curr_j-1];
                 }
             }
-            // // vector<Candidate> copyL = L;
-            // if(lsize != L.size()){
-            //     lsize = L.size();
-            //     cout << "size \n" << lsize ;
-            // }
+
             if(curr_j >= L.size()){
                 curr_i++;
                 curr_j = curr_i+1;
@@ -158,38 +151,22 @@ public:
                 }
                 else {
                     curr_i++;
-                    curr_j = curr_i + 1;
-                    // stupidJoin++;
-                    // if (stupidJoin % 10 == 0) {
-                    //     cout << "Had 10 stupidJoins\n";
-                    // }
+                    curr_j = curr_i;
                 }
             } else {
                 redundantCounter++;
                 if(redundantCounter%2000 == 0){ 
                     cleanLFromRedundant();
-                    // cout << "Had 1000000000 redundant combinations\n";
                 }
             }
         }
         return vector<int>();
     }
-
-    // vector<vector<int> > generateNextC() {
-    //     if(nowStep==0) {
-    //         vector<vector<int> > ret;
-    //         vector<int> element = getElement(transactions);
-    //         for(auto&i:element) ret.push_back(vector<int>(1, i));
-    //         return ret;
-    //     } else {
-    //         return pruning(joining());
-    //     }
-    // }
     
-    vector<int> getElement(vector<vector<int>> itemset) {
+    vector<int> getElement(vector<AggConComps> itemset) {
         vector<int> element;
         set<int> s;
-        for(auto&row:itemset) for(auto&col:row) s.insert(col);
+        for(auto&row:itemset) for(auto&col:row.nodes) s.insert(col);
         for(auto iter=s.begin(); iter != s.end(); iter++) element.push_back(*iter);
         return element;
     }
