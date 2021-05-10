@@ -23,7 +23,6 @@ struct ValueTime {
     }
 };
 
-// C:\Users\chris\Documents\6. Semester\Bachelor Project\BSc_project\GraphsGeneration\processed_graphs\edge_degree\0\0.txt
 ValueTime runExperiment(string path, int numSamples, int k){
     Graph graph = Graph(path);
     string value = graph.getValue();
@@ -84,6 +83,15 @@ void runExperiments(bool valency, string category){
         resPath = path + "\\output\\results.txt";
     }
     writeListOfResultsToFile(resPath, results, category, category);
+}
+
+void runSimpleExperiment(){
+    vector<ValueTime> results;
+    string path = abs_path + "\\num_nodes\\0\\0.txt";
+    ValueTime valTime = runExperiment(path, 100, 2);
+    results.push_back(valTime);
+    string resPath = abs_path + "\\num_nodes\\output\\results.txt";
+    writeListOfResultsToFile(resPath, results, "test", "test");
 }
 
 #endif
