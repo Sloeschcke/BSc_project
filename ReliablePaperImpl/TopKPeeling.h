@@ -46,6 +46,7 @@ long double getThresholdOfRandomDFS(vector<vector<vector<int>>> * graphSamples, 
 
 vector<Candidate> topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<vector<int>> * components, int numSamples, int k){
     vector<Candidate> tMFCS;
+    //TODO add 3 set constraint
     long double theta = getThresholdOfRandomDFS(graphSamples, components, k)-0.00001;
     IterApriori iApriori = IterApriori(components, numSamples);
     iApriori.setMinSupport(theta);
