@@ -10,9 +10,9 @@
 #include "IterApriori.h"
 #include "naiveTopKPeeling.h"
 
-// string abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\";
+string abs_path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\";
 // string abspath = "/Users/sebastianloeschcke/Desktop/6.semester/BSc";
-string abs_path = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\GraphsGeneration\\processed_graphs\\";
+// string abs_path = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\GraphsGeneration\\processed_graphs\\";
 
 struct ValueTime {
     double long time;
@@ -31,7 +31,7 @@ ValueTime runExperiment(string path, int numSamples, int k){
     vector<vector<vector<int>>> samples = sample(graph, numSamples);
     clock_t start;
     start = clock();
-    vector<Candidate> result = runTopKPeelingWithoutSampling(samples, numSamples, k);
+    resultMFCS result = runTopKPeelingWithoutSampling(samples, numSamples, k, 0.05);
     double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     return ValueTime(duration, stod(value));
 }

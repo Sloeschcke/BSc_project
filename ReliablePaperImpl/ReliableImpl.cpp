@@ -14,8 +14,8 @@ int main(int argc, char const *argv[])
 	string edgeDegree = "edge_degree";
 
 	std::cout << "Hello ze world \n";
-	// testAll();
-	runExperiments(true, varyingK);
+	testAll();
+	// runExperiments(true, varyingK);
 	return 0;
 }
 	

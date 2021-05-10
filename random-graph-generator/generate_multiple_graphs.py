@@ -31,7 +31,7 @@ def get_relative_path(value_for_plot):
     return path
 
 def generate_numNodes_graphs(valency = None):
-    num_nodes = [40, 50, 60, 70, 80, 90, 100, 110, 120, 130]
+    #num_nodes = [40, 50, 60, 70, 80, 90, 100, 110, 120, 130]
     edge_degree = 2
     num_samples = 5
     value_for_plot = "num_nodes"
