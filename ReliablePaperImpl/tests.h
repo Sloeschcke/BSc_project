@@ -243,37 +243,38 @@ void testTopKgraph3(){
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file4.inf";
-	vector<Candidate> res = runTopKPeeling(path, 1000, 1);
+	resultMFCS res = runTopKPeeling(path, 1000, 1, 0.05);
 	vector<int> mostLikely = {2, 3, 5};
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in topKFacebook: " << duration << "\n";
-	assert(res[0].nodes == mostLikely);
+	assert(res.MFCS[0].nodes == mostLikely);
 }
 
 void testTopKPeelingFacebook(){
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	vector<Candidate> res = runTopKPeeling(path, 100, 2);
+	resultMFCS res = runTopKPeeling(path, 100, 2, 0.05);
 	vector<int> mostLikely = {75,103,48};
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in topKFacebook: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERN \n";
-	printMFCS(res);
+	printMFCS(res.MFCS);
 }
 
 void testNaiveTopKPeelingGraph4() {
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file4.inf";
-	vector<NodesAndReliability> res = runNaiveTopKPeeling(path, 1000, 2);
+	vector<NodesAndReliability> res = runNaiveTopKPeeling(path, 1000, 2 );
 	vector<int> mostLikely = {2, 3, 5};
 	printMFCSWhichAreNodesAndReliability(res);
 }
 
 void testTopKPeelingGraph5() {
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file5.inf";
-	vector<Candidate> res = runTopKPeeling(path, 1000, 2);
+	double long eps = 0.05;
+	resultMFCS res = runTopKPeeling(path, 1000, 2,eps);
 	vector<int> mostLikely = {2, 3, 5};
-	printMFCS(res);
+	printMFCS(res.MFCS);
 }
 
 void testNaiveTopKPeelingFaceBook() {
@@ -301,20 +302,22 @@ void testNaiveTopKPeelingSynthetic() {
 void testTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
+	double long eps = 0.05;
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\1\\0.txt";
-	vector<Candidate> res = runTopKPeeling(path, 100, 5);
+	resultMFCS res = runTopKPeeling(path, 100, 5, eps);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
-	printMFCS(res);
+	printMFCS(res.MFCS);
 }
 
 void testFastPeelingSynthetic() {
 	clock_t start;
 	start = clock();
+	double long eps = 0.05;
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\1\\0.txt";
-	vector<Candidate> res1 = runTopKPeeling(path, 100, 5);
-	printMFCS(res1);
+	resultMFCS res1 = runTopKPeeling(path, 100, 5, eps);
+	printMFCS(res1.MFCS);
 	vector<NodesAndReliability> res = runFastPeeling(path, 100, 0.24);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration << "\n";
@@ -325,12 +328,13 @@ void testFastPeelingSynthetic() {
 void testBothTopKPeelingSynthetic(){
 	clock_t start1;
 	start1 = clock();
+	double long eps = 0.05;
 	string path1 = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\1\\0.txt";
-	vector<Candidate> res1 = runTopKPeeling(path1, 1000, 5);
+	resultMFCS res1 = runTopKPeeling(path1, 1000, 5, eps);
 	double duration1 = ( clock() - start1 ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration1 << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
-	printMFCS(res1);
+	printMFCS(res1.MFCS);
 	clock_t start2;
 	start2 = clock();
 	vector<NodesAndReliability> res2 = runNaiveTopKPeeling(path1, 1000, 5);
