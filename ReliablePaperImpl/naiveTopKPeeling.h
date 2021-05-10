@@ -39,9 +39,8 @@ vector<NodesAndReliability> naiveTopKPeeling(vector<vector<vector<int>>>& graphS
     return res;
 }
 
-vector<NodesAndReliability> runNaiveTopKPeeling(string fileName, int numNodes, int numEdges, int numSamples, int k){
-    Graph graph (numNodes, numEdges, fileName);
-	graph.readGraph();
+vector<NodesAndReliability> runNaiveTopKPeeling(string fileName, int numSamples, int k){
+    Graph graph (fileName);
     vector<vector<vector<int>>> graphSamples = sample(graph, numSamples);
     vector<vector<int>> components = connectedComponents(&graphSamples);
     vector<vector<int>> filteredComponents = removeLenKComponents(&components,2);

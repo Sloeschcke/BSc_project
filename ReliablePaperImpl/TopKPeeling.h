@@ -92,8 +92,8 @@ vector<Candidate> runTopKPeelingWithoutSampling(vector<vector<vector<int>>>& sam
     return topKPeeling(&samples, &aggregatedComponents, numSamples, k);
 }
 
-vector<Candidate> runTopKPeeling(string fileName, int numNodes, int numEdges, int numSamples, int k){
-    Graph graph(numNodes, numEdges, fileName);
+vector<Candidate> runTopKPeeling(string fileName, int numSamples, int k){
+    Graph graph(fileName);
     graph.readGraph();
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     return runTopKPeelingWithoutSampling(graphSamples, numSamples, k);

@@ -1,3 +1,6 @@
+#ifndef EXPERIMENTS_H
+#define EXPERIMENTS_H
+
 #include "hoved.h"
 #include "utility.h"
 #include "apriori.h"
@@ -8,9 +11,9 @@
 #include "naiveTopKPeeling.h"
 using namespace std;
 
-// string abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt";
+// string abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\";
 // string abspath = "/Users/sebastianloeschcke/Desktop/6.semester/BSc";
-// string abspath = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project";
+string abs_path = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\GraphsGeneration\\processed_graphs\\";
 
 struct ValueTime {
     double long time;
@@ -22,17 +25,11 @@ struct ValueTime {
 };
 
 ValueTime runExperiment(string path, int numSamples, int k){
-    string line;
-    string firstLine;
     string numNodes, numEdges;
     string problem;
     string value;
-    ifstream graphFile (path);
-    assert(graphFile.is_open());
-    graphFile >> numNodes >> numEdges >> problem >> value;
-    cout << value << "\n";
-    Graph graph = Graph(stoi(numNodes), stoi(numEdges), "");
-    graph.readGraphfile(&graphFile);
+    Graph graph = Graph(path);
+    cout << graph.getValue() << "\n";
     vector<vector<vector<int>>> samples = sample(graph, numSamples);
     clock_t start;
     start = clock();
@@ -53,13 +50,16 @@ void writeListOfResultsToFile(string outPath, vector<ValueTime> results, string 
     outFile.close();
 }
 
-void runNumNodesExperiment(){
-    string path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes_edgedegree2";
+void runExperiment(bool valency, string category){
+    string path = abs_path + category;
     vector<ValueTime> results;
     int numExperiments = 10;
     int numRepetitions = 5;
     for (int j = 0; j<numExperiments; j++){
-        string folderPath = path +"/" + to_string(j);
+        string folderPath = path +"\\" + to_string(j);
+        if(valency){
+            string folderPath = folderPath + "_valency";
+        }
         for (int i = 0; i<numRepetitions; i++){
             string filePath = folderPath + "\\"+ to_string(i)+".txt";
             ValueTime valTime = runExperiment(filePath, 100, 2);
@@ -68,9 +68,13 @@ void runNumNodesExperiment(){
             cout << "============================\n";
             }
     }
+    string resPath;
+    if(valency){
+        resPath =  path + "\\output\\results_valency.txt";
+    } else {
+        resPath = path + "\\output\\results.txt";
+    }
     writeListOfResultsToFile(path+"/output/results.txt", results, "Number of nodes", "Nodes");
 }
+#endif
 
-void runKExperiment(){
-    
-}

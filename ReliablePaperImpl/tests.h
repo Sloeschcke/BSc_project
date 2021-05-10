@@ -50,16 +50,14 @@ void testPruneMatrix(){
 
 void testConnectedComponnets(){
 		string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file2.inf";
-		Graph graph (6, 4, graph_file);
-		graph.readGraph();
+		Graph graph (graph_file);
 		vector<vector<vector<int>>> samples = sample(graph, 3);
 		vector<vector<int>> cC = connectedComponents(&samples);
     }
 
 void testAggConnectedComponnetsV2(){
 		string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file5.inf";
-		Graph graph (7, 10, graph_file);
-		graph.readGraph();
+		Graph graph (graph_file);
 		vector<vector<vector<int>>> samples = sample(graph, 100);
 		vector<vector<int>> cC = connectedComponents(&samples);
 		vector<vector<int>> fCC = removeLenKComponents(&cC, 2);
@@ -71,8 +69,7 @@ void testConnectedComponnets2(){
 		string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file_certain.inf";
 		int numEdges = 11;
 		int numNodes = 11;
-		Graph graph (numNodes,numEdges, graph_file);
-		graph.readGraph();
+		Graph graph (graph_file);
 		vector<vector<vector<int>>> samples = sample(graph, 1);
 
 	    std::cout << "Started testConnectedComponnets: \n";
@@ -85,8 +82,7 @@ void testConnectedComponnets2(){
 
 void testSampler(){
 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file.inf";
-	Graph graph (7,10, graph_file);
-	graph.readGraph();
+	Graph graph (graph_file);
 	vector<vector<vector<int>>> samples = sample(graph, 5);
 
 	assert(samples.size() == 5);
@@ -114,8 +110,7 @@ void testReliability(){
 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file_certain.inf";
 	int numEdges = 11;
 	int numNodes = 11;
-	Graph graph (numNodes,numEdges, graph_file);
-	graph.readGraph();
+	Graph graph (graph_file);
 	vector<vector<vector<int>>> samples = sample(graph, 2);
 	set<int> subgraph = {0,1};
 
@@ -127,8 +122,7 @@ void testSubgraphDFS(){
 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file_certain.inf";
 	int numEdges = 11;
 	int numNodes = 11;
-	Graph graph (numNodes,numEdges, graph_file);
-	graph.readGraph();
+	Graph graph (graph_file);
 	vector<vector<vector<int>>> samples = sample(graph, 1);
 	
 }
@@ -136,15 +130,15 @@ void testSubgraphDFS(){
 
 void testPeeling(){
 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file_certain.inf";
-	set<set<int>> res = runPeeling(graph_file, 11, 11, 1, 0.5, 0);
+	set<set<int>> res = runPeeling(graph_file, 1, 0.5, 0);
 	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
 	assert(res == expected);
 }
 
 void testFastPeeling(){
 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file_certain.inf";
-	set<set<int>> resPeeling = runPeeling(graph_file, 11, 11, 1, 0.5, 0);
-	vector<NodesAndReliability>  resFastPeeling = runFastPeeling(graph_file, 11, 11, 1, 0.5);
+	set<set<int>> resPeeling = runPeeling(graph_file, 1, 0.5, 0);
+	vector<NodesAndReliability>  resFastPeeling = runFastPeeling(graph_file, 1, 0.5);
 	vector<vector<int>> resFastPeelingVector = extractNodes(resFastPeeling);
 	set<set<int>> resFastPeelingSet = vectorVectorToSetSet(resFastPeelingVector);
 	set<set<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
@@ -163,15 +157,15 @@ void testSetSorting(){
 
 void testPeelingNonDeterministic(){
 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file3.inf";
-	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5, 0);
+	set<set<int>> res = runPeeling(graph_file, 100, 0.5, 0);
 	set<set<int>> expected = {{0, 2, 3, 5}, {4, 6}};
 	assert(res == expected);
 }
 
 void testFastPeelingNonDeterministic(){
 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file3.inf";
-	set<set<int>> res = runPeeling(graph_file, 7, 10, 100, 0.5, 0);
-	vector<NodesAndReliability> resFastPeeling = runFastPeeling(graph_file, 7, 10, 1000, 0.95);
+	set<set<int>> res = runPeeling(graph_file, 100, 0.5, 0);
+	vector<NodesAndReliability> resFastPeeling = runFastPeeling(graph_file, 1000, 0.95);
 	vector<vector<int>> resFastPeelingVector = extractNodes(resFastPeeling);
 	set<set<int>> resFastPeelingSet = vectorVectorToSetSet(resFastPeelingVector);
 	set<set<int>> expected = {{0, 2, 3, 5}, {4, 6}};
@@ -182,8 +176,8 @@ void testFastPeelingNonDeterministic(){
 
 void testPeelingFacebook(){
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	set<set<int>> res = runPeeling(path,199, 270, 100, 0.95, 0);
-	vector<NodesAndReliability>  resFastPeeling = runFastPeeling(path, 199, 270, 100, 0.99);
+	set<set<int>> res = runPeeling(path, 100, 0.95, 0);
+	vector<NodesAndReliability>  resFastPeeling = runFastPeeling(path, 100, 0.99);
 	vector<vector<int>> resFastPeelingVector = extractNodes(resFastPeeling);
 	set<set<int>> resFastPeelingSet = vectorVectorToSetSet(resFastPeelingVector);
 	assert(res == resFastPeelingSet);
@@ -249,7 +243,7 @@ void testTopKgraph3(){
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file4.inf";
-	vector<Candidate> res = runTopKPeeling(path,7, 10, 1000, 1);
+	vector<Candidate> res = runTopKPeeling(path, 1000, 1);
 	vector<int> mostLikely = {2, 3, 5};
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in topKFacebook: " << duration << "\n";
@@ -260,7 +254,7 @@ void testTopKPeelingFacebook(){
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	vector<Candidate> res = runTopKPeeling(path,199, 270, 100, 2);
+	vector<Candidate> res = runTopKPeeling(path, 100, 2);
 	vector<int> mostLikely = {75,103,48};
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in topKFacebook: " << duration << "\n";
@@ -270,14 +264,14 @@ void testTopKPeelingFacebook(){
 
 void testNaiveTopKPeelingGraph4() {
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file4.inf";
-	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,7, 10, 1000, 2);
+	vector<NodesAndReliability> res = runNaiveTopKPeeling(path, 1000, 2);
 	vector<int> mostLikely = {2, 3, 5};
 	printMFCSWhichAreNodesAndReliability(res);
 }
 
-void testTopKPeelingGraph4() {
-	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file4.inf";
-	vector<Candidate> res = runTopKPeeling(path,7, 10, 1000, 2);
+void testTopKPeelingGraph5() {
+	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file5.inf";
+	vector<Candidate> res = runTopKPeeling(path, 1000, 2);
 	vector<int> mostLikely = {2, 3, 5};
 	printMFCS(res);
 }
@@ -286,7 +280,7 @@ void testNaiveTopKPeelingFaceBook() {
 	clock_t start;
 	start = clock();
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,199, 270, 100, 1);
+	vector<NodesAndReliability> res = runNaiveTopKPeeling(path, 100, 1);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in NaiveTopKPeelingFaceBook: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNS \n";
@@ -296,8 +290,8 @@ void testNaiveTopKPeelingFaceBook() {
 void testNaiveTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
-	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
-	vector<NodesAndReliability> res = runNaiveTopKPeeling(path,40, 80, 10000, 5);
+	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\1\\0.txt";
+	vector<NodesAndReliability> res = runNaiveTopKPeeling(path, 10000, 5);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in NaiveTopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
@@ -307,8 +301,8 @@ void testNaiveTopKPeelingSynthetic() {
 void testTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
-	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes_edgedegree2\\1\\0.txt";
-	vector<Candidate> res = runTopKPeeling(path,40, 80, 10000, 5);
+	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\1\\0.txt";
+	vector<Candidate> res = runTopKPeeling(path, 100, 5);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
@@ -318,10 +312,10 @@ void testTopKPeelingSynthetic() {
 void testFastPeelingSynthetic() {
 	clock_t start;
 	start = clock();
-	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\syn_graph_seed0_n39_m80.edges";
-	vector<Candidate> res1 = runTopKPeeling(path,40, 80, 100, 5);
+	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\1\\0.txt";
+	vector<Candidate> res1 = runTopKPeeling(path, 100, 5);
 	printMFCS(res1);
-	vector<NodesAndReliability> res = runFastPeeling(path,40, 80, 100, 0.24);
+	vector<NodesAndReliability> res = runFastPeeling(path, 100, 0.24);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
@@ -331,15 +325,15 @@ void testFastPeelingSynthetic() {
 void testBothTopKPeelingSynthetic(){
 	clock_t start1;
 	start1 = clock();
-	string path1 = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes_edgedegree2\\1\\0.txt";
-	vector<Candidate> res1 = runTopKPeeling(path1,40, 80, 1000, 5);
+	string path1 = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\1\\0.txt";
+	vector<Candidate> res1 = runTopKPeeling(path1, 1000, 5);
 	double duration1 = ( clock() - start1 ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration1 << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
 	printMFCS(res1);
 	clock_t start2;
 	start2 = clock();
-	vector<NodesAndReliability> res2 = runNaiveTopKPeeling(path1,40, 80, 1000, 5);
+	vector<NodesAndReliability> res2 = runNaiveTopKPeeling(path1, 1000, 5);
 	double duration2 = ( clock() - start2 ) / (double) CLOCKS_PER_SEC;
     cout << "Time in NaiveTopKSynthetic: " << duration2 << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
@@ -348,7 +342,7 @@ void testBothTopKPeelingSynthetic(){
 
 void testFastPeelingOnRapportGraph(){
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file5.inf";
-	vector<NodesAndReliability> res = runFastPeeling(path, 7, 10, 100, 0.5);
+	vector<NodesAndReliability> res = runFastPeeling(path, 100, 0.5);
 }
 
 void testAll(){
@@ -368,14 +362,14 @@ void testAll(){
 	// testIterApriori2();
 	// testTopKgraph3();
 	// testTopKPeelingFacebook();
-	// testTopKPeelingGraph4();
+	// testTopKPeelingGraph5();
 	// testNaiveTopKPeelingGraph4();
 	// testNaiveTopKPeelingFaceBook();
-	// testTopKPeelingSynthetic();
+	testTopKPeelingSynthetic();
 	// testNaiveTopKPeelingSynthetic();
 	// testFastPeelingSynthetic();
 	// testBothTopKPeelingSynthetic();
-	testFastPeelingOnRapportGraph();
+	// testFastPeelingOnRapportGraph();
 	// testAggConnectedComponnetsV2();
 }
 

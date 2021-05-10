@@ -45,9 +45,8 @@ void peeling(vector<vector<vector<int>>> graphSamples, set<set<int>> mfls, doubl
 
 
 
-set<set<int>> runPeeling(string fileName, int numNodes, int numEdges, int numSamples, long double threshold, long double eps){
-    Graph graph (numNodes, numEdges, fileName);
-	graph.readGraph();
+set<set<int>> runPeeling(string fileName, int numSamples, long double threshold, long double eps){
+    Graph graph (fileName);
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     vector<vector<vector<int>>> graphSamples2 = sample(graph, numSamples);
     vector<vector<int>> components = connectedComponents(&graphSamples);

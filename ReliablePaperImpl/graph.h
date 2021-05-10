@@ -12,19 +12,21 @@ public:
     vector<vector<int> > adjList;
     vector<bool> hasNode;
     string graph_file;
+    string valueForPlot;
 
-    Graph(int n, int m, string fileName) : graph_file(fileName){ 
-        numNodes = n;
-        numEdges = m;
+    Graph(string fileName) : graph_file(fileName){ 
+        readGraph();
     }
     vector<int> inDeg;
 
     void readGraph(){
-
         ifstream fileStream (graph_file);
         assert(fileStream.is_open());
-        string problem, value;
-        fileStream >> numNodes >> numEdges >> problem >> value;
+        string problem, value, numNodesStream, numEdgesStream;
+        fileStream >> numNodesStream >> numEdgesStream >> problem >> value;
+        valueForPlot = value;
+        numNodes = stod(numNodesStream);
+        numEdges = stod(numEdgesStream);
         hasNode = vector<bool> (numNodes);
         adjList = vector<vector<int> > (numNodes);
         probs = vector<vector<double> > (numEdges);
@@ -39,7 +41,11 @@ public:
             add_edge(ai, bi, stod(p));
         }
     }
-    
+
+    string getValue(){
+        return valueForPlot;
+    }
+
     void readGraphfile(ifstream * fileStream){
         string a, b;
         string p;
