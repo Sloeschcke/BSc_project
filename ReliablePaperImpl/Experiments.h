@@ -30,7 +30,7 @@ ValueTime runExperiment(string path, int numSamples, int k){
     vector<vector<vector<int>>> samples = sample(graph, numSamples);
     clock_t start;
     start = clock();
-    vector<Candidate> result = runTopKPeelingWithoutSampling(samples, numSamples, k);
+    resultMFCS result = runTopKPeelingWithoutSampling(samples, numSamples, k, 0.001);
     double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     return ValueTime(duration, stod(value));
 }
@@ -51,10 +51,10 @@ void runExperiments(bool valency, string category){
     vector<ValueTime> results;
     int numExperiments = 10;
     int numRepetitions = 5;
-    for (int j = 0; j<numExperiments; j++){
+    for (int j = 1; j<numExperiments; j++){
         string folderPath = path +"\\" + to_string(j);
         if(valency){
-            string folderPath = folderPath + "_valency";
+            folderPath = folderPath + "_valency";
         }
         for (int i = 0; i<numRepetitions; i++){
             string filePath = folderPath + "\\"+ to_string(i)+".txt";
