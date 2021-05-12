@@ -24,13 +24,25 @@ struct ValueTime {
 };
 
 ValueTime runExperiment(string path, int numSamples, int k){
+    clock_t start;
+    start = clock();
     Graph graph = Graph(path);
     string value = graph.getValue();
     cout << value << "\n";
     vector<vector<vector<int>>> samples = sample(graph, numSamples);
+    resultMFCS result = runTopKPeelingWithoutSampling(samples, numSamples, k, 0.001);
+    double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+    return ValueTime(duration, stod(value));
+}
+
+ValueTime runNaiveExperiment(string path, int numSamples, int k){
     clock_t start;
     start = clock();
-    resultMFCS result = runTopKPeelingWithoutSampling(samples, numSamples, k, 0.001);
+    Graph graph = Graph(path);
+    string value = graph.getValue();
+    cout << value << "\n";
+    vector<vector<vector<int>>> samples = sample(graph, numSamples);
+    vector<NodesAndReliability> result = runNaiveTopKPeelingWithoutSampling(samples, numSamples, k, graph);
     double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     return ValueTime(duration, stod(value));
 }
@@ -46,7 +58,7 @@ void writeListOfResultsToFile(string outPath, vector<ValueTime> results, string 
     outFile.close();
 }
 
-void runExperiments(bool valency, string category){
+void runExperiments(bool valency, bool naive, string category){
     string path = abs_path + category;
     vector<ValueTime> results;
     int numExperiments = 10;
@@ -60,27 +72,49 @@ void runExperiments(bool valency, string category){
             string filePath = folderPath + "\\"+ to_string(i)+".txt";
             double long value;
             double long time;
-            if(category == "Varying K"){
-                ValueTime valTime = runExperiment(filePath, 100, i + 1);
-                results.push_back(valTime);
-                value = valTime.value;
-                time = valTime.time;
+            if(!naive){
+                if(category == "Varying K"){
+                    ValueTime valTime = runExperiment(filePath, 100, i + 1);
+                    results.push_back(valTime);
+                    value = valTime.value;
+                    time = valTime.time;
+                } else {
+                    ValueTime valTime = runExperiment(filePath, 100, 2);
+                    results.push_back(valTime);
+                    value = valTime.value;
+                    time = valTime.time;
+                }
             } else {
-                ValueTime valTime = runExperiment(filePath, 100, 2);
-                results.push_back(valTime);
-                value = valTime.value;
-                time = valTime.time;
+                if(category == "Varying K"){
+                    ValueTime valTime = runNaiveExperiment(filePath, 100, i + 1);
+                    results.push_back(valTime);
+                    value = valTime.value;
+                    time = valTime.time;
+                } else {
+                    ValueTime valTime = runNaiveExperiment(filePath, 100, 2);
+                    results.push_back(valTime);
+                    value = valTime.value;
+                    time = valTime.time;
+                }
             }
             cout << "finished value: "<< value << " in time: " << time <<"\n";
             cout << "============================\n";
-            }
+        }
     }
 
     string resPath;
-    if(valency){
-        resPath =  path + "\\output\\results_valency.txt";
+    if(!naive){
+        if(valency){
+            resPath =  path + "\\output\\results_valency.txt";
+        } else {
+            resPath = path + "\\output\\results.txt";
+        }
     } else {
-        resPath = path + "\\output\\results.txt";
+        if(valency){
+            resPath =  path + "\\output\\results_naive_valency.txt";
+        } else {
+            resPath = path + "\\output\\results_naive.txt";
+        }
     }
     writeListOfResultsToFile(resPath, results, category, category);
 }

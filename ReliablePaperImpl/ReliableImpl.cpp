@@ -15,7 +15,7 @@ int main(int argc, char const *argv[])
 
 	std::cout << "Hello ze world \n";
 	// testAll();
-	runExperiments(true, numNodes);
+	runExperiments(true, false, numNodes);
 	// runSimpleExperiment();
 	return 0;
 }

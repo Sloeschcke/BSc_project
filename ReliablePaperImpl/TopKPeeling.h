@@ -109,14 +109,12 @@ resultMFCS topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<AggCon
 resultMFCS runTopKPeelingWithoutSampling(vector<vector<vector<int>>>& samples, int numSamples, int k, long double eps){
     vector<vector<int>> components = connectedComponents(&samples);
     vector<vector<int>> filteredComponents = removeLenKComponents(&components, 2);
-    int s = filteredComponents.size();
     vector<AggConComps> aggregatedComponents = aggregateConnectedComponents(filteredComponents);
     return topKPeeling(&samples, &aggregatedComponents, numSamples, k, eps);
 }
 
 resultMFCS runTopKPeeling(string fileName, int numSamples, int k, long double eps){
     Graph graph(fileName);
-    graph.readGraph();
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     return runTopKPeelingWithoutSampling(graphSamples, numSamples, k, eps);
 }
