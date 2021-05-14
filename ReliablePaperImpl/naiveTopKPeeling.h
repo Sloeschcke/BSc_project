@@ -42,11 +42,13 @@ vector<NodesAndReliability> naiveTopKPeeling(vector<vector<vector<int>>>& graphS
 vector<NodesAndReliability> runNaiveTopKPeeling(string fileName, int numSamples, int k){
     Graph graph (fileName);
     vector<vector<vector<int>>> graphSamples = sample(graph, numSamples);
-    vector<vector<int>> components = connectedComponents(&graphSamples);
-    vector<vector<int>> filteredComponents = removeLenKComponents(&components,2);
+    return runNaiveTopKPeelingWithoutSampling(graphSamples, numSamples, k, graph);
+}
 
-    vector<NodesAndReliability> res = naiveTopKPeeling(graphSamples, filteredComponents, numSamples, k, graph);
-    return res;
+vector<NodesAndReliability> runNaiveTopKPeelingWithoutSampling(vector<vector<vector<int>>>& samples, int numSamples, int k, Graph graph){
+    vector<vector<int>> components = connectedComponents(&samples);
+    vector<vector<int>> filteredComponents = removeLenKComponents(&components,2);
+    return naiveTopKPeeling(samples, filteredComponents, numSamples, k, graph);
 }
 
 #endif

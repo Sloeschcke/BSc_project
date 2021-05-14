@@ -17,6 +17,8 @@ int main(int argc, char const *argv[])
 	testAll();
 	// runExperiments(true, varyingK);
 	// runExperiments(false, numNodes);
+	// testAll();
+	// runExperiments(true, false, numNodes);
 	// runSimpleExperiment();
 	return 0;
 }

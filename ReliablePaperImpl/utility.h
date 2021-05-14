@@ -80,7 +80,7 @@ vector<vector<int>> connectedComponents(vector<vector<vector<int>>> *samples)
                 DFS(n, &visited, &component, &sample);
                 // cout << "\n";
                 vectorOfComponents.push_back(component);
-            } 
+            }
         }
         visited.clear();
     }

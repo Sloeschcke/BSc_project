@@ -186,7 +186,6 @@ vector<Candidate> topKPeelingStep2 (Graph & graph, resultMFCS & step1Results, in
 resultMFCS runTopKPeelingWithoutSampling(vector<vector<vector<int>>>& samples, int numSamples, int k, long double eps){
     vector<vector<int>> components = connectedComponents(&samples);
     vector<vector<int>> filteredComponents = removeLenKComponents(&components, 2);
-    int s = filteredComponents.size();
     vector<AggConComps> aggregatedComponents = aggregateConnectedComponents(filteredComponents);
     return topKPeeling(&samples, &aggregatedComponents, numSamples, k, eps);
 }
@@ -196,7 +195,6 @@ resultMFCS runTopKPeeling(string fileName, int k, long double eps, long double d
     double long numCombinations = pow(2, graph.numNodes +1);
     //graph.readGraph();
     int numSamples = calculateRequiredSamples(0.01, eps, pow(2, graph.numNodes +1));
-
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     resultMFCS step1 = runTopKPeelingWithoutSampling(graphSamples, numSamples, k, eps);
     vector<Candidate> step2 = topKPeelingStep2 (graph, step1, 10000, eps, delta, k, numSamples, 0.001);

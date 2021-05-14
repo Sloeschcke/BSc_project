@@ -8,9 +8,9 @@ from pathlib import Path
 def main():
     valency_probs = [0.1, 0.3, 0.5, 0.7, 0.9]
     # generate_edge_degree_graphs()
-    # generate_edge_degree_graphs(valency= valency_probs)
+    generate_edge_degree_graphs(valency= valency_probs)
     # generate_numNodes_graphs()
-    generate_numNodes_graphs(valency = valency_probs)
+    # generate_numNodes_graphs(valency = valency_probs)
     # generate_data_for_vary_k()
     # generate_data_for_vary_k(valency = valency_probs)
 
@@ -47,7 +47,7 @@ def generate_edge_degree_graphs(valency = None):
     path = get_relative_path(value_for_plot)
     num_samples = 5
     nodes = 80
-    edges = [40,80,120,160,200,240,280,320,360,400]
+    edges = [80,120,160,200,240,280,320,360,400]
     for folder_index, edges in enumerate(edges):
         for sample_index in range(num_samples):
             value = edges/nodes
