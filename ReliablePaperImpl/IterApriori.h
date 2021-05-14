@@ -7,9 +7,14 @@
 struct Candidate {
     double long support;
     vector<int> nodes;
+    
     Candidate(vector<int> _nodes, double long _support){
         nodes = _nodes;
         support = _support;
+    }
+
+    const bool operator < (const Candidate &r) const{
+        return (support > r.support);
     }
 };
 

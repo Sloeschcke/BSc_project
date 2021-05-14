@@ -46,6 +46,10 @@ public:
         return valueForPlot;
     }
 
+    int getNumNodes(){
+        return numNodes;
+    }
+    
     void readGraphfile(ifstream * fileStream){
         string a, b;
         string p;

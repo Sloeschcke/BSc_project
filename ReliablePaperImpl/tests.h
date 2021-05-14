@@ -162,26 +162,26 @@ void testPeelingNonDeterministic(){
 	assert(res == expected);
 }
 
-void testFastPeelingNonDeterministic(){
-	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file3.inf";
-	set<set<int>> res = runPeeling(graph_file, 100, 0.5, 0);
-	vector<NodesAndReliability> resFastPeeling = runFastPeeling(graph_file, 1000, 0.95);
-	vector<vector<int>> resFastPeelingVector = extractNodes(resFastPeeling);
-	set<set<int>> resFastPeelingSet = vectorVectorToSetSet(resFastPeelingVector);
-	set<set<int>> expected = {{0, 2, 3, 5}, {4, 6}};
-	assert(res == expected);
-	assert(res == resFastPeelingSet);
-	std::cout << "finished\n";
-}
+// void testFastPeelingNonDeterministic(){
+// 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file3.inf";
+// 	set<set<int>> res = runPeeling(graph_file, 100, 0.5, 0);
+// 	vector<NodesAndReliability> resFastPeeling = runFastPeeling(graph_file, 1000, 0.95);
+// 	vector<vector<int>> resFastPeelingVector = extractNodes(resFastPeeling);
+// 	set<set<int>> resFastPeelingSet = vectorVectorToSetSet(resFastPeelingVector);
+// 	set<set<int>> expected = {{0, 2, 3, 5}, {4, 6}};
+// 	assert(res == expected);
+// 	assert(res == resFastPeelingSet);
+// 	std::cout << "finished\n";
+// }
 
-void testPeelingFacebook(){
-	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	set<set<int>> res = runPeeling(path, 100, 0.95, 0);
-	vector<NodesAndReliability>  resFastPeeling = runFastPeeling(path, 100, 0.99);
-	vector<vector<int>> resFastPeelingVector = extractNodes(resFastPeeling);
-	set<set<int>> resFastPeelingSet = vectorVectorToSetSet(resFastPeelingVector);
-	assert(res == resFastPeelingSet);
-}
+// void testPeelingFacebook(){
+// 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
+// 	set<set<int>> res = runPeeling(path, 100, 0.95, 0);
+// 	vector<NodesAndReliability>  resFastPeeling = runFastPeeling(path, 100, 0.99);
+// 	vector<vector<int>> resFastPeelingVector = extractNodes(resFastPeeling);
+// 	set<set<int>> resFastPeelingSet = vectorVectorToSetSet(resFastPeelingVector);
+// 	assert(res == resFastPeelingSet);
+// }
 
 void testIterApriori(){
 	vector<vector<int>> components = {{1,2}, {1,2,3},{1,4}};
@@ -239,28 +239,28 @@ void testIterApriori2(){
 			cout << "\n";
 	}
 }
-void testTopKgraph3(){
-	clock_t start;
-	start = clock();
-	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file4.inf";
-	resultMFCS res = runTopKPeeling(path, 1000, 1, 0.05);
-	vector<int> mostLikely = {2, 3, 5};
-	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
-    cout << "Time in topKFacebook: " << duration << "\n";
-	assert(res.MFCS[0].nodes == mostLikely);
-}
+// void testTopKgraph3(){
+// 	clock_t start;
+// 	start = clock();
+// 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file4.inf";
+// 	resultMFCS res = runTopKPeeling(path, 1000, 1, 0.05);
+// 	vector<int> mostLikely = {2, 3, 5};
+// 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+//     cout << "Time in topKFacebook: " << duration << "\n";
+// 	assert(res.MFCS[0].nodes == mostLikely);
+// }
 
-void testTopKPeelingFacebook(){
-	clock_t start;
-	start = clock();
-	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
-	resultMFCS res = runTopKPeeling(path, 100, 2, 0.05);
-	vector<int> mostLikely = {75,103,48};
-	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
-    cout << "Time in topKFacebook: " << duration << "\n";
-	cout << "FINAL TOP MOST RELIABLE PATTERN \n";
-	printMFCS(res.MFCS);
-}
+// void testTopKPeelingFacebook(){
+// 	clock_t start;
+// 	start = clock();
+// 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\facebook_698.edges";
+// 	resultMFCS res = runTopKPeeling(path, 100, 2, 0.05);
+// 	vector<int> mostLikely = {75,103,48};
+// 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+//     cout << "Time in topKFacebook: " << duration << "\n";
+// 	cout << "FINAL TOP MOST RELIABLE PATTERN \n";
+// 	printMFCS(res.MFCS);
+// }
 
 void testNaiveTopKPeelingGraph4() {
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file4.inf";
@@ -299,12 +299,16 @@ void testNaiveTopKPeelingSynthetic() {
 	printMFCSWhichAreNodesAndReliability(res);
 }
 
+
+
 void testTopKPeelingSynthetic() {
 	clock_t start;
 	start = clock();
 	double long eps = 0.05;
-	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\1\\0.txt";
-	resultMFCS res = runTopKPeeling(path, 100, 5, eps);
+	double long delta = 0.01;
+	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\3\\0.txt";
+	resultMFCS res = runTopKPeeling(path, 1, eps, delta);
+	cout << "buffersize: " << res.MFCSBuffer.size() << "\n";
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration << "\n";
 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
@@ -325,24 +329,24 @@ void testFastPeelingSynthetic() {
 	printMFCSWhichAreNodesAndReliability(res);
 }
 
-void testBothTopKPeelingSynthetic(){
-	clock_t start1;
-	start1 = clock();
-	double long eps = 0.05;
-	string path1 = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\1\\0.txt";
-	resultMFCS res1 = runTopKPeeling(path1, 1000, 5, eps);
-	double duration1 = ( clock() - start1 ) / (double) CLOCKS_PER_SEC;
-    cout << "Time in TopKSynthetic: " << duration1 << "\n";
-	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
-	printMFCS(res1.MFCS);
-	clock_t start2;
-	start2 = clock();
-	vector<NodesAndReliability> res2 = runNaiveTopKPeeling(path1, 1000, 5);
-	double duration2 = ( clock() - start2 ) / (double) CLOCKS_PER_SEC;
-    cout << "Time in NaiveTopKSynthetic: " << duration2 << "\n";
-	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
-	printMFCSWhichAreNodesAndReliability(res2);
-}
+// void testBothTopKPeelingSynthetic(){
+// 	clock_t start1;
+// 	start1 = clock();
+// 	double long eps = 0.05;
+// 	string path1 = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\1\\0.txt";
+// 	resultMFCS res1 = runTopKPeeling(path1, 1000, 5, eps);
+// 	double duration1 = ( clock() - start1 ) / (double) CLOCKS_PER_SEC;
+//     cout << "Time in TopKSynthetic: " << duration1 << "\n";
+// 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
+// 	printMFCS(res1.MFCS);
+// 	clock_t start2;
+// 	start2 = clock();
+// 	vector<NodesAndReliability> res2 = runNaiveTopKPeeling(path1, 1000, 5);
+// 	double duration2 = ( clock() - start2 ) / (double) CLOCKS_PER_SEC;
+//     cout << "Time in NaiveTopKSynthetic: " << duration2 << "\n";
+// 	cout << "FINAL TOP MOST RELIABLE PATTERNs \n";
+// 	printMFCSWhichAreNodesAndReliability(res2);
+// }
 
 void testFastPeelingOnRapportGraph(){
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file5.inf";

@@ -143,7 +143,7 @@ bool DFSToCheckConnectivityOfSubgraph(int v, vector<bool> *visited, vector<vecto
     }
     return true;
 }
-vector<vector<vector<int>>> sample(Graph g, int number) {
+vector<vector<vector<int>>> sample(Graph & g, int number) {
     // default_random_engine eng(static_cast<long unsigned int>(time(0)));
     default_random_engine eng(1);
     uniform_real_distribution<> distr(0, 1);
@@ -294,7 +294,7 @@ bool isInducedConnectedComponent(vector<vector<int>>& G, set<int> * subgraph ){
     return containsSubgraph;
 }
 
-double subgraphReliability( vector<vector<vector<int>>>& samples, set<int> * subgraph, long double threshold){
+double subgraphReliability( vector<vector<vector<int>>>& samples, set<int>* subgraph, long double threshold){
     double inducedCounter = 0;
     double counter = 0;
     double required = threshold*samples.size();
@@ -310,6 +310,12 @@ double subgraphReliability( vector<vector<vector<int>>>& samples, set<int> * sub
     }
     double reliability = inducedCounter/samples.size();
     return reliability;
+}
+
+int calculateRequiredSamples(long double delta, long double epsilon, long double numNodes){
+	int sampleSize = (1/(2*pow(epsilon,2)))*log(numNodes/delta);
+	cout << "sample size:  " << sampleSize << "\n";
+	return sampleSize;
 }
 
 
