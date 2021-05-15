@@ -107,6 +107,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
         if(valency){
             folderPath = folderPath + "_valency";
         }
+        double duration;
         for (int i = 0; i<numRepetitions; i++){
             clock_t start;
             start = clock();
@@ -154,24 +155,24 @@ void runExperiments(bool valency, string algorithm, string category, long double
             cout << "finished value: "<< value << " in time: " << time <<"\n";
             cout << "============================\n";
 
-            double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
-            if(duration > 30){
+            duration = max(duration, ( clock() - start ) / (double) CLOCKS_PER_SEC);
+        }
+        if(duration > 5){
                 writeListOfResultsToFile(resPath, results, category, category);
                 return;
             }
-        }
     }
     writeListOfResultsToFile(resPath, results, category, category);
 }
 
 void allNumNodesRunExperiments(){
     long double eps = 0.05;
-    long double delta = 0.01;
+    long double delta = 0.1;
     runExperiments(true, "2Step", "num_nodes", eps, delta);
-    runExperiments(false, "Naive", "num_nodes", eps, delta);
     runExperiments(false, "1Step", "num_nodes", eps, delta);
     runExperiments(false, "2Step", "num_nodes", eps, delta);
     runExperiments(true, "1Step", "num_nodes", eps, delta);
+    runExperiments(false, "Naive", "num_nodes", eps, delta);
     runExperiments(true, "Naive", "num_nodes", eps, delta);
 }
 

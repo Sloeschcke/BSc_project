@@ -16,9 +16,9 @@ struct customCompareLength final{
     {
         int nLeft = left.size();
         int nRight = right.size();
-        return nLeft >= nRight;
+        return nLeft > nRight;
     }
-};
+};  
 
 vector<vector<int>> extractNodes(vector<Candidate>& candidates){
     vector<vector<int>> res = {};

@@ -21,7 +21,7 @@ vector<Candidate> extractMax(vector<Candidate> tempRes, int k){
 }
 
 vector<Candidate> naiveTopKPeeling(vector<vector<vector<int>>>& graphSamples, vector<vector<int>>& filteredComponents, int numSamples, int k, Graph& uncertain){
-    long double theta = 0.9;
+    long double theta = 0.95;
     vector<Candidate> tempRes = {};
     while(tempRes.size() < k){
         cout << "one iteration using threshold: " << theta << "\n";

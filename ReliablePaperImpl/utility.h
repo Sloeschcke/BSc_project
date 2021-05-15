@@ -31,8 +31,7 @@ vector<AggConComps> aggregateConnectedComponents(vector<vector<int>>& connectedC
     }
     int scc = connectedComponents.size();
     int sacc = res.size();
-    cout << scc << "\n";
-    cout << sacc << "\n";
+    cout << scc << "\n" << sacc << "\n";
     return res;
 }
 
@@ -100,18 +99,35 @@ void DFSOnSubgraph(int v, vector<bool> *visited, vector<int> * component, vector
     }
 }
 
+// https://www.geeksforgeeks.org/how-to-convert-a-vector-to-set-in-c/
+// Function to convert Vector to Set 
+set<int> convertVectorToSet(vector<int>& v) { 
+    // Declaring the set 
+    // using range of vector 
+    set<int> s(v.begin(), v.end()); 
+    // Return the resultant Set 
+    return s; 
+} 
+
+vector<int> convertSetToVector(set<int>& s) {
+    vector<int> v(s.begin(), s.end());
+    return v;
+}
+
 // https://www.geeksforgeeks.org/connected-components-in-an-undirected-graph/ 
 // Method to print connected components in an undirected graph
 vector<vector<int>> connectedComponentsSubgraph(vector<vector<vector<int>>>& samples, set<int> subgraph)
 {
+    vector<int> subgraphVector = convertSetToVector(subgraph);
     vector<vector<int>> vectorOfComponents;
+    vector<vector<int>> sample;
     for (int i = 0; i < samples.size(); i++){
-        vector<vector<int>> sample = samples[i];
+        sample = samples[i];
         vector<bool> visited;
         int numNodes = (sample).size();
         // Mark all the vertices as not visited
         visited = vector<bool> (numNodes);
-        for (auto & node : subgraph) {
+        for (auto & node : subgraphVector) {
             vector<int> component;
             if (visited[node] == false) {
                 DFSOnSubgraph(node, &visited, &component, &sample, &subgraph);
@@ -235,20 +251,6 @@ set<set<int>> prune(set<set<int>>& original) {
 	return res;
 }
 
-// https://www.geeksforgeeks.org/how-to-convert-a-vector-to-set-in-c/
-// Function to convert Vector to Set 
-set<int> convertVectorToSet(vector<int>& v) { 
-    // Declaring the set 
-    // using range of vector 
-    set<int> s(v.begin(), v.end()); 
-    // Return the resultant Set 
-    return s; 
-} 
-
-vector<int> convertSetToVector(set<int>& s) {
-    vector<int> v(s.begin(), s.end());
-    return v;
-}
 
 set<set<int>> vectorVectorToSetSet (vector<vector<int>>& vectorVector){
     set<set<int>> res;
@@ -314,7 +316,7 @@ double subgraphReliability( vector<vector<vector<int>>>& samples, set<int>* subg
 
 int calculateRequiredSamples(long double epsilon, long double delta, long double numNodes){
 	int sampleSize = (1/(2*pow(epsilon,2)))*((numNodes+1)*log(2)-log(delta));
-	cout << "sample size:  " << sampleSize << "\n";
+	cout << "sample size: " << sampleSize << "\n";
 	return sampleSize;
 }
 

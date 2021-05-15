@@ -176,7 +176,10 @@ vector<Candidate> topKPeelingStep2 (Graph & graph, resultMFCS & step1Results, in
             cout << "Early stopped";
             sort(candidates.begin(), candidates.end());
             vector<Candidate> candidates_topk;
-            copy(candidates.begin(), candidates.begin()+k+1, candidates_topk.begin());
+            for (int i = 0; i<k; i++){
+                candidates_topk.push_back(candidates[i]);
+            }
+            // copy(candidates.begin(), candidates.begin()+k+1, candidates_topk.begin());
             return candidates_topk;
         }
         candidates = filterCandidates(candidates, k, currentEpsilon);
@@ -197,9 +200,9 @@ resultMFCS runTopKPeeling(string fileName, int k, long double eps, long double d
     int numSamples = calculateRequiredSamples(eps, delta, graph.numNodes);
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     resultMFCS step1 = runTopKPeelingWithoutSampling(graphSamples, numSamples, k, eps);
-    vector<Candidate> step2 = topKPeelingStep2 (graph, step1, 100000, eps, delta, k, numSamples, 0.01);
+    vector<Candidate> step2 = topKPeelingStep2 (graph, step1, 100000, eps, delta, k, numSamples, 0.001);
     resultMFCS result = resultMFCS(step2, step1.MFCSBuffer, step1.theta, step1.thetaRelaxed);
-    return result; //should be step2
+    return result; 
 }
 #endif
 

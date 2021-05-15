@@ -2,8 +2,14 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from networkx.classes.graph import Graph
 
-file_ending = "698"
-r = open(f"processed_graphs/facebook_{file_ending}.edges", "r")
+abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt"
+_file = "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\0\\2.txt"
+path_to_graph = abspath+_file # file 0.0
+
+# file_ending = "698"
+# r = open(f"processed_graphs/facebook_{file_ending}.edges", "r")
+
+r = open(path_to_graph, "r")
 
 class GraphVisualization:
    
