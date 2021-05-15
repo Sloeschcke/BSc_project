@@ -6,6 +6,8 @@
 #include "apriori.h"
 #include "fastPeeling.h"
 #include "TopKPeeling.h"
+#include "iterApriori.h"
+
 
 void print(std::vector<int> const &input)
 {
@@ -111,7 +113,7 @@ vector<vector<int>> sortMFCS(vector<vector<int>> unsorted){
     return sorted;
 }
 
-void MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode, vector<int> vertexSet, vector<int> MFCSIDs, vector<bool> con, vector<int> neighbours, vector<int> exclusionList, vector<NodesAndReliability>* FCS, vector<vector<int>>& allMFCSIDs, long double threshold, vector<vector<int>>& MFCS, Graph& uncertain){
+void MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode, vector<int> vertexSet, vector<int> MFCSIDs, vector<bool> con, vector<int> neighbours, vector<int> exclusionList, vector<Candidate>* FCS, vector<vector<int>>& allMFCSIDs, long double threshold, vector<vector<int>>& MFCS, Graph& uncertain){
     sort(vertexSet.begin(), vertexSet.end());
     for (int i =0; i<graphSamples.size(); i++){
         if (con[i]){
@@ -130,7 +132,7 @@ void MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode,
 
     long double reliability = static_cast<double>(accumulate(con.begin(), con.end(), 0))/con.size();
     if (reliability > threshold){
-        NodesAndReliability FCS_ele = NodesAndReliability(vertexSet, reliability);
+        Candidate FCS_ele = Candidate(vertexSet, reliability);
         if(FCS_ele.nodes.size() >= 3){
             (*FCS).push_back(FCS_ele);
         }
@@ -156,10 +158,10 @@ void MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode,
     }
 }
 
-vector<NodesAndReliability> runNonMaximal(vector<vector<vector<int>>>& graphSamples, Graph& uncertain, vector<vector<int>>& MFCSs, long double threshold){
+vector<Candidate> runNonMaximal(vector<vector<vector<int>>>& graphSamples, Graph& uncertain, vector<vector<int>>& MFCSs, long double threshold){
     vector<vector<int>> sortedMFCSs = sortMFCS(MFCSs);
     vector<int> nodes = getMFCSNodes(sortedMFCSs);
-    vector<NodesAndReliability> FCS = {};
+    vector<Candidate> FCS = {};
     vector<vector<int>> allMFCSIDs = vertexMFCSIDs(uncertain, sortedMFCSs);
     int numNodes = uncertain.adjList.size();
     vector<vector<int>> adjList = uncertain.adjList;

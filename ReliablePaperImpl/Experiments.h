@@ -17,34 +17,48 @@ string abs_path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Ba
 struct ValueTime {
     double long time;
     double long value;
-    ValueTime(double long _time, double long _value){
+    vector<Candidate> result;
+    ValueTime(double long _time, double long _value, vector<Candidate> _result){
+        result = _result;
         time = _time;
         value = _value;
     }
 };
 
-ValueTime runExperiment(string path, int numSamples, int k){
-    clock_t start;
-    start = clock();
+ValueTime run2StepExperiment(string path, int k, long double eps, long double delta){
     Graph graph = Graph(path);
     string value = graph.getValue();
     cout << value << "\n";
-    vector<vector<vector<int>>> samples = sample(graph, numSamples);
-    resultMFCS result = runTopKPeelingWithoutSampling(samples, numSamples, k, 0.001);
+
+    clock_t start;
+    start = clock();
+    resultMFCS result = runTopKPeeling(path,k, eps, delta);
     double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
-    return ValueTime(duration, stod(value));
+    return ValueTime(duration, stod(value), result.MFCS);
 }
 
-ValueTime runNaiveExperiment(string path, int numSamples, int k){
-    clock_t start;
-    start = clock();
+ValueTime runSingleStepExperiment(string path, int k, long double eps, long double delta){
     Graph graph = Graph(path);
     string value = graph.getValue();
     cout << value << "\n";
-    vector<vector<vector<int>>> samples = sample(graph, numSamples);
-    vector<NodesAndReliability> result = runNaiveTopKPeelingWithoutSampling(samples, numSamples, k, graph);
+
+    clock_t start;
+    start = clock();
+    vector<Candidate> result = runTopKSingleStep(path,k, eps, delta);
     double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
-    return ValueTime(duration, stod(value));
+    return ValueTime(duration, stod(value), result);
+}
+
+ValueTime runNaiveExperiment(string path, int k, long double eps, long double delta){
+    clock_t start;
+    Graph graph = Graph(path);
+    string value = graph.getValue();
+    cout << value << "\n";
+    
+    start = clock();
+    vector<Candidate> result = runNaiveTopKPeeling(path, k, eps, delta);
+    double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+    return ValueTime(duration, stod(value), result);
 }
 
 void writeListOfResultsToFile(string outPath, vector<ValueTime> results, string graphTitle, string xLabel){
@@ -58,40 +72,80 @@ void writeListOfResultsToFile(string outPath, vector<ValueTime> results, string 
     outFile.close();
 }
 
-void runExperiments(bool valency, bool naive, string category){
+string getResPath(bool valency, string algorithm, string path){
+    string resPath;
+    if(algorithm == "2Step"){
+        if(valency){
+            resPath =  path + "\\output\\results_2step_valency.txt";
+        } else {
+            resPath = path + "\\output\\results_2step.txt";
+        }
+    } else if(algorithm == "Naive") {
+        if(valency){
+            resPath =  path + "\\output\\results_naive_valency.txt";
+        } else {
+            resPath = path + "\\output\\results_naive.txt";
+        }
+    } else if(algorithm == "1Step") {
+        if(valency){
+            resPath =  path + "\\output\\results_1step_valency.txt";
+        } else {
+            resPath = path + "\\output\\results_1step.txt";
+        }
+    }
+    return resPath;
+}
+
+void runExperiments(bool valency, string algorithm, string category, long double eps, long double delta){
     string path = abs_path + category;
+    string resPath = getResPath(valency, algorithm, path);
     vector<ValueTime> results;
     int numExperiments = 10;
     int numRepetitions = 5;
-    for (int j = 1; j<numExperiments; j++){
+    for (int j = 0; j < numExperiments; j++){
         string folderPath = path +"\\" + to_string(j);
         if(valency){
             folderPath = folderPath + "_valency";
         }
         for (int i = 0; i<numRepetitions; i++){
+            clock_t start;
+            start = clock();
             string filePath = folderPath + "\\"+ to_string(i)+".txt";
             double long value;
             double long time;
-            if(!naive){
+            if(algorithm == "2Step"){
                 if(category == "Varying K"){
-                    ValueTime valTime = runExperiment(filePath, 100, i + 1);
+                    ValueTime valTime = run2StepExperiment(filePath, i + 1, eps, delta);
                     results.push_back(valTime);
                     value = valTime.value;
                     time = valTime.time;
                 } else {
-                    ValueTime valTime = runExperiment(filePath, 100, 2);
+                    ValueTime valTime = run2StepExperiment(filePath, 2, eps, delta);
                     results.push_back(valTime);
                     value = valTime.value;
                     time = valTime.time;
                 }
-            } else {
+            } if(algorithm=="Naive") {
                 if(category == "Varying K"){
-                    ValueTime valTime = runNaiveExperiment(filePath, 100, i + 1);
+                    ValueTime valTime = runNaiveExperiment(filePath, i + 1, eps, delta);
                     results.push_back(valTime);
                     value = valTime.value;
                     time = valTime.time;
                 } else {
-                    ValueTime valTime = runNaiveExperiment(filePath, 100, 2);
+                    ValueTime valTime = runNaiveExperiment(filePath, 2, eps, delta);
+                    results.push_back(valTime);
+                    value = valTime.value;
+                    time = valTime.time;
+                }
+            }
+            if(algorithm == "1Step"){
+                if(category == "Varying K"){
+                    ValueTime valTime = runSingleStepExperiment(filePath, i + 1, eps, delta);
+                    results.push_back(valTime);
+                    value = valTime.value;
+                    time = valTime.time;
+                } else {
+                    ValueTime valTime = runSingleStepExperiment(filePath, 2, eps, delta);
                     results.push_back(valTime);
                     value = valTime.value;
                     time = valTime.time;
@@ -99,34 +153,58 @@ void runExperiments(bool valency, bool naive, string category){
             }
             cout << "finished value: "<< value << " in time: " << time <<"\n";
             cout << "============================\n";
-        }
-    }
 
-    string resPath;
-    if(!naive){
-        if(valency){
-            resPath =  path + "\\output\\results_valency.txt";
-        } else {
-            resPath = path + "\\output\\results.txt";
-        }
-    } else {
-        if(valency){
-            resPath =  path + "\\output\\results_naive_valency.txt";
-        } else {
-            resPath = path + "\\output\\results_naive.txt";
+            double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+            if(duration > 30){
+                writeListOfResultsToFile(resPath, results, category, category);
+                return;
+            }
         }
     }
     writeListOfResultsToFile(resPath, results, category, category);
 }
 
-void runSimpleExperiment(){
-    vector<ValueTime> results;
-    string path = abs_path + "\\num_nodes\\0\\0.txt";
-    ValueTime valTime = runExperiment(path, 100, 2);
-    results.push_back(valTime);
-    string resPath = abs_path + "\\num_nodes\\output\\results.txt";
-    writeListOfResultsToFile(resPath, results, "test", "test");
+void allNumNodesRunExperiments(){
+    long double eps = 0.05;
+    long double delta = 0.01;
+    runExperiments(true, "2Step", "num_nodes", eps, delta);
+    runExperiments(false, "Naive", "num_nodes", eps, delta);
+    runExperiments(false, "1Step", "num_nodes", eps, delta);
+    runExperiments(false, "2Step", "num_nodes", eps, delta);
+    runExperiments(true, "1Step", "num_nodes", eps, delta);
+    runExperiments(true, "Naive", "num_nodes", eps, delta);
 }
+
+void allVaryingKRunExperiments(){
+    long double eps = 0.05;
+    long double delta = 0.01;
+    runExperiments(false, "2Step", "Varying K", eps, delta);
+    runExperiments(false, "1Step", "Varying K", eps, delta);
+    runExperiments(false, "Naive", "Varying K", eps, delta);
+    runExperiments(true, "2Step", "Varying K", eps, delta);
+    runExperiments(true, "1Step", "Varying K", eps, delta);
+    runExperiments(true, "Naive", "Varying K", eps, delta);
+}
+
+void allEdgeDegreeRunExperiments(){
+    long double eps = 0.05;
+    long double delta = 0.01;
+    runExperiments(false, "2Step", "edge_degree", eps, delta);
+    runExperiments(false, "1Step", "edge_degree", eps, delta);
+    runExperiments(false, "Naive", "edge_degree", eps, delta);
+    runExperiments(true, "2Step", "edge_degree", eps, delta);
+    runExperiments(true, "1Step", "edge_degree", eps, delta);
+    runExperiments(true, "Naive", "edge_degree", eps, delta);
+}
+
+// void runSimpleExperiment(){
+//     vector<ValueTime> results;
+//     string path = abs_path + "\\num_nodes\\0\\0.txt";
+//     ValueTime valTime = runExperiment(path, 100, 2);
+//     results.push_back(valTime);
+//     string resPath = abs_path + "\\num_nodes\\output\\results.txt";
+//     writeListOfResultsToFile(resPath, results, "test", "test");
+// }
 
 #endif
 

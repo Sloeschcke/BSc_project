@@ -26,7 +26,7 @@ private:
     double duration;
 public:
     
-    Apriori (vector<vector<int>> _transactions, long double _minSupport, int _numSamples) {
+    Apriori (vector<vector<int>> &_transactions, long double _minSupport, int _numSamples) {
         nowStep=0;
         numSamples = _numSamples;
         minSupport = _minSupport;
@@ -52,7 +52,7 @@ public:
             }
     }
 
-    vector<int> getElement(vector<vector<int> > itemset) {
+    vector<int> getElement(vector<vector<int>> &itemset) {
         vector<int> element;
         set<int> s;
         for(auto&row:itemset) for(auto&col:row) s.insert(col);
@@ -68,7 +68,8 @@ public:
             
             return ret;
         } else {
-            return pruning(joining());
+            auto joined = joining();
+            return pruning(joined);
         }
     }
     
@@ -100,7 +101,7 @@ public:
         return ret;
     }
     
-    vector<vector<int>> pruning (vector<vector<int>> joined) {
+    vector<vector<int>> pruning (vector<vector<int>> & joined) {
         start = clock();
 
         vector<vector<int> > ret;
@@ -157,7 +158,7 @@ public:
 
 
 
-set<set<int>> getMFI(vector<vector<int>> components, double threshold, int numSamples){
+set<set<int>> getMFI(vector<vector<int>> & components, double threshold, int numSamples){
     Apriori apriori (components, threshold, numSamples);
     apriori.process();
     vector<vector<vector<int>>> result = apriori.getFrequentSet();

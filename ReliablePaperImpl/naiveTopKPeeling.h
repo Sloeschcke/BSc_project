@@ -4,13 +4,14 @@
 #include "graph.h"
 #include "utility.h"
 #include "apriori.h"
+#include "iterApriori.h"
 #include "fastPeeling.h"
 #include "TopKPeeling.h"
 #include "MiningNonMaximal.h"
 
-vector<NodesAndReliability> extractMax(vector<NodesAndReliability> tempRes, int k){
+vector<Candidate> extractMax(vector<Candidate> tempRes, int k){
     sort(tempRes.begin(), tempRes.end());
-    vector<NodesAndReliability> res = {};
+    vector<Candidate> res = {};
     auto it = tempRes.end();
     while (res.size() < k){
         it--;
@@ -19,36 +20,36 @@ vector<NodesAndReliability> extractMax(vector<NodesAndReliability> tempRes, int 
     return res;
 }
 
-vector<NodesAndReliability> naiveTopKPeeling(vector<vector<vector<int>>>& graphSamples, vector<vector<int>>& filteredComponents, int numSamples, int k, Graph& uncertain){
-    long double thetaLow = 0;
-    long double thetaHigh = 1;
-    vector<NodesAndReliability> tempRes = {};
+vector<Candidate> naiveTopKPeeling(vector<vector<vector<int>>>& graphSamples, vector<vector<int>>& filteredComponents, int numSamples, int k, Graph& uncertain){
+    long double theta = 0.9;
+    vector<Candidate> tempRes = {};
     while(tempRes.size() < k){
-        long double thetaMid = (thetaHigh + thetaLow)/2;
-        cout << "one iteration using threshold: " << thetaMid << "\n";
-        set<set<int>> maximalFI = getMFI(filteredComponents, thetaMid, numSamples);
-        vector<NodesAndReliability> MFCS = fastPeeling(graphSamples, maximalFI, thetaMid, numSamples);
+        cout << "one iteration using threshold: " << theta << "\n";
+        set<set<int>> maximalFI = getMFI(filteredComponents, theta, numSamples);
+        vector<Candidate> MFCS = fastPeeling(graphSamples, maximalFI, theta, numSamples);
         vector<vector<int>> MFCSNodes = extractNodes(MFCS);
         if(MFCSNodes.size() > 0){
-            tempRes = runNonMaximal(graphSamples, uncertain, MFCSNodes, thetaMid);
+            tempRes = runNonMaximal(graphSamples, uncertain, MFCSNodes, theta);
             tempRes.insert(tempRes.end(), MFCS.begin(), MFCS.end());
         } 
-        thetaHigh = thetaMid;
+        theta = theta -0.1;
     }
-    vector<NodesAndReliability> res = extractMax(tempRes, k);
+    vector<Candidate> res = extractMax(tempRes, k);
     return res;
 }
 
-vector<NodesAndReliability> runNaiveTopKPeeling(string fileName, int numSamples, int k){
-    Graph graph (fileName);
-    vector<vector<vector<int>>> graphSamples = sample(graph, numSamples);
-    return runNaiveTopKPeelingWithoutSampling(graphSamples, numSamples, k, graph);
-}
-
-vector<NodesAndReliability> runNaiveTopKPeelingWithoutSampling(vector<vector<vector<int>>>& samples, int numSamples, int k, Graph graph){
+vector<Candidate> runNaiveTopKPeelingWithoutSampling(vector<vector<vector<int>>>& samples, int numSamples, int k, Graph graph){
     vector<vector<int>> components = connectedComponents(&samples);
     vector<vector<int>> filteredComponents = removeLenKComponents(&components,2);
     return naiveTopKPeeling(samples, filteredComponents, numSamples, k, graph);
 }
+
+vector<Candidate> runNaiveTopKPeeling(string fileName, int k, long double eps, long double delta){
+    Graph graph (fileName);
+    int numSamples = calculateRequiredSamples(eps, delta, graph.numNodes);
+    vector<vector<vector<int>>> graphSamples = sample(graph, numSamples);
+    return runNaiveTopKPeelingWithoutSampling(graphSamples, numSamples, k, graph);
+}
+
 
 #endif

@@ -9,17 +9,8 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-	string varyingK = "Varying K";
-	string numNodes = "num_nodes";
-	string edgeDegree = "edge_degree";
-
 	std::cout << "Hello ze world \n";
-	testAll();
-	// runExperiments(true, varyingK);
-	// runExperiments(false, numNodes);
 	// testAll();
-	// runExperiments(true, false, numNodes);
-	// runSimpleExperiment();
+	allNumNodesRunExperiments();
 	return 0;
-}
-	
+}	

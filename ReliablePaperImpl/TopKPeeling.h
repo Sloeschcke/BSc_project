@@ -162,12 +162,16 @@ vector<Candidate> topKPeelingStep2 (Graph & graph, resultMFCS & step1Results, in
     vector<Candidate> candidates = step1Results.MFCS;
     candidates.insert(candidates.end(), step1Results.MFCSBuffer.begin(),  step1Results.MFCSBuffer.end() ); 
     long double kth_reliability = 0;
+    //TODO fix while less than
     while(numSampled < 100000000 && candidates.size()>k){
         vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
         candidates = updateReliabilities(graphSamples,  candidates, numSampled);
-        numSampled = numSampled+numSamples;
-        cout << numSampled << "\n";
+        numSampled = numSampled+graphSamples.size();
         long double currentEpsilon = calculateEpsilon(delta, numSampled, resultSize);
+        cout << numSampled <<" : " << currentEpsilon << " " << candidates[k-1].support << "," << candidates[k].support << "\n";
+        // if(numSampled > 700000){
+        //     cout << "numSampled > 700000 \n";
+        // }
         if(currentEpsilon<epsilonLimit) {
             cout << "Early stopped";
             sort(candidates.begin(), candidates.end());
@@ -181,8 +185,6 @@ vector<Candidate> topKPeelingStep2 (Graph & graph, resultMFCS & step1Results, in
 } 
 
 
-
-
 resultMFCS runTopKPeelingWithoutSampling(vector<vector<vector<int>>>& samples, int numSamples, int k, long double eps){
     vector<vector<int>> components = connectedComponents(&samples);
     vector<vector<int>> filteredComponents = removeLenKComponents(&components, 2);
@@ -192,12 +194,10 @@ resultMFCS runTopKPeelingWithoutSampling(vector<vector<vector<int>>>& samples, i
 
 resultMFCS runTopKPeeling(string fileName, int k, long double eps, long double delta){
     Graph graph(fileName);
-    double long numCombinations = pow(2, graph.numNodes +1);
-    //graph.readGraph();
-    int numSamples = calculateRequiredSamples(0.01, eps, pow(2, graph.numNodes +1));
+    int numSamples = calculateRequiredSamples(eps, delta, graph.numNodes);
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     resultMFCS step1 = runTopKPeelingWithoutSampling(graphSamples, numSamples, k, eps);
-    vector<Candidate> step2 = topKPeelingStep2 (graph, step1, 10000, eps, delta, k, numSamples, 0.001);
+    vector<Candidate> step2 = topKPeelingStep2 (graph, step1, 100000, eps, delta, k, numSamples, 0.01);
     resultMFCS result = resultMFCS(step2, step1.MFCSBuffer, step1.theta, step1.thetaRelaxed);
     return result; //should be step2
 }
