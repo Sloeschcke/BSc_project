@@ -8,11 +8,11 @@ from pathlib import Path
 def main():
     valency_probs = [0.1, 0.3, 0.5, 0.7, 0.9]
     # generate_edge_degree_graphs()
-    generate_edge_degree_graphs(valency= valency_probs)
+    # generate_edge_degree_graphs(valency= valency_probs)
     # generate_numNodes_graphs()
     # generate_numNodes_graphs(valency = valency_probs)
     # generate_data_for_vary_k()
-    # generate_data_for_vary_k(valency = valency_probs)
+    generate_data_for_vary_k(valency = valency_probs)
 
     
 def get_relative_path(value_for_plot):
@@ -31,7 +31,7 @@ def get_relative_path(value_for_plot):
     return path
 
 def generate_numNodes_graphs(valency = None):
-    num_nodes = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    num_nodes = [10,15,20,25,30,35,40,45,50,55]
     edge_degree = 2
     num_samples = 5
     value_for_plot = "num_nodes"
@@ -46,17 +46,17 @@ def generate_edge_degree_graphs(valency = None):
     value_for_plot = "edge_degree"
     path = get_relative_path(value_for_plot)
     num_samples = 5
-    nodes = 80
-    edges = [80,120,160,200,240,280,320,360,400]
+    nodes = 30
+    edges = [30,45,60,75,90,105,120,135,150]
     for folder_index, edges in enumerate(edges):
         for sample_index in range(num_samples):
             value = edges/nodes
             create_processed_graph_files(path, folder_index, sample_index, nodes, edges, 1, value_for_plot, value, valency)
 
 def generate_data_for_vary_k(valency = None):
-    value_for_plot = "Varying K"
+    value_for_plot = "Varying_K"
     relative_path_processed = get_relative_path(value_for_plot)
-    nodes = 80
+    nodes = 30
     edges = 2*nodes
     numSamples = 5
     k = 10
