@@ -50,6 +50,4 @@ vector<Candidate> runNaiveTopKPeeling(string fileName, int k, long double eps, l
     vector<vector<vector<int>>> graphSamples = sample(graph, numSamples);
     return runNaiveTopKPeelingWithoutSampling(graphSamples, numSamples, k, graph);
 }
-
-
 #endif
