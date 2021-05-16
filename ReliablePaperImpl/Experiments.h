@@ -115,7 +115,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
             double long value;
             double long time;
             if(algorithm == "2Step"){
-                if(category == "Varying K"){
+                if(category == "Varying_K"){
                     ValueTime valTime = run2StepExperiment(filePath, i + 1, eps, delta);
                     results.push_back(valTime);
                     value = i+1;
@@ -127,7 +127,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
                     time = valTime.time;
                 }
             } if(algorithm=="Naive") {
-                if(category == "Varying K"){
+                if(category == "Varying_K"){
                     ValueTime valTime = runNaiveExperiment(filePath, i + 1, eps, delta);
                     results.push_back(valTime);
                     value = i+1;
@@ -140,7 +140,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
                 }
             }
             if(algorithm == "1Step"){
-                if(category == "Varying K"){
+                if(category == "Varying_K"){
                     ValueTime valTime = runSingleStepExperiment(filePath, i + 1, eps, delta);
                     results.push_back(valTime);
                     value = i+1;
@@ -182,7 +182,7 @@ void allVaryingKRunExperiments(){
     long double delta = 0.01;
     int k = 3;
     runExperiments(false, "2Step", "Varying_K", eps, delta, k);
-    runExperiments(false, "1Step", "Varying-K", eps, delta, k);
+    runExperiments(false, "1Step", "Varying_K", eps, delta, k);
     // runExperiments(false, "Naive", "Varying_K", eps, delta, k);
     runExperiments(true, "2Step", "Varying_K", eps, delta, k);
     runExperiments(true, "1Step", "Varying_K", eps, delta, k);
