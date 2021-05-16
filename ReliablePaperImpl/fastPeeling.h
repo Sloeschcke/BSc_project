@@ -16,7 +16,11 @@ struct customCompareLength final{
     {
         int nLeft = left.size();
         int nRight = right.size();
-        return nLeft > nRight;
+        if (nLeft>nRight){
+            return true;
+        } else {
+            return left > right;
+        }
     }
 };  
 

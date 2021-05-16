@@ -96,7 +96,7 @@ string getResPath(bool valency, string algorithm, string path){
     return resPath;
 }
 
-void runExperiments(bool valency, string algorithm, string category, long double eps, long double delta){
+void runExperiments(bool valency, string algorithm, string category, long double eps, long double delta, int k){
     string path = abs_path + category;
     string resPath = getResPath(valency, algorithm, path);
     vector<ValueTime> results;
@@ -121,7 +121,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
                     value = valTime.value;
                     time = valTime.time;
                 } else {
-                    ValueTime valTime = run2StepExperiment(filePath, 2, eps, delta);
+                    ValueTime valTime = run2StepExperiment(filePath, k, eps, delta);
                     results.push_back(valTime);
                     value = valTime.value;
                     time = valTime.time;
@@ -133,7 +133,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
                     value = valTime.value;
                     time = valTime.time;
                 } else {
-                    ValueTime valTime = runNaiveExperiment(filePath, 2, eps, delta);
+                    ValueTime valTime = runNaiveExperiment(filePath, k, eps, delta);
                     results.push_back(valTime);
                     value = valTime.value;
                     time = valTime.time;
@@ -146,7 +146,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
                     value = valTime.value;
                     time = valTime.time;
                 } else {
-                    ValueTime valTime = runSingleStepExperiment(filePath, 2, eps, delta);
+                    ValueTime valTime = runSingleStepExperiment(filePath, k, eps, delta);
                     results.push_back(valTime);
                     value = valTime.value;
                     time = valTime.time;
@@ -157,7 +157,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
 
             duration = max(duration, ( clock() - start ) / (double) CLOCKS_PER_SEC);
         }
-        if(duration > 5){
+        if(duration > 300){
                 writeListOfResultsToFile(resPath, results, category, category);
                 return;
             }
@@ -168,34 +168,37 @@ void runExperiments(bool valency, string algorithm, string category, long double
 void allNumNodesRunExperiments(){
     long double eps = 0.05;
     long double delta = 0.1;
-    runExperiments(true, "2Step", "num_nodes", eps, delta);
-    runExperiments(false, "1Step", "num_nodes", eps, delta);
-    runExperiments(false, "2Step", "num_nodes", eps, delta);
-    runExperiments(true, "1Step", "num_nodes", eps, delta);
-    runExperiments(false, "Naive", "num_nodes", eps, delta);
-    runExperiments(true, "Naive", "num_nodes", eps, delta);
+    int k = 3;
+    runExperiments(false, "Naive", "num_nodes", eps, delta, k);
+    runExperiments(false, "1Step", "num_nodes", eps, delta, k);
+    runExperiments(false, "2Step", "num_nodes", eps, delta, k);
+    runExperiments(true, "2Step", "num_nodes", eps, delta, k);
+    runExperiments(true, "1Step", "num_nodes", eps, delta, k);
+    runExperiments(true, "Naive", "num_nodes", eps, delta, k);
 }
 
 void allVaryingKRunExperiments(){
     long double eps = 0.05;
     long double delta = 0.01;
-    runExperiments(false, "2Step", "Varying K", eps, delta);
-    runExperiments(false, "1Step", "Varying K", eps, delta);
-    runExperiments(false, "Naive", "Varying K", eps, delta);
-    runExperiments(true, "2Step", "Varying K", eps, delta);
-    runExperiments(true, "1Step", "Varying K", eps, delta);
-    runExperiments(true, "Naive", "Varying K", eps, delta);
+    int k=3;
+    runExperiments(false, "2Step", "Varying K", eps, delta,  k);
+    runExperiments(false, "1Step", "Varying K", eps, delta, k);
+    runExperiments(false, "Naive", "Varying K", eps, delta, k);
+    runExperiments(true, "2Step", "Varying K", eps, delta, k);
+    runExperiments(true, "1Step", "Varying K", eps, delta, k);
+    runExperiments(true, "Naive", "Varying K", eps, delta, k);
 }
 
 void allEdgeDegreeRunExperiments(){
     long double eps = 0.05;
     long double delta = 0.01;
-    runExperiments(false, "2Step", "edge_degree", eps, delta);
-    runExperiments(false, "1Step", "edge_degree", eps, delta);
-    runExperiments(false, "Naive", "edge_degree", eps, delta);
-    runExperiments(true, "2Step", "edge_degree", eps, delta);
-    runExperiments(true, "1Step", "edge_degree", eps, delta);
-    runExperiments(true, "Naive", "edge_degree", eps, delta);
+    int k = 3;
+    runExperiments(false, "Naive", "edge_degree", eps, delta, k);
+    runExperiments(false, "2Step", "edge_degree", eps, delta, k);
+    runExperiments(false, "1Step", "edge_degree", eps, delta, k);
+    runExperiments(true, "2Step", "edge_degree", eps, delta, k);
+    runExperiments(true, "1Step", "edge_degree", eps, delta, k);
+    runExperiments(true, "Naive", "edge_degree", eps, delta, k);
 }
 
 // void runSimpleExperiment(){
