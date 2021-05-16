@@ -12,10 +12,8 @@
 vector<Candidate> extractMax(vector<Candidate> tempRes, int k){
     sort(tempRes.begin(), tempRes.end());
     vector<Candidate> res = {};
-    auto it = tempRes.end();
-    while (res.size() < k){
-        it--;
-        res.push_back(*it);
+    for(int i = 0; i<k; i++){
+        res.push_back(tempRes[i]);
     }
     return res;
 }

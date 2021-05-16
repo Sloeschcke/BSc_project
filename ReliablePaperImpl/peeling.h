@@ -9,7 +9,7 @@
 using namespace std;
 
 bool containsSupersetOfElem(set<set<int>> MFCS, set<int> m){
-    for (auto elem : MFCS){
+    for (auto & elem : MFCS){
         if(includes(elem.begin(), elem.end(), m.begin(), m.end())){
             return false;
         }
@@ -18,16 +18,17 @@ bool containsSupersetOfElem(set<set<int>> MFCS, set<int> m){
 }
 
 void checkReliabilityInGraphSamples2(set<set<int>>& MFCS, set<set<int>>& MFCS2, vector<vector<vector<int>>>& graphSamples2, long double threshold){
-    for(auto m : MFCS){
-        if(subgraphReliability(graphSamples2, &m, threshold) >= threshold){
+    for(auto & m : MFCS){
+        double long reliability = subgraphReliability(graphSamples2, m, threshold);
+        if(reliability >= threshold){
             MFCS2.insert(m);
         }
     }
 }
 
 void peeling(vector<vector<vector<int>>> graphSamples, set<set<int>> mfls, double threshold, set<set<int>> *MFCS, int numSamples){
-    for (auto m : mfls){
-        if(subgraphReliability(graphSamples, &m, threshold) >= threshold){ //check if m is a frequent cohesive set
+    for (auto & m : mfls){
+        if(subgraphReliability(graphSamples, m, threshold) >= threshold){ //check if m is a frequent cohesive set
             //no m' in MFCS where m is subset of m'
             if(containsSupersetOfElem(*MFCS, m)){ 
                 (*MFCS).insert(m);

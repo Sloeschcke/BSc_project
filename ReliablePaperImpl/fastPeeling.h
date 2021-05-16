@@ -26,7 +26,7 @@ struct customCompareLength final{
 
 vector<vector<int>> extractNodes(vector<Candidate>& candidates){
     vector<vector<int>> res = {};
-    for(auto ele : candidates){
+    for(auto & ele : candidates){
         res.push_back(ele.nodes);
     }
     return res;
@@ -44,7 +44,7 @@ vector<vector<int>> transReduce(vector<vector<vector<int>>>& graphSamples, set<i
     cup.insert(MFCS.begin(), MFCS.end());
 
     vector<vector<int>> result;
-    for (auto component : components){
+    for (auto & component : components){
         if (!isContainedInPrevious(component, cup)){
             result.push_back(component);
         };
@@ -64,8 +64,8 @@ vector<Candidate> fastPeeling(vector<vector<vector<int>>>& graphSamples, set<set
             cout << "10000 iterations!\n";
         }
         set<set<int>> P = {};
-        for (auto m : L){
-            long double reliability = subgraphReliability(graphSamples, &m, threshold);
+        for (auto & m    : L){
+            long double reliability = subgraphReliability(graphSamples, m, threshold);
             if(reliability >= threshold){ //check if m is a frequent cohesive set
                 //no m' in MFCS where m is subset of m'
                 if(containsSupersetOfElem(MFCS, m)){
@@ -86,7 +86,7 @@ vector<Candidate> fastPeeling(vector<vector<vector<int>>>& graphSamples, set<set
         }
         copy(MFCS.begin(), MFCS.end(), inserter(newLayer, newLayer.begin()));
         newLayer = prune(newLayer);
-        for (auto m : MFCS){
+        for (auto & m : MFCS){
             newLayer.erase(m);
         }
         L = {};
