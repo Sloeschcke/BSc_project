@@ -12,10 +12,8 @@
 vector<Candidate> extractMax(vector<Candidate> tempRes, int k){
     sort(tempRes.begin(), tempRes.end());
     vector<Candidate> res = {};
-    auto it = tempRes.end();
-    while (res.size() < k){
-        it--;
-        res.push_back(*it);
+    for(int i = 0; i<k; i++){
+        res.push_back(tempRes[i]);
     }
     return res;
 }
@@ -26,7 +24,9 @@ vector<Candidate> naiveTopKPeeling(vector<vector<vector<int>>>& graphSamples, ve
     while(tempRes.size() < k){
         cout << "one iteration using threshold: " << theta << "\n";
         set<set<int>> maximalFI = getMFI(filteredComponents, theta, numSamples);
+        cout << "MFI done\n";
         vector<Candidate> MFCS = fastPeeling(graphSamples, maximalFI, theta, numSamples);
+        cout << "Peeling done\n";
         vector<vector<int>> MFCSNodes = extractNodes(MFCS);
         if(MFCSNodes.size() > 0){
             tempRes = runNonMaximal(graphSamples, uncertain, MFCSNodes, theta);

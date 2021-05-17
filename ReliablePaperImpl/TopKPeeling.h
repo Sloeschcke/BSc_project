@@ -52,7 +52,7 @@ Candidate replaceLowestReliabilityMFCS(vector<Candidate>* tMFCS, Candidate& repl
 Candidate getNextCandidateAndCheckReliability(IterApriori & iApriori,vector<vector<vector<int>>> * graphSamples, long double threshold){
     vector<int> candidate = iApriori.getNextFrequentItemset();
     set<int> candidateSet = convertVectorToSet(candidate);
-    double long reliability = subgraphReliability(*graphSamples, &candidateSet, threshold);
+    double long reliability = subgraphReliability(*graphSamples, candidateSet, threshold);
     return Candidate(candidate, reliability);
 }
 
@@ -60,7 +60,7 @@ long double getThresholdOfRandomDFS(vector<vector<vector<int>>> * graphSamples, 
     long double lowestBest = 1;
     for(int i = 0; i < k ; i++){
         set<int> firstComponent = convertVectorToSet((*components)[i]);
-        long double res = subgraphReliability(*graphSamples, &firstComponent, 0);
+        long double res = subgraphReliability(*graphSamples, firstComponent, 0);
         if(res < lowestBest){
             lowestBest = res;
         }
@@ -83,7 +83,7 @@ resultMFCS topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<AggCon
         }
         if(candidate.size()>2){
             set<int> candidateSet = convertVectorToSet(candidate);
-            double long reliability = subgraphReliability(*graphSamples, &candidateSet, theta);
+            double long reliability = subgraphReliability(*graphSamples, candidateSet, theta);
             if(reliability >= theta){
                 tMFCS.push_back(Candidate(candidate, reliability));
             }
@@ -133,7 +133,7 @@ long double calculateEpsilon(long double delta, long double numSamples, int Cand
 vector<Candidate> updateReliabilities(vector<vector<vector<int>>> &graphSamples, vector<Candidate> & candidates, int numSampled){
     for (auto &cand : candidates){
         set<int> candidate = convertVectorToSet(cand.nodes);
-        double long reliability = subgraphReliability( graphSamples, &candidate, 0);
+        double long reliability = subgraphReliability( graphSamples, candidate, 0);
         double long newSupport = (cand.support * numSampled + graphSamples.size() * reliability)/(numSampled + graphSamples.size());
         cand.support = newSupport;
     }
