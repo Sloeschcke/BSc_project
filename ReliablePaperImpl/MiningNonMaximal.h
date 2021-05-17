@@ -53,7 +53,7 @@ vector<int> getintersectionOfMFCSIDs(vector<int> currentMFCSIDs, int newlyAddedV
 
 vector<int> getMFCSNodes(vector<vector<int>> MFCS){
     vector<int> res = {};
-    for(auto mfcs : MFCS){
+    for(auto & mfcs : MFCS){
         res = vector_union(res, mfcs);
     }
     return res;
@@ -96,7 +96,7 @@ vector<int> getVectorFrom1toN(int n){
 }
 
 bool isVertexSetAnMFCS(vector<int>& vertexSet, vector<vector<int>>& allMFCS){
-    for (auto mfcs : allMFCS){
+    for (auto & mfcs : allMFCS){
         if(vertexSet == mfcs){
             return true;
         }
@@ -106,7 +106,7 @@ bool isVertexSetAnMFCS(vector<int>& vertexSet, vector<vector<int>>& allMFCS){
 
 vector<vector<int>> sortMFCS(vector<vector<int>> unsorted){
     vector<vector<int>> sorted = {};
-    for(auto mfcs : unsorted){
+    for(auto & mfcs : unsorted){
         sort(mfcs.begin(), mfcs.end());
         sorted.push_back(mfcs);
     }
@@ -126,7 +126,7 @@ void MiningNonMaximal(vector<vector<vector<int>>>& graphSamples, int chosenNode,
             con[i] = neighbours_intersection_vertex_set.size() != 0; 
         } else {
             set<int> setVertexSet = convertVectorToSet(vertexSet);
-            con[i] = isInducedConnectedComponent(graphSamples[i], &setVertexSet);
+            con[i] = isInducedConnectedComponent(graphSamples[i], setVertexSet);
         }
     }
 

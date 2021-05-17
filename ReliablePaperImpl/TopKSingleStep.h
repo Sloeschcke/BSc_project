@@ -19,7 +19,7 @@ vector<Candidate> topKSingleStep(vector<vector<vector<int>>> * graphSamples, vec
         }
         if(candidate.size()>2){
             set<int> candidateSet = convertVectorToSet(candidate);
-            double long reliability = subgraphReliability(*graphSamples, &candidateSet, theta);
+            double long reliability = subgraphReliability(*graphSamples, candidateSet, theta);
             if(reliability >= theta){
                 tMFCS.push_back(Candidate(candidate, reliability));
             }

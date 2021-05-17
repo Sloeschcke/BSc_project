@@ -146,8 +146,12 @@ public:
         start = clock();
         vector<vector<int> > ret;
         for(auto&row:C){
+            vector<int> problem = {0,2,3,4,5,8,9}; 
+            if(row == problem){
+                cout << "problematic row" << "\n";
+            }
             long double support = getSupport(&row);
-            if(round(support, 2) < minSupport) continue;
+            if(support < minSupport) continue;
             ret.push_back(row);
         }
         duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;

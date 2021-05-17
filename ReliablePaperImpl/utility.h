@@ -109,7 +109,7 @@ set<int> convertVectorToSet(vector<int>& v) {
     return s; 
 } 
 
-vector<int> convertSetToVector(set<int>& s) {
+vector<int> convertSetToVector(const set<int>& s) {
     vector<int> v(s.begin(), s.end());
     return v;
 }
@@ -139,20 +139,20 @@ vector<vector<int>> connectedComponentsSubgraph(vector<vector<vector<int>>>& sam
     return vectorOfComponents;
 }
 
-bool DFSToCheckConnectivityOfSubgraph(int v, vector<bool> *visited, vector<vector<int>> *sample, set<int> *subgraph, int counter)
+bool DFSToCheckConnectivityOfSubgraph(int v, vector<bool> *visited, vector<vector<int>> *sample, const set<int>& subgraph, int counter)
 {
     // Mark the current node as visited
     (*visited)[v] = true;
-    if(counter==(*subgraph).size()){
+    if(counter==subgraph.size()){
         return true;
     }
     // Recur on all adjacent vertices
     for(auto & u : (*sample)[v]){
-        if((*subgraph).count(u) == 1 && !(*visited)[u]){
+        if(subgraph.count(u) == 1 && !(*visited)[u]){
             DFSToCheckConnectivityOfSubgraph(u, visited, sample, subgraph, counter++);
         }
     }
-    for(auto & s: *subgraph){
+    for(auto & s: subgraph){
         if(!(*visited)[s]) {
             return false;
         }
@@ -272,7 +272,7 @@ set<set<int>> convertFrequentToSets (vector<vector<vector<int>>>& frequentList){
 
 vector<vector<int>> setSetToVectorVector(set<set<int>>& setSet){
     vector<vector<int>> res;
-    for(auto set:setSet){
+    for(auto & set:setSet){
         res.push_back(convertSetToVector(set));
     }
     return res;
@@ -289,14 +289,14 @@ vector<vector<int>> flatten(vector<vector<vector<int>>>& v) {
     return result;
 }
 
-bool isInducedConnectedComponent(vector<vector<int>>& G, set<int>* subgraph ){
-    auto it = (*subgraph).begin();
+bool isInducedConnectedComponent(vector<vector<int>>& G, const set<int>& subgraph ){
+    auto it = subgraph.begin();
     vector<bool> visited(G.size());
     bool containsSubgraph = DFSToCheckConnectivityOfSubgraph(*it, &visited, &G, subgraph, 0);
     return containsSubgraph;
 }
 
-double subgraphReliability( vector<vector<vector<int>>>& samples, set<int>* subgraph, long double threshold){
+double subgraphReliability( vector<vector<vector<int>>>& samples, const set<int>& subgraph, long double threshold){
     double inducedCounter = 0;
     double counter = 0;
     double required = threshold*samples.size();
