@@ -16,11 +16,10 @@ struct customCompareLength final{
     {
         int nLeft = left.size();
         int nRight = right.size();
-        if (nLeft>nRight){
-            return true;
-        } else {
-            return left > right;
+        if(nLeft == nRight){
+            return left < right;
         }
+        return nLeft>nRight;
     }
 };  
 
@@ -40,6 +39,8 @@ bool isContainedInPrevious(vector<int> component, set<set<int>> previous){
 
 vector<vector<int>> transReduce(vector<vector<vector<int>>>& graphSamples, set<int> m, set<set<int>> P, set<set<int>> MFCS){
     vector<vector<int>> components = connectedComponentsSubgraph(graphSamples, m);
+    vector<vector<int>> filteredComponents = removeLenKComponents(&components, 2);
+
     set<set<int>> cup = P;
     cup.insert(MFCS.begin(), MFCS.end());
 
@@ -54,20 +55,28 @@ vector<vector<int>> transReduce(vector<vector<vector<int>>>& graphSamples, set<i
 vector<Candidate> fastPeeling(vector<vector<vector<int>>>& graphSamples, set<set<int>>& mfls, double threshold, int numSamples){
     int counter = 0;
     set<set<int>, customCompareLength> L;
+    cout << "before copy\n";
 	copy(mfls.begin(), mfls.end(), inserter(L, L.begin()));
+    cout << "after copy\n";
     set<set<int>> newLayer = {};
     set<set<int>> MFCS = {};
     vector<Candidate> candidates = {};
+    cout << mfls.size()<< "\n";
     while(L.size() != 0){
+        cout << "looped\n";
+        if(counter > 5){ 
+            cout << "looped many times \n";
+        }
         counter ++;
         if(counter % 10000 == 0){
             cout << "10000 iterations!\n";
         }
         set<set<int>> P = {};
-        for (auto & m    : L){
+        for (auto & m : L){
             long double reliability = subgraphReliability(graphSamples, m, threshold);
             if(reliability >= threshold){ //check if m is a frequent cohesive set
                 //no m' in MFCS where m is subset of m'
+                cout << "Found one with high reliability\n";
                 if(containsSupersetOfElem(MFCS, m)){
                     vector<int> vector_m = convertSetToVector(m);
                     candidates.push_back(Candidate(vector_m, reliability));
