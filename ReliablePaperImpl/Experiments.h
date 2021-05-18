@@ -10,9 +10,9 @@
 #include "IterApriori.h"
 #include "naiveTopKPeeling.h"
 
-string abs_path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\";
+// string abs_path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\";
 // string abspath = "/Users/sebastianloeschcke/Desktop/6.semester/BSc";
-// string abs_path = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\GraphsGeneration\\processed_graphs\\";
+string abs_path = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\GraphsGeneration\\processed_graphs\\";
 
 struct ValueTime {
     double long time;
@@ -199,6 +199,21 @@ void allEdgeDegreeRunExperiments(){
     runExperiments(true, "1Step", "edge_degree", eps, delta, k);
     // runExperiments(false, "Naive", "edge_degree", eps, delta, k);
     // runExperiments(true, "Naive", "edge_degree", eps, delta, k);
+}
+
+void runAllNaiveExperiments(){
+    long double eps = 0.05;
+    long double delta = 0.01;
+    int k = 3;
+    runExperiments(false, "Naive", "edge_degree", eps, delta, k);
+    runExperiments(true, "Naive", "edge_degree", eps, delta, k);
+    runExperiments(false, "Naive", "Varying_K", eps, delta, k);
+    runExperiments(true, "Naive", "Varying_K", eps, delta, k);
+    runExperiments(true, "Naive", "num_nodes", eps, delta, k);
+    runExperiments(false, "Naive", "num_nodes", eps, delta, k);
+
+
+
 }
 
 // void runSimpleExperiment(){

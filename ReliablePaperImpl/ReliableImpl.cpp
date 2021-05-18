@@ -15,6 +15,7 @@ int main(int argc, char const *argv[])
 	// testAll();
 	// allNumNodesRunExperiments();
 	// allVaryingKRunExperiments();
-	allEdgeDegreeRunExperiments();
+	// allEdgeDegreeRunExperiments();
+	runAllNaiveExperiments();
 	return 0;
 }	

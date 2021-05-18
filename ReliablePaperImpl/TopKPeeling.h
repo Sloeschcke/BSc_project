@@ -164,7 +164,7 @@ vector<Candidate> topKPeelingStep2 (Graph & graph, resultMFCS & step1Results, in
     //TODO fix while less than
     while(numSampled < 100000000 && candidates.size()>k){
         vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
-        candidates = updateReliabilities(graphSamples,  candidates, numSampled);
+        candidates = updateReliabilities(graphSamples, candidates, numSampled);
         numSampled = numSampled+graphSamples.size();
         long double currentEpsilon = calculateEpsilon(delta, numSampled, candidates.size());
         cout << numSampled <<" : " << currentEpsilon << " " << candidates[k-1].support << "," << candidates[k].support << "\n";
