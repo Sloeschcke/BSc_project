@@ -7,12 +7,12 @@ from pathlib import Path
 
 def main():
     valency_probs = [0.1, 0.3, 0.5, 0.7, 0.9]
-    # generate_edge_degree_graphs()
+    generate_edge_degree_graphs()
     # generate_edge_degree_graphs(valency= valency_probs)
     # generate_numNodes_graphs()
     # generate_numNodes_graphs(valency = valency_probs)
     # generate_data_for_vary_k()
-    generate_data_for_vary_k(valency = valency_probs)
+    # generate_data_for_vary_k(valency = valency_probs)
 
     
 def get_relative_path(value_for_plot):
@@ -47,7 +47,7 @@ def generate_edge_degree_graphs(valency = None):
     path = get_relative_path(value_for_plot)
     num_samples = 5
     nodes = 30
-    edges = [30,45,60,75,90,105,120,135,150]
+    edges = [30,36,42,48,54,60,66,72,78,84,90]
     for folder_index, edges in enumerate(edges):
         for sample_index in range(num_samples):
             value = edges/nodes
@@ -98,7 +98,7 @@ def create_processed_graph_files(path, folderIndex, index, nodes, edges, seed, v
             w.write(editedLine)
 
     w.close()
-    # r.close()
+    r.close()
     os.remove(filename)
 
 def create_graph_file( nodes, edges, filename , seed):
