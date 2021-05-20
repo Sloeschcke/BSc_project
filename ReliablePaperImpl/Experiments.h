@@ -54,7 +54,6 @@ ValueTime runNaiveExperiment(string path, int k, long double eps, long double de
     Graph graph = Graph(path);
     string value = graph.getValue();
     cout << value << "\n";
-    
     start = clock();
     vector<Candidate> result = runNaiveTopKPeeling(path, k, eps, delta);
     double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
@@ -100,6 +99,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
     string path = abs_path + category;
     string resPath = getResPath(valency, algorithm, path);
     vector<ValueTime> results;
+    vector<int> k_values = {1,2,3,5,10,20,40,60,80,100};
     int numExperiments = 10;
     int numRepetitions = 5;
     for (int j = 0; j < numExperiments; j++){
@@ -116,9 +116,10 @@ void runExperiments(bool valency, string algorithm, string category, long double
             double long time;
             if(algorithm == "2Step"){
                 if(category == "Varying_K"){
-                    ValueTime valTime = run2StepExperiment(filePath, i + 1, eps, delta);
+                    value = k_values[j];
+                    ValueTime val = run2StepExperiment(filePath, k_values[j], eps, delta);
+                    ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
-                    value = i+1;
                     time = valTime.time;
                 } else {
                     ValueTime valTime = run2StepExperiment(filePath, k, eps, delta);
@@ -128,9 +129,10 @@ void runExperiments(bool valency, string algorithm, string category, long double
                 }
             } if(algorithm=="Naive") {
                 if(category == "Varying_K"){
-                    ValueTime valTime = runNaiveExperiment(filePath, i + 1, eps, delta);
+                    value = k_values[j];
+                    ValueTime val = runNaiveExperiment(filePath, k_values[j], eps, delta);
+                    ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
-                    value = i+1;
                     time = valTime.time;
                 } else {
                     ValueTime valTime = runNaiveExperiment(filePath, k, eps, delta);
@@ -141,9 +143,10 @@ void runExperiments(bool valency, string algorithm, string category, long double
             }
             if(algorithm == "1Step"){
                 if(category == "Varying_K"){
-                    ValueTime valTime = runSingleStepExperiment(filePath, i + 1, eps, delta);
+                    value = k_values[j];
+                    ValueTime val = runSingleStepExperiment(filePath, k_values[j], eps, delta);
+                    ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
-                    value = i+1;
                     time = valTime.time;
                 } else {
                     ValueTime valTime = runSingleStepExperiment(filePath, k, eps, delta);
@@ -157,10 +160,10 @@ void runExperiments(bool valency, string algorithm, string category, long double
 
             duration = max(duration, ( clock() - start ) / (double) CLOCKS_PER_SEC);
         }
-        if(duration > 300){
-                writeListOfResultsToFile(resPath, results, category, category);
-                return;
-            }
+        // if(duration > 300){
+        //         writeListOfResultsToFile(resPath, results, category, category);
+        //         return;
+        // }
     }
     writeListOfResultsToFile(resPath, results, category, category);
 }
@@ -181,8 +184,8 @@ void allVaryingKRunExperiments(){
     long double eps = 0.05;
     long double delta = 0.01;
     int k = 3;
-    // runExperiments(false, "2Step", "Varying_K", eps, delta, k);
-    // runExperiments(false, "1Step", "Varying_K", eps, delta, k);
+    runExperiments(false, "2Step", "Varying_K", eps, delta, k);
+    runExperiments(false, "1Step", "Varying_K", eps, delta, k);
     // runExperiments(false, "Naive", "Varying_K", eps, delta, k);
     runExperiments(true, "2Step", "Varying_K", eps, delta, k);
     runExperiments(true, "1Step", "Varying_K", eps, delta, k);
