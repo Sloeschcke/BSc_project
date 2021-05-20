@@ -16,9 +16,10 @@ def main():
     edge_set = get_edgeSet(path_to_graph_reliable_paper)
     worlds = get_possible_worlds(edge_set)
     world_probs = get_world_probabilities(worlds, edge_set)
-    node_combinations = get_all_node_combinations(7)
-    reliabilities = get_topk_reliabilities(worlds, world_probs, 10, node_combinations, 7)
-    print(reliabilities)
+    # subgraph_to_check = [5,6]
+    subgraph_to_check = [0,3,4]
+    reliability = get_reliability(worlds, world_probs, subgraph_to_check, 7)
+    print(reliability)
 
 def get_edgeSet(path_to_graph):
     r = open(path_to_graph, "r")
