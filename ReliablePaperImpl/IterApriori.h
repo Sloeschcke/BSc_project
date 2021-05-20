@@ -1,8 +1,8 @@
 #ifndef ITERAPRIORI_H
 #define ITERAPRIORI_H
+#include "utility.h"
 #include "hoved.h"
 #include "graph.h"
-#include "utility.h"
 
 struct Candidate {
     double long support;

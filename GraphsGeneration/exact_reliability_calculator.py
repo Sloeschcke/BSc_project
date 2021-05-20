@@ -4,7 +4,7 @@ import networkx as nx
 from itertools import combinations
 
 abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt"
-_file = "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\0\\0.txt"
+_file = "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file5.inf"
 path_to_graph_reliable_paper = Path(abspath+_file) # file 0.0
 #path_to_graph_reliable_paper = Path("C:/Users/chris/Documents/6. Semester/Bachelor Project/BSc_project/ReliablePaperImpl/test_graphs/graph_file5.inf")
 
@@ -16,7 +16,7 @@ def main():
     worlds = get_possible_worlds(edge_set)
     world_probs = get_world_probabilities(worlds, edge_set)
     # subgraph_to_check = [5,6]
-    subgraph_to_check = [1,4,9]
+    subgraph_to_check = [0,3,4]
     reliability = get_reliability(worlds, world_probs, subgraph_to_check, 10)
     print(reliability)
 
@@ -26,7 +26,7 @@ def get_edgeSet(path_to_graph):
 
     edges_set = set()
 
-    for line in lines:
+    for line in lines[1:]:
         numbers = [n for n in line.split()]
         edges_set.add(tuple([int(numbers[0]), int(numbers[1]), float(numbers[2])]))
 

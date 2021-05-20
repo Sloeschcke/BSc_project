@@ -194,12 +194,12 @@ resultMFCS runTopKPeelingWithoutSampling(vector<vector<vector<int>>>& samples, i
     return topKPeeling(&samples, &aggregatedComponents, numSamples, k, eps);
 }
 
-resultMFCS runTopKPeeling(string fileName, int k, long double eps, long double delta){
+resultMFCS runTopKPeeling(string fileName, int k, long double eps, long double delta, double long epsLimit){
     Graph graph(fileName);
     int numSamples = calculateRequiredSamples(eps, delta, graph.numNodes);
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     resultMFCS step1 = runTopKPeelingWithoutSampling(graphSamples, numSamples, k, eps);
-    vector<Candidate> step2 = topKPeelingStep2 (graph, step1, 100000, eps, delta, k, numSamples, 0.001);
+    vector<Candidate> step2 = topKPeelingStep2 (graph, step1, 100000, eps, delta, k, numSamples, epsLimit);
     resultMFCS result = resultMFCS(step2, step1.MFCSBuffer, step1.theta, step1.thetaRelaxed);
     return result; 
 }

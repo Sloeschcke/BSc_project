@@ -105,5 +105,11 @@ def create_graph_file( nodes, edges, filename , seed):
     command_nodes_and_edges = "python gen_graph.py -grnm -n " + str(nodes) + " -m " + str(edges) + " --seed "+ str(seed) + " --out " + filename
     os.system(command_nodes_and_edges)
 
+
+def boostProbabilityOnUniformEdges(fileName):
+    r = open(file)
+    lines = r.readlines()
+    r.close()
+    
 if __name__ == "__main__":
     main()

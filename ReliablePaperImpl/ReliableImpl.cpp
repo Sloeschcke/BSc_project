@@ -13,8 +13,11 @@ int main(int argc, char const *argv[])
 	string path = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\GraphsGeneration\\processed_graphs\\Varying_K\\0\\1.txt";
 	// ValueTime valTime = run2StepExperiment(path, 2, 0.05, 0.01);
 	// testAll();
+	// Precision2Step();
+	ToyDataSetValidation();
 	// allNumNodesRunExperiments();
-	allVaryingKRunExperiments();
+	// allVaryingKRunExperiments();
 	// allNumNodesRunExperiments();
+	// testFindWrongsBetweenMFCS();
 	return 0;
 }	
