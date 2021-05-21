@@ -230,6 +230,13 @@ void testIterApriori2(){
 			cout << "\n";
 	}
 }
+
+void testFindWrongsBetweenMFCS(){
+	vector<Candidate> res1 = {Candidate({1,2,3}, 0.05),Candidate({4,5,6},0.05),Candidate({2,3}, 0.05)};
+	vector<Candidate> res2 = {Candidate({1,3,2}, 0.05),Candidate({2,3}, 0.05),Candidate({4,5,6}, 0.05)};
+	int wrongs = findWrongsBetweenMFCS(res1, res2);
+	cout << "wrongs: " << wrongs;
+}
 // void testTopKgraph3(){
 // 	clock_t start;
 // 	start = clock();
@@ -263,7 +270,7 @@ void testNaiveTopKPeelingGraph4() {
 void testTopKPeelingGraph5() {
 	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file5.inf";
 	double long eps = 0.05;
-	resultMFCS res = runTopKPeeling(path, 1000, 2,eps);
+	resultMFCS res = runTopKPeeling(path, 1000, 2,eps, 0.001);
 	vector<int> mostLikely = {2, 3, 5};
 	printMFCS(res.MFCS);
 }
@@ -299,7 +306,7 @@ void testTopKPeelingSynthetic() {
 	double long eps = 0.05;
 	double long delta = 0.01;
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\3\\0.txt";
-	resultMFCS res = runTopKPeeling(path, 1, eps, delta);
+	resultMFCS res = runTopKPeeling(path, 1, eps, delta, 0.001);
 	cout << "buffersize: " << res.MFCSBuffer.size() << "\n";
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration << "\n";
@@ -312,7 +319,7 @@ void testFastPeelingSynthetic() {
 	start = clock();
 	double long eps = 0.05;
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\1\\0.txt";
-	resultMFCS res1 = runTopKPeeling(path, 100, 5, eps);
+	resultMFCS res1 = runTopKPeeling(path, 100, 5, eps, 0.001);
 	printMFCS(res1.MFCS);
 	vector<Candidate> res = runFastPeeling(path, 100, 0.24);
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
@@ -328,7 +335,7 @@ void testSingleStepVS2step(){
 	double long delta = 0.01;
 	int k=2;
 	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\0\\0.txt";
-	resultMFCS res = runTopKPeeling(path, k, eps, delta);
+	resultMFCS res = runTopKPeeling(path, k, eps, delta, 0.001);
 	cout << "buffersize: " << res.MFCSBuffer.size() << "\n";
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Time in TopKSynthetic: " << duration << "\n";
@@ -390,12 +397,13 @@ void testAll(){
 	// testNaiveTopKPeelingFaceBook();
 	
 	//testTopKPeelingSynthetic();
-	testSingleStepVS2step();
+	// testSingleStepVS2step();
 	
 	// testNaiveTopKPeelingSynthetic();
 	// testFastPeelingSynthetic();
 	// testBothTopKPeelingSynthetic();
 	// testFastPeelingOnRapportGraph();
 	// testAggConnectedComponnetsV2();
+	testFindWrongsBetweenMFCS();
 }
 

@@ -1,6 +1,6 @@
 #include "hoved.h"
 #include "graph.h"
-
+#include "Experiments.h"
 #ifndef UTILITY_H
 #define UTILITY_H
 
@@ -319,6 +319,9 @@ int calculateRequiredSamples(long double epsilon, long double delta, long double
 	cout << "sample size: " << sampleSize << "\n";
 	return sampleSize;
 }
+
+
+
 
 
 #endif

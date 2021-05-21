@@ -21,6 +21,7 @@ public:
 
     void readGraph(){
         ifstream fileStream (graph_file);
+        cout << graph_file;
         assert(fileStream.is_open());
         string problem, value, numNodesStream, numEdgesStream;
         fileStream >> numNodesStream >> numEdgesStream >> problem >> value;

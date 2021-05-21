@@ -8,7 +8,8 @@
 
 vector<Candidate> topKSingleStep(vector<vector<vector<int>>> * graphSamples, vector<AggConComps> *components, int numSamples, int k, long double eps){
     vector<Candidate> tMFCS;
-    long double theta = 0;
+    long double theta = getThresholdOfRandomDFS(graphSamples, components, k);
+    cout << "initial theta: " << theta;
     IterApriori iApriori = IterApriori(components, numSamples);
     iApriori.setMinSupport(theta);
     int counter = 0;
