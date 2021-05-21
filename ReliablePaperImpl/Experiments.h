@@ -119,6 +119,7 @@ int findWrongsBetweenMFCS(vector<Candidate> result2Step, vector<Candidate> resul
 
 void runExperiments(bool valency, string algorithm, string category, long double eps, long double delta, int k){
     string path = abs_path + category;
+    cout << path;
     string resPath = getResPath(valency, algorithm, path);
     vector<ValueTime> results;
     vector<int> k_values = {1,2,3,5,10,20,40,60,80,100};
