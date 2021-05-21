@@ -124,7 +124,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
     vector<ValueTime> results;
     vector<int> k_values = {1,2,3,5,10,20,40,60,80,100};
     int numExperiments = 10;
-    int numRepetitions = 2;
+    int numRepetitions = 5;
     for (int j = 0; j < numExperiments; j++){
         string folderPath = path +"/" + to_string(j);
         if(valency){
@@ -297,7 +297,6 @@ void ToyDataSetValidation(){
     vector<ValueTime> results;
     string path;
     path = abs_path +"ToyGraph/graph_file5.inf";
-    cout << path;
     Graph graph = Graph(path);
 
     string value = graph.getValue();
