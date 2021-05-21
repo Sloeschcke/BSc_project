@@ -15,6 +15,7 @@ public:
     string valueForPlot;
 
     Graph(string fileName) : graph_file(fileName){ 
+        cout << fileName << "\n";
         readGraph();
     }
     vector<int> inDeg;
