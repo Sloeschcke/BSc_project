@@ -9,10 +9,11 @@
 #include "TopKPeeling.h"
 #include "IterApriori.h"
 #include "naiveTopKPeeling.h"
+#include "TopKSingleStep.h"
 
-// string abs_path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\";
+string abs_path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\";
 // string abspath = "/Users/sebastianloeschcke/Desktop/6.semester/BSc";
-string abs_path = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\GraphsGeneration\\processed_graphs\\";
+// string abs_path = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\GraphsGeneration\\processed_graphs\\";
 
 struct ValueTime {
     double long time;
@@ -32,7 +33,7 @@ ValueTime run2StepExperiment(string path, int k, long double eps, long double de
 
     clock_t start;
     start = clock();
-    resultMFCS result = runTopKPeeling(path,k, eps, delta);
+    resultMFCS result = runTopKPeeling(path,k, eps, delta, 0.001);
     double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     return ValueTime(duration, stod(value), result.MFCS);
 }
@@ -94,6 +95,27 @@ string getResPath(bool valency, string algorithm, string path){
     }
     return resPath;
 }
+struct compareCandidates{
+    Candidate key;
+    compareCandidates(Candidate &i): key(i){}
+
+    bool operator()(Candidate &i){
+        sort(key.nodes.begin(), key.nodes.end());
+        sort(i.nodes.begin(), i.nodes.end());
+        return key.nodes == i.nodes;
+    }
+};
+
+int findWrongsBetweenMFCS(vector<Candidate> result2Step, vector<Candidate> result1Step){
+    int counter = 0;
+    for (auto & candidate : result1Step){
+       if (find_if(result2Step.begin(), result2Step.end(), compareCandidates(candidate)) == result2Step.end()) {
+            cout << "not found";
+            counter++;
+        } 
+    }
+    return counter;
+}
 
 void runExperiments(bool valency, string algorithm, string category, long double eps, long double delta, int k){
     string path = abs_path + category;
@@ -101,7 +123,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
     vector<ValueTime> results;
     vector<int> k_values = {1,2,3,5,10,20,40,60,80,100};
     int numExperiments = 10;
-    int numRepetitions = 5;
+    int numRepetitions = 2;
     for (int j = 0; j < numExperiments; j++){
         string folderPath = path +"\\" + to_string(j);
         if(valency){
@@ -180,6 +202,13 @@ void allNumNodesRunExperiments(){
     runExperiments(true, "1Step", "num_nodes", eps, delta, k);
 }
 
+void runNumNodesFDist(){
+    long double eps = 0.05;
+    long double delta = 0.01;
+    int k = 1;
+    runExperiments(false, "1Step", "num_nodes_f_dist", eps, delta, k);
+}
+
 void allVaryingKRunExperiments(){
     long double eps = 0.05;
     long double delta = 0.01;
@@ -214,9 +243,75 @@ void runAllNaiveExperiments(){
     runExperiments(true, "Naive", "Varying_K", eps, delta, k);
     runExperiments(true, "Naive", "num_nodes", eps, delta, k);
     runExperiments(false, "Naive", "num_nodes", eps, delta, k);
+}
 
 
 
+void Precision2Step(){
+    int numExperiments = 5;
+    int numIterations = 5;
+    int k=10;
+    double long eps = 0.05;
+    double long delta = 0.01;
+    double long epsLimit = 0.0001;
+
+    vector<ValueTime> results;
+    string path;
+    for (int i = 0; i<numExperiments; i++){
+        for (int j = 0; j<numIterations; j++){
+            path = abs_path +"PrecisionNumNodes\\" + to_string(i);
+            path = path + "\\"+ to_string(j)+".txt";
+            cout << path;
+            Graph graph = Graph(path);
+
+            string value = graph.getValue();
+            cout << value << "\n";
+
+            vector<Candidate> result1Step = runTopKSingleStep(path, k, eps, delta);
+            resultMFCS result2Step = runTopKPeeling(path, k, eps, delta, epsLimit);
+            int wrongs = findWrongsBetweenMFCS(result2Step.MFCS, result1Step);
+            results.push_back(ValueTime(wrongs, stod(value), result2Step.MFCS));
+        }
+    writeListOfResultsToFile(abs_path+"PrecisionNumNodes\\output\\result.txt",results, "number wrong with k = 10", "num nodes");
+}
+}
+
+void printMFCS2(vector<Candidate> MFCS){
+	for (auto elem: MFCS)
+	{
+		for(auto elem2: elem.nodes){
+			cout << elem2 << ", " ;
+		}
+		cout << "with reliability: " << elem.support << "\n";
+	}
+}
+
+void ToyDataSetValidation(){
+    int numExperiments = 5;
+    int numIterations = 5;
+    int k=5;
+    double long eps = 0.05;
+    double long delta = 0.01;
+    double long epsLimit = 0.0001;
+
+    vector<ValueTime> results;
+    string path;
+    path = abs_path +"ToyGraph\\graph_file5.inf";
+    cout << path;
+    Graph graph = Graph(path);
+
+    string value = graph.getValue();
+    cout << value << "\n";
+
+    vector<Candidate> result1Step = runTopKSingleStep(path, k, eps, delta);
+    resultMFCS result2Step = runTopKPeeling(path, k, eps, delta, epsLimit);
+    cout << "1 step ========================\n";
+    printMFCS2(result1Step);
+    cout << "2 step ========================\n";
+    printMFCS2(result2Step.MFCS);
+    int wrongs = findWrongsBetweenMFCS(result2Step.MFCS, result1Step);
+    cout << wrongs;
+    results.push_back(ValueTime(wrongs, stod(value), result2Step.MFCS));
 }
 
 // void runSimpleExperiment(){
