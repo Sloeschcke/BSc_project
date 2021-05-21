@@ -10,8 +10,8 @@
 #include "IterApriori.h"
 #include "naiveTopKPeeling.h"
 #include "TopKSingleStep.h"
-
-string abs_path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\";
+string abs_path = "/home/scm/BachelorProject/BSc_project/GraphsGeneration/processed_graphs";
+// string abs_path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\";
 // string abspath = "/Users/sebastianloeschcke/Desktop/6.semester/BSc";
 // string abs_path = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\GraphsGeneration\\processed_graphs\\";
 
@@ -76,21 +76,21 @@ string getResPath(bool valency, string algorithm, string path){
     string resPath;
     if(algorithm == "2Step"){
         if(valency){
-            resPath =  path + "\\output\\results_2step_valency.txt";
+            resPath =  path + "/output/results_2step_valency.txt";
         } else {
-            resPath = path + "\\output\\results_2step.txt";
+            resPath = path + "/output/results_2step.txt";
         }
     } else if(algorithm == "Naive") {
         if(valency){
-            resPath =  path + "\\output\\results_naive_valency.txt";
+            resPath =  path + "/output/results_naive_valency.txt";
         } else {
-            resPath = path + "\\output\\results_naive.txt";
+            resPath = path + "/output/results_naive.txt";
         }
     } else if(algorithm == "1Step") {
         if(valency){
-            resPath =  path + "\\output\\results_1step_valency.txt";
+            resPath =  path + "/output/results_1step_valency.txt";
         } else {
-            resPath = path + "\\output\\results_1step.txt";
+            resPath = path + "/output/results_1step.txt";
         }
     }
     return resPath;
@@ -125,7 +125,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
     int numExperiments = 10;
     int numRepetitions = 2;
     for (int j = 0; j < numExperiments; j++){
-        string folderPath = path +"\\" + to_string(j);
+        string folderPath = path +"/" + to_string(j);
         if(valency){
             folderPath = folderPath + "_valency";
         }
@@ -133,7 +133,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
         for (int i = 0; i<numRepetitions; i++){
             clock_t start;
             start = clock();
-            string filePath = folderPath + "\\"+ to_string(i)+".txt";
+            string filePath = folderPath + "/"+ to_string(i)+".txt";
             double long value;
             double long time;
             if(algorithm == "2Step"){
@@ -259,8 +259,8 @@ void Precision2Step(){
     string path;
     for (int i = 0; i<numExperiments; i++){
         for (int j = 0; j<numIterations; j++){
-            path = abs_path +"PrecisionNumNodes\\" + to_string(i);
-            path = path + "\\"+ to_string(j)+".txt";
+            path = abs_path +"PrecisionNumNodes/" + to_string(i);
+            path = path + "/"+ to_string(j)+".txt";
             cout << path;
             Graph graph = Graph(path);
 
@@ -272,7 +272,7 @@ void Precision2Step(){
             int wrongs = findWrongsBetweenMFCS(result2Step.MFCS, result1Step);
             results.push_back(ValueTime(wrongs, stod(value), result2Step.MFCS));
         }
-    writeListOfResultsToFile(abs_path+"PrecisionNumNodes\\output\\result.txt",results, "number wrong with k = 10", "num nodes");
+    writeListOfResultsToFile(abs_path+"PrecisionNumNodes/output/result.txt",results, "number wrong with k = 10", "num nodes");
 }
 }
 
@@ -296,7 +296,7 @@ void ToyDataSetValidation(){
 
     vector<ValueTime> results;
     string path;
-    path = abs_path +"ToyGraph\\graph_file5.inf";
+    path = abs_path +"ToyGraph/graph_file5.inf";
     cout << path;
     Graph graph = Graph(path);
 
