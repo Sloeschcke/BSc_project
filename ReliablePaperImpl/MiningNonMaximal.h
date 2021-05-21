@@ -3,10 +3,10 @@
 #include "hoved.h"
 #include "graph.h"
 #include "utility.h"
-#include "apriori.h"
+#include "Apriori.h"
 #include "fastPeeling.h"
 #include "TopKPeeling.h"
-#include "iterApriori.h"
+#include "IterApriori.h"
 
 
 void print(std::vector<int> const &input)

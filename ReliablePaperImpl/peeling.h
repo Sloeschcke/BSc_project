@@ -4,7 +4,7 @@
 #include "hoved.h"
 #include "graph.h"
 #include "utility.h"
-#include "apriori.h"
+#include "Apriori.h"
 
 using namespace std;
 

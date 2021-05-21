@@ -3,7 +3,7 @@
 
 #include "hoved.h"
 #include "utility.h"
-#include "apriori.h"
+#include "Apriori.h"
 #include "peeling.h"
 #include "fastPeeling.h"
 #include "TopKPeeling.h"
