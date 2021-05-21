@@ -17,8 +17,8 @@ int main(int argc, char const *argv[])
 	// runNumNodesFDist();
 	// ToyDataSetValidation();
 	allNumNodesRunExperiments();
-	// allVaryingKRunExperiments();
-	// allEdgeDegreeRunExperiments();
+	allEdgeDegreeRunExperiments();
+	allVaryingKRunExperiments();
 	// runAllNaiveExperiments();
 	return 0;
 }	

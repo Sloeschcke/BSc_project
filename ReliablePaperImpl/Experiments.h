@@ -183,10 +183,10 @@ void runExperiments(bool valency, string algorithm, string category, long double
 
             duration = max(duration, ( clock() - start ) / (double) CLOCKS_PER_SEC);
         }
-        // if(duration > 300){
-        //         writeListOfResultsToFile(resPath, results, category, category);
-        //         return;
-        // }
+        if(duration > 1800 && category != "Varying_K"){
+                writeListOfResultsToFile(resPath, results, category, category);
+                return;
+        }
     }
     writeListOfResultsToFile(resPath, results, category, category);
 }
@@ -216,10 +216,10 @@ void allVaryingKRunExperiments(){
     int k = 3;
     runExperiments(false, "2Step", "Varying_K", eps, delta, k);
     runExperiments(false, "1Step", "Varying_K", eps, delta, k);
-    // runExperiments(false, "Naive", "Varying_K", eps, delta, k);
+    runExperiments(false, "Naive", "Varying_K", eps, delta, k);
     runExperiments(true, "2Step", "Varying_K", eps, delta, k);
     runExperiments(true, "1Step", "Varying_K", eps, delta, k);
-    // runExperiments(true, "Naive", "Varying_K", eps, delta, k);
+    runExperiments(true, "Naive", "Varying_K", eps, delta, k);
 }
 
 void allEdgeDegreeRunExperiments(){
@@ -230,8 +230,8 @@ void allEdgeDegreeRunExperiments(){
     runExperiments(false, "1Step", "edge_degree", eps, delta, k);
     runExperiments(true, "2Step", "edge_degree", eps, delta, k);
     runExperiments(true, "1Step", "edge_degree", eps, delta, k);
-    // runExperiments(false, "Naive", "edge_degree", eps, delta, k);
-    // runExperiments(true, "Naive", "edge_degree", eps, delta, k);
+    runExperiments(false, "Naive", "edge_degree", eps, delta, k);
+    runExperiments(true, "Naive", "edge_degree", eps, delta, k);
 }
 
 void runAllNaiveExperiments(){
@@ -262,7 +262,6 @@ void Precision2Step(){
         for (int j = 0; j<numIterations; j++){
             path = abs_path +"PrecisionNumNodes/" + to_string(i);
             path = path + "/"+ to_string(j)+".txt";
-            cout << path;
             Graph graph = Graph(path);
 
             string value = graph.getValue();
