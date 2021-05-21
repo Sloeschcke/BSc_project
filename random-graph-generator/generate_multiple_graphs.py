@@ -3,11 +3,13 @@ import os
 import random
 import shutil
 from pathlib import Path
+import numpy as np
 
 
 def main():
     valency_probs = [0.1, 0.3, 0.5, 0.7, 0.9]
-    generate_edge_degree_graphs()
+    # generate_edge_degree_graphs()
+    generate_numNodes_graphs_f_dist()
     # generate_edge_degree_graphs(valency= valency_probs)
     # generate_numNodes_graphs()
     # generate_numNodes_graphs(valency = valency_probs)
@@ -16,8 +18,8 @@ def main():
 
     
 def get_relative_path(value_for_plot):
-    # relative_path = Path("C:/Users/mabet/OneDrive - Aarhus Universitet/Datalogi/Bachelor projekt/BSc_project/GraphsGeneration/processed_graphs")
-    relative_path = Path("C:/Users/chris/Documents/6. Semester/Bachelor Project/BSc_project/GraphsGeneration/processed_graphs")
+    relative_path = Path("C:/Users/mabet/OneDrive - Aarhus Universitet/Datalogi/Bachelor projekt/BSc_project/GraphsGeneration/processed_graphs")
+    # relative_path = Path("C:/Users/chris/Documents/6. Semester/Bachelor Project/BSc_project/GraphsGeneration/processed_graphs")
 
     print(os.path)
     path = relative_path/value_for_plot
@@ -40,6 +42,17 @@ def generate_numNodes_graphs(valency = None):
         for sample_index in range(num_samples):
             edges = edge_degree*nodes
             create_processed_graph_files(path, folder_index, sample_index, nodes, edges, 1, value_for_plot, nodes, valency)
+
+def generate_numNodes_graphs_f_dist():
+    num_nodes = [50, 100, 200, 400, 800]
+    edge_degree = 2
+    num_samples = 5
+    value_for_plot = "num_nodes_f_dist"
+    path = get_relative_path(value_for_plot)
+    for folder_index, nodes in enumerate(num_nodes):
+        for sample_index in range(num_samples):
+            edges = edge_degree*nodes
+            create_f_graph(path, folder_index, sample_index, nodes, edges, 1, value_for_plot, nodes, None)
 
     
 def generate_edge_degree_graphs(valency = None):
@@ -105,11 +118,35 @@ def create_graph_file( nodes, edges, filename , seed):
     command_nodes_and_edges = "python gen_graph.py -grnm -n " + str(nodes) + " -m " + str(edges) + " --seed "+ str(seed) + " --out " + filename
     os.system(command_nodes_and_edges)
 
+def create_f_graph(path, folderIndex, index, nodes, edges, seed, value_for_plot, value, valency = None):
+    subFolder = path/str(folderIndex)
+    if(valency is None):
+        subFolder = path/str(folderIndex)
+    else:
+        subFolder = path/(str(folderIndex) + "_valency")
+    if not os.path.exists(subFolder):
+        os.mkdir(subFolder)
+    filename = str(index)
+    create_graph_file(nodes, edges, filename, seed=seed+index)
+    
+    r = open(filename, "r")
+    first_line = r.readline()
+    
+    filename_processed = subFolder/f"{str(index)}.txt"
 
-def boostProbabilityOnUniformEdges(fileName):
-    r = open(file)
+    w = open(filename_processed, "w+")
+    
     lines = r.readlines()
+
+    if(valency is None):
+        w.write(first_line.rstrip("\n") +" "+value_for_plot + " " + str(value)+"\n")
+        for nodes in lines:
+            editedLine = f"{nodes.rstrip()} {str(np.random.f(0.1, 90, 1)[0])}\n"
+            w.write(editedLine)
+
+    w.close()
     r.close()
+    os.remove(filename)
     
 if __name__ == "__main__":
     main()

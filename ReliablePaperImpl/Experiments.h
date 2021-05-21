@@ -11,9 +11,9 @@
 #include "naiveTopKPeeling.h"
 #include "TopKSingleStep.h"
 
-// string abs_path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\";
+string abs_path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\";
 // string abspath = "/Users/sebastianloeschcke/Desktop/6.semester/BSc";
-string abs_path = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\GraphsGeneration\\processed_graphs\\";
+// string abs_path = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\GraphsGeneration\\processed_graphs\\";
 
 struct ValueTime {
     double long time;
@@ -123,7 +123,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
     vector<ValueTime> results;
     vector<int> k_values = {1,2,3,5,10,20,40,60,80,100};
     int numExperiments = 10;
-    int numRepetitions = 5;
+    int numRepetitions = 2;
     for (int j = 0; j < numExperiments; j++){
         string folderPath = path +"\\" + to_string(j);
         if(valency){
@@ -202,6 +202,13 @@ void allNumNodesRunExperiments(){
     runExperiments(true, "1Step", "num_nodes", eps, delta, k);
 }
 
+void runNumNodesFDist(){
+    long double eps = 0.05;
+    long double delta = 0.01;
+    int k = 1;
+    runExperiments(false, "1Step", "num_nodes_f_dist", eps, delta, k);
+}
+
 void allVaryingKRunExperiments(){
     long double eps = 0.05;
     long double delta = 0.01;
@@ -236,7 +243,7 @@ void runAllNaiveExperiments(){
     runExperiments(true, "Naive", "Varying_K", eps, delta, k);
     runExperiments(true, "Naive", "num_nodes", eps, delta, k);
     runExperiments(false, "Naive", "num_nodes", eps, delta, k);
-
+}
 
 
 

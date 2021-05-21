@@ -56,10 +56,10 @@ Candidate getNextCandidateAndCheckReliability(IterApriori & iApriori,vector<vect
     return Candidate(candidate, reliability);
 }
 
-long double getThresholdOfRandomDFS(vector<vector<vector<int>>> * graphSamples, vector<vector<int>> * components, int k){
+long double getThresholdOfRandomDFS(vector<vector<vector<int>>> * graphSamples, vector<AggConComps> * components, int k){
     long double lowestBest = 1;
     for(int i = 0; i < k ; i++){
-        set<int> firstComponent = convertVectorToSet((*components)[i]);
+        set<int> firstComponent = convertVectorToSet((*components)[i].nodes);
         long double res = subgraphReliability(*graphSamples, firstComponent, 0);
         if(res < lowestBest){
             lowestBest = res;
