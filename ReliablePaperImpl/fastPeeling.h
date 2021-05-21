@@ -4,9 +4,9 @@
 #include "hoved.h"
 #include "graph.h"
 #include "utility.h"
-#include "apriori.h"
+#include "Apriori.h"
 #include "peeling.h"
-#include "iterApriori.h"
+#include "IterApriori.h"
 
 
 using namespace std;
