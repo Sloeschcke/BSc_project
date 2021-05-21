@@ -10,7 +10,7 @@
 #include "IterApriori.h"
 #include "naiveTopKPeeling.h"
 #include "TopKSingleStep.h"
-string abs_path = "home/scm/BachelorProject/BSc_project/GraphsGeneration/processed_graphs";
+string abs_path = "/home/scm/BachelorProject/BSc_project/GraphsGeneration/processed_graphs";
 // string abs_path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\";
 // string abspath = "/Users/sebastianloeschcke/Desktop/6.semester/BSc";
 // string abs_path = "C:\\Users\\chris\\Documents\\6. Semester\\Bachelor Project\\BSc_project\\GraphsGeneration\\processed_graphs\\";
