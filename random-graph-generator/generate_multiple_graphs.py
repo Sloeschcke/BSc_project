@@ -137,11 +137,13 @@ def create_f_graph(path, folderIndex, index, nodes, edges, seed, value_for_plot,
     w = open(filename_processed, "w+")
     
     lines = r.readlines()
-
+    probs = np.random.f(1, 90, len(lines))
+    probs = probs/(np.max(probs)+0.5)
+    probs = np.round(probs, 4)
     if(valency is None):
         w.write(first_line.rstrip("\n") +" "+value_for_plot + " " + str(value)+"\n")
-        for nodes in lines:
-            editedLine = f"{nodes.rstrip()} {str(np.random.f(0.1, 90, 1)[0])}\n"
+        for i, nodes in enumerate(lines):
+            editedLine = f"{nodes.rstrip()} {str(probs[i])}\n"
             w.write(editedLine)
 
     w.close()
