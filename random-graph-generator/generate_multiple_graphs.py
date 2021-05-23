@@ -11,10 +11,10 @@ def main():
     # generate_edge_degree_graphs()
     # generate_numNodes_graphs_f_dist()
     # generate_edge_degree_graphs(valency= valency_probs)
-    # generate_numNodes_graphs()
-    generate_numNodes_graphs(valency = valency_probs)
+    generate_numNodes_graphs()
+    # generate_numNodes_graphs(valency = valency_probs)
     # generate_data_for_vary_k()
-    generate_data_for_vary_k(valency = valency_probs)
+    # generate_data_for_vary_k(valency = valency_probs)
 
     
 def get_relative_path(value_for_plot):
@@ -33,7 +33,7 @@ def get_relative_path(value_for_plot):
     return path
 
 def generate_numNodes_graphs(valency = None):
-    num_nodes = [10,15,20,25,30,35,40,45,50,55]
+    num_nodes = [10,20,30,40,50,60,70,80,90,100]
     edge_degree = 1.5
     num_samples = 5
     value_for_plot = "num_nodes"
@@ -111,7 +111,7 @@ def create_processed_graph_files(path, folderIndex, index, nodes, edges, seed, v
             w.write(editedLine)
 
     w.close()
-    # r.close()
+    r.close()
     os.remove(filename)
 
 def create_graph_file( nodes, edges, filename , seed):
