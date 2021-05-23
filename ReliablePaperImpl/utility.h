@@ -13,7 +13,23 @@ struct AggConComps {
         nodes = _nodes;
         number = _number;
     }
+    const bool operator < (const AggConComps &r) const{
+        return (number > r.number);
+    }
 };
+
+vector<AggConComps> aggregateConnectedComponentsSet(vector<vector<int>>& connectedComponents){
+    map<vector<int>, int> temp;
+    vector<AggConComps> res = {};
+    for (auto & comp : connectedComponents){
+        sort(comp.begin(), comp.end());
+        temp[comp]++;
+    }
+    for(std::map<vector<int>,int>::iterator iter = temp.begin(); iter != temp.end(); ++iter){
+        res.push_back(AggConComps(iter->first, iter->second));
+    }
+    return res;
+}
 
 vector<AggConComps> aggregateConnectedComponents(vector<vector<int>>& connectedComponents){
     vector<AggConComps> res = {};

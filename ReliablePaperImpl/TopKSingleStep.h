@@ -51,7 +51,7 @@ vector<Candidate> topKSingleStep(vector<vector<vector<int>>> * graphSamples, vec
 vector<Candidate> runTopKSingleStepWithoutSampling(vector<vector<vector<int>>>& samples, int numSamples, int k, long double eps){
     vector<vector<int>> components = connectedComponents(&samples);
     vector<vector<int>> filteredComponents = removeLenKComponents(&components, 2);
-    vector<AggConComps> aggregatedComponents = aggregateConnectedComponents(filteredComponents);
+    vector<AggConComps> aggregatedComponents = aggregateConnectedComponentsSet(filteredComponents);
     return topKSingleStep(&samples, &aggregatedComponents, numSamples, k, eps);
 }
 
