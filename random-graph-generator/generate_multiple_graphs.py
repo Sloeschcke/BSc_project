@@ -9,17 +9,17 @@ import numpy as np
 def main():
     valency_probs = [0.1, 0.3, 0.5, 0.7, 0.9]
     # generate_edge_degree_graphs()
-    generate_numNodes_graphs_f_dist()
+    # generate_numNodes_graphs_f_dist()
     # generate_edge_degree_graphs(valency= valency_probs)
     # generate_numNodes_graphs()
-    # generate_numNodes_graphs(valency = valency_probs)
+    generate_numNodes_graphs(valency = valency_probs)
     # generate_data_for_vary_k()
-    # generate_data_for_vary_k(valency = valency_probs)
+    generate_data_for_vary_k(valency = valency_probs)
 
     
 def get_relative_path(value_for_plot):
-    relative_path = Path("C:/Users/mabet/OneDrive - Aarhus Universitet/Datalogi/Bachelor projekt/BSc_project/GraphsGeneration/processed_graphs")
-    # relative_path = Path("C:/Users/chris/Documents/6. Semester/Bachelor Project/BSc_project/GraphsGeneration/processed_graphs")
+    # relative_path = Path("C:/Users/mabet/OneDrive - Aarhus Universitet/Datalogi/Bachelor projekt/BSc_project/GraphsGeneration/processed_graphs")
+    relative_path = Path("C:/Users/chris/Documents/6. Semester/Bachelor Project/BSc_project/GraphsGeneration/processed_graphs")
 
     print(os.path)
     path = relative_path/value_for_plot
@@ -34,7 +34,7 @@ def get_relative_path(value_for_plot):
 
 def generate_numNodes_graphs(valency = None):
     num_nodes = [10,15,20,25,30,35,40,45,50,55]
-    edge_degree = 2
+    edge_degree = 1.5
     num_samples = 5
     value_for_plot = "num_nodes"
     path = get_relative_path(value_for_plot)
@@ -45,7 +45,7 @@ def generate_numNodes_graphs(valency = None):
 
 def generate_numNodes_graphs_f_dist():
     num_nodes = [50, 100, 200, 400, 800]
-    edge_degree = 2
+    edge_degree = 1.5
     num_samples = 5
     value_for_plot = "num_nodes_f_dist"
     path = get_relative_path(value_for_plot)
@@ -70,13 +70,13 @@ def generate_data_for_vary_k(valency = None):
     value_for_plot = "Varying_K"
     relative_path_processed = get_relative_path(value_for_plot)
     nodes = 30
-    edges = 2*nodes
+    edges = 1.5*nodes
     numSamples = 5
-    k = 10
+    k = 1
     for folder_index in range(k):
         for sample_index in range(numSamples):
-            value = k + 1
-            create_processed_graph_files(relative_path_processed, folder_index, sample_index, nodes, edges, 1, value_for_plot, value, valency)
+            value = folder_index + 1
+            create_processed_graph_files(relative_path_processed, folder_index, sample_index, nodes, edges, folder_index, value_for_plot, value, valency)
         
 def create_processed_graph_files(path, folderIndex, index, nodes, edges, seed, value_for_plot, value, valency = None):
     subFolder = path/str(folderIndex)
@@ -111,11 +111,11 @@ def create_processed_graph_files(path, folderIndex, index, nodes, edges, seed, v
             w.write(editedLine)
 
     w.close()
-    r.close()
+    # r.close()
     os.remove(filename)
 
 def create_graph_file( nodes, edges, filename , seed):
-    command_nodes_and_edges = "python gen_graph.py -grnm -n " + str(nodes) + " -m " + str(edges) + " --seed "+ str(seed) + " --out " + filename
+    command_nodes_and_edges = "python gen_graph.py -grnm -n " + str(nodes) + " -m " + str(int(edges)) + " --seed "+ str(seed) + " --out " + filename
     os.system(command_nodes_and_edges)
 
 def genrate_f_dist_sample(no_samples):
