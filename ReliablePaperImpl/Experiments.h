@@ -206,12 +206,12 @@ void allNumNodesRunExperiments(){
     long double eps = 0.05;
     long double delta = 0.01;
     int k = 3;
-    runExperiments(true, "Naive", "num_nodes", eps, delta, k);
-    runExperiments(true, "2Step", "num_nodes", eps, delta, k);
     runExperiments(false, "1Step", "num_nodes", eps, delta, k);
-    runExperiments(false, "2Step", "num_nodes", eps, delta, k);
-    runExperiments(false, "Naive", "num_nodes", eps, delta, k);
     runExperiments(true, "1Step", "num_nodes", eps, delta, k);
+    runExperiments(false, "2Step", "num_nodes", eps, delta, k);
+    runExperiments(true, "2Step", "num_nodes", eps, delta, k);
+    runExperiments(false, "Naive", "num_nodes", eps, delta, k);
+    runExperiments(true, "Naive", "num_nodes", eps, delta, k);
 }
 
 void runNumNodesFDist(){
@@ -225,11 +225,11 @@ void allVaryingKRunExperiments(){
     long double eps = 0.05;
     long double delta = 0.01;
     int k = 3;
-    runExperiments(false, "2Step", "Varying_K", eps, delta, k);
     runExperiments(false, "1Step", "Varying_K", eps, delta, k);
-    runExperiments(false, "Naive", "Varying_K", eps, delta, k);
-    runExperiments(true, "2Step", "Varying_K", eps, delta, k);
     runExperiments(true, "1Step", "Varying_K", eps, delta, k);
+    runExperiments(false, "2Step", "Varying_K", eps, delta, k);
+    runExperiments(true, "2Step", "Varying_K", eps, delta, k);
+    runExperiments(false, "Naive", "Varying_K", eps, delta, k);
     runExperiments(true, "Naive", "Varying_K", eps, delta, k);
 }
 
@@ -237,10 +237,10 @@ void allEdgeDegreeRunExperiments(){
     long double eps = 0.05;
     long double delta = 0.01;
     int k = 3;
-    runExperiments(false, "2Step", "edge_degree", eps, delta, k);
     runExperiments(false, "1Step", "edge_degree", eps, delta, k);
-    runExperiments(true, "2Step", "edge_degree", eps, delta, k);
     runExperiments(true, "1Step", "edge_degree", eps, delta, k);
+    runExperiments(false, "2Step", "edge_degree", eps, delta, k);
+    runExperiments(true, "2Step", "edge_degree", eps, delta, k);
     runExperiments(false, "Naive", "edge_degree", eps, delta, k);
     runExperiments(true, "Naive", "edge_degree", eps, delta, k);
 }
