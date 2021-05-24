@@ -24,7 +24,7 @@ int main(int argc, char const *argv[])
 	// allEdgeDegreeRunExperiments();
 	// allVaryingKRunExperiments();
 	// runAllNaiveExperiments();
-	runAllEpsilonExperiments();
 	runAllDeltaExperiments();
+	runAllEpsilonExperiments();
 	return 0;
 }	
