@@ -209,7 +209,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
                     results.push_back(valTime);
                     time = valTime.time;
                 } else if (category == "epsilon"){
-                    ValueTime val = runSingleStepExperiment(filePath, value, eps, delta);
+                    ValueTime val = runSingleStepExperiment(filePath, k, value, delta);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
