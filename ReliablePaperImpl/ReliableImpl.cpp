@@ -16,10 +16,10 @@ int main(int argc, char const *argv[])
 	// Precision2Step();
 	// runNumNodesFDist();
 	// ToyDataSetValidation();
-	long double eps = 0.05;
-    long double delta = 0.01;
-    int k = 3;
-	runExperiments(true, "2Step", "num_nodes", eps, delta, k);
+	// long double eps = 0.05;
+    // long double delta = 0.01;
+    // int k = 3;
+	// runExperiments(true, "2Step", "num_nodes", eps, delta, k);
 	// allNumNodesRunExperiments();
 	// allEdgeDegreeRunExperiments();
 	// allVaryingKRunExperiments();
