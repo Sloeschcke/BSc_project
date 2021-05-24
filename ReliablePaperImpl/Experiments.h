@@ -164,13 +164,11 @@ void runExperiments(bool valency, string algorithm, string category, long double
                     results.push_back(valTime);
                     time = valTime.time;
                 } else if(category == "epsilon"){
-                    value = k_values[j];
                     ValueTime val = run2StepExperiment(filePath, k, value, delta);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
                 } else if(category == "delta"){
-                    value = k_values[j];
                     ValueTime val = run2StepExperiment(filePath, k, eps, value);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
@@ -183,19 +181,16 @@ void runExperiments(bool valency, string algorithm, string category, long double
                 }
             } if(algorithm=="Naive") {
                 if(category == "Varying_K"){
-                    value = k_values[j];
                     ValueTime val = runNaiveExperiment(filePath, value, eps, delta);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
                 } else if(category == "epsilon"){
-                    value = k_values[j];
                     ValueTime val = runNaiveExperiment(filePath, k, value, delta);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
                 } else if(category == "delta"){
-                    value = k_values[j];
                     ValueTime val = runNaiveExperiment(filePath, k, eps, value);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
@@ -209,19 +204,16 @@ void runExperiments(bool valency, string algorithm, string category, long double
             }
             if(algorithm == "1Step"){
                 if(category == "Varying_K"){
-                    value = k_values[j];
                     ValueTime val = runSingleStepExperiment(filePath, value, eps, delta);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
                 } else if (category == "epsilon"){
-                    value = epsilon_values[j];
                     ValueTime val = runSingleStepExperiment(filePath, value, eps, delta);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
                 } else if(category == "delta"){
-                    value = k_values[j];
                     ValueTime val = runSingleStepExperiment(filePath, k, eps, value);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
