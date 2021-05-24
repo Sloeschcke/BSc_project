@@ -282,7 +282,7 @@ void allEdgeDegreeRunExperiments(){
     long double delta = 0.01;
     int k = 3;
     // runExperiments(false, "1Step", "edge_degree", eps, delta, k);
-    runExperiments(true, "1Step", "edge_degree", eps, delta, k);
+    // runExperiments(true, "1Step", "edge_degree", eps, delta, k);
     runExperiments(false, "2Step", "edge_degree", eps, delta, k);
     runExperiments(true, "2Step", "edge_degree", eps, delta, k);
     // runExperiments(false, "Naive", "edge_degree", eps, delta, k);
