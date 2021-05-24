@@ -135,7 +135,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
     vector<ValueTime> results;
     vector<int> k_values = {1,2,3,5,10,20,40,60,80,100};
     vector<long double> epsilon_values = {0,025, 0.03, 0.035, 0.04, 0.045, 0.05, 0.055, 0.06, 0.065, 0.7};
-    vector<long double> delta_values = {0.01, 0.008, 0.006, 0.004, 0.002};
+    vector<long double> delta_values = {0.002, 0.004, 0.006, 0.008, 0.01, 0.012, 0.014, 0.016, 0.018, 0.02};
     int numExperiments = 10;
     int numRepetitions = 5;
     for (int j = 0; j < numExperiments; j++){
@@ -281,7 +281,7 @@ void allEdgeDegreeRunExperiments(){
     long double eps = 0.05;
     long double delta = 0.01;
     int k = 3;
-    runExperiments(false, "1Step", "edge_degree", eps, delta, k);
+    // runExperiments(false, "1Step", "edge_degree", eps, delta, k);
     runExperiments(true, "1Step", "edge_degree", eps, delta, k);
     runExperiments(false, "2Step", "edge_degree", eps, delta, k);
     runExperiments(true, "2Step", "edge_degree", eps, delta, k);
