@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
     // long double delta = 0.01;
     // int k = 3;
 	// runExperiments(true, "2Step", "num_nodes", eps, delta, k);
-	// allNumNodesRunExperiments();
+	allNumNodesRunExperiments();
 	// allEdgeDegreeRunExperiments();
 	// allVaryingKRunExperiments();
 	// runAllNaiveExperiments();
