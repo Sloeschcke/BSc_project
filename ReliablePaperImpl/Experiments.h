@@ -134,7 +134,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
     string resPath = getResPath(valency, algorithm, path);
     vector<ValueTime> results;
     vector<int> k_values = {1,2,3,5,10,20,40,60,80,100};
-    vector<long double> epsilon_values = {0,025, 0.03, 0.035, 0.04, 0.045, 0.05, 0.055, 0.06, 0.065, 0.7}
+    vector<long double> epsilon_values = {0,025, 0.03, 0.035, 0.04, 0.045, 0.05, 0.055, 0.06, 0.065, 0.7};
     vector<long double> delta_values = {0.01, 0.008, 0.006, 0.004, 0.002};
     int numExperiments = 10;
     int numRepetitions = 5;
@@ -145,6 +145,8 @@ void runExperiments(bool valency, string algorithm, string category, long double
         }
         double duration;
         for (int i = 0; i<numRepetitions; i++){
+            clock_t start;
+            start = clock();
             string filePath = folderPath + "/"+ to_string(i)+".txt";
             double long value;
             double long time;
@@ -155,8 +157,6 @@ void runExperiments(bool valency, string algorithm, string category, long double
             } else if(category == "delta"){
                 value = delta_values[j];
             }
-            clock_t start;
-            start = clock();
             if(algorithm == "2Step"){
                 if(category == "Varying_K"){
                     ValueTime val = run2StepExperiment(filePath, value, eps, delta);
@@ -169,9 +169,9 @@ void runExperiments(bool valency, string algorithm, string category, long double
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
-                else if(category == "delta"){
+                } else if(category == "delta"){
                     value = k_values[j];
-                    ValueTime val = run2StepExperiment(filePath, k, epsilon, value);
+                    ValueTime val = run2StepExperiment(filePath, k, eps, value);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
@@ -188,15 +188,15 @@ void runExperiments(bool valency, string algorithm, string category, long double
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
-                else if(category == "epsilon"){
+                } else if(category == "epsilon"){
                     value = k_values[j];
                     ValueTime val = runNaiveExperiment(filePath, k, value, delta);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
-                else if(category == "delta"){
+                } else if(category == "delta"){
                     value = k_values[j];
-                    ValueTime val = runNaiveExperiment(filePath, k, epsilon, value);
+                    ValueTime val = runNaiveExperiment(filePath, k, eps, value);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
@@ -214,15 +214,15 @@ void runExperiments(bool valency, string algorithm, string category, long double
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
-                else if {category == "epsilon"}{
+                } else if (category == "epsilon"){
                     value = epsilon_values[j];
                     ValueTime val = runSingleStepExperiment(filePath, value, eps, delta);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
-                else if(category == "delta"){
+                } else if(category == "delta"){
                     value = k_values[j];
-                    ValueTime val = runSingleStepExperiment(filePath, k, epsilon, value);
+                    ValueTime val = runSingleStepExperiment(filePath, k, eps, value);
                     ValueTime valTime = ValueTime(val.time, value, val.result);
                     results.push_back(valTime);
                     time = valTime.time;
