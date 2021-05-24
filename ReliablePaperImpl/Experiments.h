@@ -289,7 +289,7 @@ void allEdgeDegreeRunExperiments(){
     // runExperiments(true, "Naive", "edge_degree", eps, delta, k);
 }
 
-runAllEpsilonExperiments(){
+void runAllEpsilonExperiments(){
     long double eps = 0.05;
     long double delta = 0.01;
     int k = 3;
@@ -299,7 +299,7 @@ runAllEpsilonExperiments(){
     runExperiments(true, "2Step", "epsilon", eps, delta, k);
 }
 
-runAllDeltaExperiments(){
+void runAllDeltaExperiments(){
     long double eps = 0.05;
     long double delta = 0.01;
     int k = 3;
