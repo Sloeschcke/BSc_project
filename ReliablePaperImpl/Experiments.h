@@ -3,7 +3,7 @@
 
 #include "hoved.h"
 #include "utility.h"
-#include "apriori.h"
+#include "Apriori.h"
 #include "peeling.h"
 #include "fastPeeling.h"
 #include "TopKPeeling.h"
@@ -26,6 +26,16 @@ struct ValueTime {
     }
 };
 
+void printMFCS2(vector<Candidate> MFCS){
+	for (auto elem: MFCS)
+	{
+		for(auto elem2: elem.nodes){
+			cout << elem2 << ", " ;
+		}
+		cout << "with reliability: " << elem.support << "\n";
+	}
+}
+
 ValueTime run2StepExperiment(string path, int k, long double eps, long double delta){
     Graph graph = Graph(path);
     string value = graph.getValue();
@@ -46,6 +56,7 @@ ValueTime runSingleStepExperiment(string path, int k, long double eps, long doub
     clock_t start;
     start = clock();
     vector<Candidate> result = runTopKSingleStep(path,k, eps, delta);
+    printMFCS2(result);
     double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     return ValueTime(duration, stod(value), result);
 }
@@ -122,7 +133,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
     string resPath = getResPath(valency, algorithm, path);
     vector<ValueTime> results;
     vector<int> k_values = {1,2,3,5,10,20,40,60,80,100};
-    int numExperiments = 10;
+    int numExperiments = 5;
     int numRepetitions = 2;
     for (int j = 0; j < numExperiments; j++){
         string folderPath = path +"\\" + to_string(j);
@@ -276,15 +287,7 @@ void Precision2Step(){
 }
 }
 
-void printMFCS2(vector<Candidate> MFCS){
-	for (auto elem: MFCS)
-	{
-		for(auto elem2: elem.nodes){
-			cout << elem2 << ", " ;
-		}
-		cout << "with reliability: " << elem.support << "\n";
-	}
-}
+
 
 void ToyDataSetValidation(){
     int numExperiments = 5;

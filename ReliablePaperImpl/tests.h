@@ -1,6 +1,6 @@
 #include "hoved.h"
 #include "utility.h"
-#include "apriori.h"
+#include "Apriori.h"
 #include "peeling.h"
 #include "fastPeeling.h"
 #include "TopKPeeling.h"
@@ -52,8 +52,10 @@ void testAggConnectedComponnetsV2(){
 		vector<vector<vector<int>>> samples = sample(graph, 100);
 		vector<vector<int>> cC = connectedComponents(&samples);
 		vector<vector<int>> fCC = removeLenKComponents(&cC, 2);
-		vector<AggConComps> aCC = aggregateConnectedComponents(fCC);
-		assert(aCC.size() < 10);
+		vector<AggConComps> aCCSet = aggregateConnectedComponents(fCC);
+		vector<AggConComps> aCC = aggregateConnectedComponentsSet(fCC);
+		assert(aCC.size() < 22);
+		assert(aCCSet.size() < 22);
     }
 
 void testConnectedComponnets2(){
@@ -403,7 +405,7 @@ void testAll(){
 	// testFastPeelingSynthetic();
 	// testBothTopKPeelingSynthetic();
 	// testFastPeelingOnRapportGraph();
-	// testAggConnectedComponnetsV2();
-	testFindWrongsBetweenMFCS();
+	testAggConnectedComponnetsV2();
+	// testFindWrongsBetweenMFCS();
 }
 

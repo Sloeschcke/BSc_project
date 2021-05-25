@@ -1,4 +1,4 @@
-
+from scipy.stats import f, norm
 import os
 import random
 import shutil
@@ -118,7 +118,15 @@ def create_graph_file( nodes, edges, filename , seed):
     command_nodes_and_edges = "python gen_graph.py -grnm -n " + str(nodes) + " -m " + str(edges) + " --seed "+ str(seed) + " --out " + filename
     os.system(command_nodes_and_edges)
 
-def create_f_graph(path, folderIndex, index, nodes, edges, seed, value_for_plot, value, valency = None):
+def genrate_f_dist_sample(no_samples):
+    rv2 = f(dfn=10, dfd=50, loc=0, scale=1)
+    x = np.linspace(rv2.ppf(0.0001), rv2.ppf(0.9999), no_samples)
+    y = rv2.pdf(x)
+    y = y/max(y)
+    y = np.random.permutation(y)
+    return y
+
+def create_f_graph(path, folderIndex, index, nodes, edges, seed, value_for_plot, value, valency = None, ):
     subFolder = path/str(folderIndex)
     if(valency is None):
         subFolder = path/str(folderIndex)
@@ -137,11 +145,13 @@ def create_f_graph(path, folderIndex, index, nodes, edges, seed, value_for_plot,
     w = open(filename_processed, "w+")
     
     lines = r.readlines()
-
+    probs = np.random.f(1, 90, len(lines))
+    probs = probs/(np.max(probs)+0.5)
+    probs = np.round(probs, 4)
     if(valency is None):
         w.write(first_line.rstrip("\n") +" "+value_for_plot + " " + str(value)+"\n")
-        for nodes in lines:
-            editedLine = f"{nodes.rstrip()} {str(np.random.f(0.1, 90, 1)[0])}\n"
+        for i, nodes in enumerate(lines):
+            editedLine = f"{nodes.rstrip()} {str(probs[i])}\n"
             w.write(editedLine)
 
     w.close()
