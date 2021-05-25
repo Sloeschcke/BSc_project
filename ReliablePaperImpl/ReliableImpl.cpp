@@ -21,9 +21,9 @@ int main(int argc, char const *argv[])
     // int k = 3;
 	// runExperiments(true, "2Step", "num_nodes", eps, delta, k);
 	// allNumNodesRunExperiments();
-	allEdgeDegreeRunExperiments();
+	// allEdgeDegreeRunExperiments();
 	// allVaryingKRunExperiments();
-	// runAllNaiveExperiments();
+	runAllNaiveExperiments();
 	// runAllDeltaExperiments();
 	// runAllEpsilonExperiments();
 	return 0;
