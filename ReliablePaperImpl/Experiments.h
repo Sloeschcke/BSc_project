@@ -259,7 +259,7 @@ void runAllNaiveExperiments(){
 
 
 void Precision2Step(){
-    int numExperiments = 5;
+    int numExperiments = 10;
     int numIterations = 5;
     int k=10;
     double long eps = 0.05;
@@ -270,7 +270,7 @@ void Precision2Step(){
     string path;
     for (int i = 0; i<numExperiments; i++){
         for (int j = 0; j<numIterations; j++){
-            path = abs_path +"PrecisionNumNodes\\" + to_string(i);
+            path = abs_path +"num_nodes\\" + to_string(i);
             path = path + "\\"+ to_string(j)+".txt";
             cout << path;
             Graph graph = Graph(path);
