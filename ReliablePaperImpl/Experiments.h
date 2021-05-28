@@ -224,6 +224,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
                     time = valTime.time;
                 }
             }
+            writeListOfResultsToFile(resPath, results, category, category);
             cout << "finished value: "<< value << " in time: " << time <<"\n";
             cout << "============================\n";
 
