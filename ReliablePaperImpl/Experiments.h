@@ -230,7 +230,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
 
             duration = max(duration, ( clock() - start ) / (double) CLOCKS_PER_SEC);
         }
-        if(duration > 1300 && category != "Varying_K"){
+        if(duration > 900 && category != "Varying_K"){
                 writeListOfResultsToFile(resPath, results, category, category);
                 return;
         }
