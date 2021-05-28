@@ -230,7 +230,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
 
             duration = max(duration, ( clock() - start ) / (double) CLOCKS_PER_SEC);
         }
-        if(duration > 900 && category != "Varying_K"){
+        if(duration > 1100 && category != "Varying_K"){
                 writeListOfResultsToFile(resPath, results, category, category);
                 return;
         }
@@ -313,8 +313,8 @@ void runAllNaiveExperiments(){
     // runExperiments(false, "Naive", "epsilon", eps, delta, k);
     // runExperiments(true, "Naive", "delta", eps, delta, k);
     // runExperiments(false, "Naive", "delta", eps, delta, k);
-    // runExperiments(true, "Naive", "num_nodes", eps, delta, k);
-    runExperiments(false, "Naive", "num_nodes", eps, delta, k);
+    runExperiments(true, "Naive", "num_nodes", eps, delta, k);
+    // runExperiments(false, "Naive", "num_nodes", eps, delta, k);
 }
 
 
