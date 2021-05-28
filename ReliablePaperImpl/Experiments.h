@@ -309,11 +309,11 @@ void runAllNaiveExperiments(){
     // runExperiments(true, "Naive", "edge_degree", eps, delta, k);
     // runExperiments(false, "Naive", "Varying_K", eps, delta, k);
     // runExperiments(true, "Naive", "Varying_K", eps, delta, k);
-    runExperiments(true, "Naive", "epsilon", eps, delta, k);
-    runExperiments(false, "Naive", "epsilon", eps, delta, k);
-    runExperiments(true, "Naive", "delta", eps, delta, k);
-    runExperiments(false, "Naive", "delta", eps, delta, k);
-    runExperiments(true, "Naive", "num_nodes", eps, delta, k);
+    // runExperiments(true, "Naive", "epsilon", eps, delta, k);
+    // runExperiments(false, "Naive", "epsilon", eps, delta, k);
+    // runExperiments(true, "Naive", "delta", eps, delta, k);
+    // runExperiments(false, "Naive", "delta", eps, delta, k);
+    // runExperiments(true, "Naive", "num_nodes", eps, delta, k);
     runExperiments(false, "Naive", "num_nodes", eps, delta, k);
 }
 
