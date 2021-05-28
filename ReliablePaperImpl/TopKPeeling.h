@@ -158,33 +158,21 @@ vector<Candidate> filterCandidates(vector<Candidate> & candidates, int k, double
 
 vector<Candidate> topKPeelingStep2 (Graph & graph, resultMFCS & step1Results, int stepSize, long double epsilon, long double delta, int k, int step1NumSamples, long double epsilonLimit){
     int numSampled = step1NumSamples;
-    int resultSize = step1Results.MFCS.size() + step1Results.MFCSBuffer.size();
     int numSamples = stepSize;
     vector<Candidate> candidates = step1Results.MFCS;
     candidates.insert(candidates.end(), step1Results.MFCSBuffer.begin(),  step1Results.MFCSBuffer.end() ); 
-    //TODO fix while less than
-    while(numSampled < 100000000 && candidates.size()>k){
+    int numSamplesLimit = calculateRequiredSamples2(epsilonLimit, delta, candidates.size());
+    while(numSampled < numSamplesLimit){
         vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
         candidates = updateReliabilities(graphSamples, candidates, numSampled);
         numSampled = numSampled+graphSamples.size();
-        long double currentEpsilon = calculateEpsilon(delta, numSampled, candidates.size());
-        cout << numSampled <<" : " << currentEpsilon << " " << candidates[k-1].support << "," << candidates[k].support << "\n";
-        // if(numSampled > 700000){
-        //     cout << "numSampled > 700000 \n";
-        // }
-        if(currentEpsilon<epsilonLimit) {
-            cout << "Early stopped";
-            sort(candidates.begin(), candidates.end());
-            vector<Candidate> candidates_topk;
-            for (int i = 0; i<k; i++){
-                candidates_topk.push_back(candidates[i]);
-            }
-            // copy(candidates.begin(), candidates.begin()+k+1, candidates_topk.begin());
-            return candidates_topk;
         }
-        candidates = filterCandidates(candidates, k, currentEpsilon);
+    sort(candidates.begin(), candidates.end());
+    vector<Candidate> candidates_topk;
+    for (int i = 0; i<k; i++){
+        candidates_topk.push_back(candidates[i]);
     }
-    return candidates;
+    return candidates_topk;
 } 
 
 

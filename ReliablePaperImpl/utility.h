@@ -336,6 +336,11 @@ int calculateRequiredSamples(long double epsilon, long double delta, long double
 	return sampleSize;
 }
 
+int calculateRequiredSamples2(long double epsilon, long double delta, long double setSize){
+    int sampleSize = (1/(2*pow(epsilon, 2)))*(log(4*setSize)/(delta));
+    return sampelSize;
+}
+
 
 
 
