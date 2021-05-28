@@ -188,6 +188,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
                     time = valTime.time;
                 }
             }
+            writeListOfResultsToFile(resPath, results, category, category);
             cout << "finished value: "<< value << " in time: " << time <<"\n";
             cout << "============================\n";
 
@@ -264,7 +265,7 @@ void Precision2Step(){
     int k=10;
     double long eps = 0.05;
     double long delta = 0.01;
-    double long epsLimit = 0.0001;
+    double long epsLimit = 0.001;
 
     vector<ValueTime> results;
     string path;
