@@ -17,7 +17,8 @@
    Library:
      gcc -O3 -c LambertW1.c 
 */
-
+#ifndef LAMBERTW_H
+#define LAMBERTW_H
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -60,8 +61,7 @@ double LambertW1(const double z) {
   fprintf(stderr,"LambertW1: No convergence at z=%g, exiting.\n",z); 
   exit(1);
 }
-
-
+#endif
 
 #ifdef TESTW
 /* test program...  */
