@@ -221,6 +221,21 @@ void runNumNodesFDist(){
     runExperiments(false, "1Step", "num_nodes_f_dist", eps, delta, k);
 }
 
+void run2StepAll(){
+    long double epsLimit = 0.0005;
+    long double eps = 0.05;
+    long double delta = 0.01;
+    int k = 3;
+    runExperiments(false, "2Step", "num_nodes", eps, delta, k);
+    runExperiments(true, "2Step", "num_nodes", eps, delta, k);
+    runExperiments(false, "2Step", "edge_degree", eps, delta, k);
+    runExperiments(true, "2Step", "edge_degree", eps, delta, k);
+    runExperiments(false, "2Step", "delta", eps, delta, k);
+    runExperiments(true, "2Step", "delta", eps, delta, k);
+    runExperiments(true, "2Step", "Varying_K", eps, delta, k);
+    runExperiments(false, "2Step", "Varying_K", eps, delta, k);
+}
+
 void allVaryingKRunExperiments(){
     long double eps = 0.05;
     long double delta = 0.01;
