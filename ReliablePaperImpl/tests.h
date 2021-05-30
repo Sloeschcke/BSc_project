@@ -7,6 +7,7 @@
 #include "IterApriori.h"
 #include "naiveTopKPeeling.h"
 #include "TopKSingleStep.h"
+#include "LambertW.h"
 using namespace std;
 
 
@@ -71,7 +72,16 @@ void testConnectedComponnets2(){
 		vector<vector<int>> expected = {{0, 1, 4, 3, 2, 5, 6}, {7,8}, {9,10}};
 
 		assert(cC ==  expected);
-    }
+}
+
+void lambertWTest(){
+	double t = calculateT(10000, 0.01, 0.0001, 10);
+	cout << t;
+	long double num = -(1.0/20000000.0);
+	// cout << num;
+	long double res = (exp(-LambertW1(num)))/4000;
+	// cout << res;
+}
 
 void testSampler(){
 	string graph_file = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file.inf";
@@ -405,7 +415,8 @@ void testAll(){
 	// testFastPeelingSynthetic();
 	// testBothTopKPeelingSynthetic();
 	// testFastPeelingOnRapportGraph();
-	testAggConnectedComponnetsV2();
+	// testAggConnectedComponnetsV2();
 	// testFindWrongsBetweenMFCS();
+	lambertWTest();
 }
 

@@ -4,6 +4,7 @@
 #include "graph.h"
 #include "utility.h"
 #include "IterApriori.h"
+#include "LambertW.h"
 
 struct resultMFCS{
     vector<Candidate> MFCS;
@@ -126,8 +127,8 @@ resultMFCS topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<AggCon
 
 
 
-long double calculateEpsilon(long double delta, long double numSamples, int CandidateSetSize ){
-    return sqrt(log((2*CandidateSetSize)/delta)/(2.0*numSamples)); 
+long double calculateEpsilon(long double delta, long double numSamples, int CandidateSetSize, int t){
+    return sqrt(log((2*CandidateSetSize*t)/delta)/(2.0*numSamples)); 
 }
 
 
@@ -161,11 +162,26 @@ vector<Candidate> topKPeelingStep2 (Graph & graph, resultMFCS & step1Results, in
     int numSamples = stepSize;
     vector<Candidate> candidates = step1Results.MFCS;
     candidates.insert(candidates.end(), step1Results.MFCSBuffer.begin(),  step1Results.MFCSBuffer.end() ); 
-    int numSamplesLimit = calculateRequiredSamples2(epsilonLimit, delta, candidates.size());
-    while(numSampled < numSamplesLimit){
+    //TODO fix while less than
+    int t = calculateT(stepSize, delta, epsilonLimit, candidates.size());
+    while(numSampled < 100000000 && candidates.size()>k){
         vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
         candidates = updateReliabilities(graphSamples, candidates, numSampled);
         numSampled = numSampled+graphSamples.size();
+        long double currentEpsilon = calculateEpsilon(delta, numSampled, candidates.size(), t);
+        cout << numSampled <<" : " << currentEpsilon << " " << candidates[k-1].support << "," << candidates[k].support << "\n";
+        // if(numSampled > 700000){
+        //     cout << "numSampled > 700000 \n";
+        // }
+        if(currentEpsilon<epsilonLimit) {
+            cout << "Early stopped";
+            sort(candidates.begin(), candidates.end());
+            vector<Candidate> candidates_topk;
+            for (int i = 0; i<k; i++){
+                candidates_topk.push_back(candidates[i]);
+            }
+            // copy(candidates.begin(), candidates.begin()+k+1, candidates_topk.begin());
+            return candidates_topk;
         }
     sort(candidates.begin(), candidates.end());
     vector<Candidate> candidates_topk;

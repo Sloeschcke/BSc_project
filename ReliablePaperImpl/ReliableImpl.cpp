@@ -14,6 +14,7 @@ int main(int argc, char const *argv[])
 	// ValueTime valTime = run2StepExperiment(path, 2, 0.05, 0.01);
 	// testAll();
 	// Precision2Step();
+	run2StepAll();
 	// runNumNodesFDist();
 	// ToyDataSetValidation();
 	// long double eps = 0.05;
@@ -23,7 +24,7 @@ int main(int argc, char const *argv[])
 	// allNumNodesRunExperiments();
 	// allEdgeDegreeRunExperiments();
 	// allVaryingKRunExperiments();
-	runAllNaiveExperiments();
+	// runAllNaiveExperiments();
 	// runAllDeltaExperiments();
 	// runAllEpsilonExperiments();
 	return 0;

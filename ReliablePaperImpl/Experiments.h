@@ -257,6 +257,21 @@ void runNumNodesFDist(){
     runExperiments(false, "1Step", "num_nodes_f_dist", eps, delta, k);
 }
 
+void run2StepAll(){
+    long double epsLimit = 0.0005;
+    long double eps = 0.05;
+    long double delta = 0.01;
+    int k = 3;
+    runExperiments(false, "2Step", "num_nodes", eps, delta, k);
+    runExperiments(true, "2Step", "num_nodes", eps, delta, k);
+    runExperiments(false, "2Step", "edge_degree", eps, delta, k);
+    runExperiments(true, "2Step", "edge_degree", eps, delta, k);
+    runExperiments(false, "2Step", "delta", eps, delta, k);
+    runExperiments(true, "2Step", "delta", eps, delta, k);
+    runExperiments(true, "2Step", "Varying_K", eps, delta, k);
+    runExperiments(false, "2Step", "Varying_K", eps, delta, k);
+}
+
 void allVaryingKRunExperiments(){
     long double eps = 0.05;
     long double delta = 0.01;
@@ -320,19 +335,20 @@ void runAllNaiveExperiments(){
 
 
 void Precision2Step(){
-    int numExperiments = 5;
+    int numExperiments = 10;
     int numIterations = 5;
     int k=10;
     double long eps = 0.05;
     double long delta = 0.01;
-    double long epsLimit = 0.0001;
+    double long epsLimit = 0.001;
 
     vector<ValueTime> results;
     string path;
     for (int i = 0; i<numExperiments; i++){
         for (int j = 0; j<numIterations; j++){
-            path = abs_path +"PrecisionNumNodes/" + to_string(i);
-            path = path + "/"+ to_string(j)+".txt";
+            path = abs_path +"num_nodes\\" + to_string(i);
+            path = path + "\\"+ to_string(j)+".txt";
+            cout << path;
             Graph graph = Graph(path);
 
             string value = graph.getValue();
