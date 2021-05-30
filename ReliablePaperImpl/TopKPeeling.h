@@ -189,7 +189,8 @@ vector<Candidate> topKPeelingStep2 (Graph & graph, resultMFCS & step1Results, in
         candidates_topk.push_back(candidates[i]);
     }
     return candidates_topk;
-} 
+}
+}
 
 
 resultMFCS runTopKPeelingWithoutSampling(vector<vector<vector<int>>>& samples, int numSamples, int k, long double eps){
