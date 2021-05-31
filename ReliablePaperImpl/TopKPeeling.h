@@ -178,6 +178,7 @@ vector<Candidate> topKPeelingStep2 (Graph& graph, resultMFCS& step1Results, int 
             }
             return candidates_topk;
         }
+        candidates = filterCandidates(candidates, k, currentEpsilon);
     }
     sort(candidates.begin(), candidates.end());
     vector<Candidate> candidates_topk;
