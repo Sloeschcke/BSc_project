@@ -342,6 +342,11 @@ int calculateRequiredSamples2(long double epsilon, long double delta, long doubl
 }
 
 
+int calculateRequiredSamplesNewMethod(long double epsilon, long double delta, long double numNodes, long double k){
+    long double m = pow(numNodes, 2);
+    long int sampleSize = (2/epsilon)*log((2*m+k*(m-k))/delta);
+    return sampleSize;
+}
 
 
 

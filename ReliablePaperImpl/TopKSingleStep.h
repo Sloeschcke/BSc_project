@@ -57,7 +57,7 @@ vector<Candidate> runTopKSingleStepWithoutSampling(vector<vector<vector<int>>>& 
 
 vector<Candidate> runTopKSingleStep(string fileName, int k, long double eps, long double delta){
     Graph graph(fileName);
-    int numSamples = calculateRequiredSamples(eps, delta, graph.numNodes + 1);
+    int numSamples = calculateRequiredSamplesNewMethod(eps, delta, graph.numNodes, k);
     vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
     vector<Candidate> step1 = runTopKSingleStepWithoutSampling(graphSamples, numSamples, k, eps);
     return step1;
