@@ -178,13 +178,13 @@ vector<Candidate> topKPeelingStep2 (Graph& graph, resultMFCS& step1Results, int 
             }
             return candidates_topk;
         }
+    }
     sort(candidates.begin(), candidates.end());
     vector<Candidate> candidates_topk;
     for (int i = 0; i<k; i++){
         candidates_topk.push_back(candidates[i]);
     }
     return candidates_topk;
-}
 }
 
 
