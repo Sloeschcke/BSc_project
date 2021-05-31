@@ -157,7 +157,7 @@ vector<Candidate> filterCandidates(vector<Candidate> & candidates, int k, double
     return candidates;
 }
 
-vector<Candidate> topKPeelingStep2 (Graph & graph, resultMFCS & step1Results, int stepSize, long double epsilon, long double delta, int k, int step1NumSamples, long double epsilonLimit){
+vector<Candidate> topKPeelingStep2 (Graph& graph, resultMFCS& step1Results, int stepSize, long double epsilon, long double delta, int k, int step1NumSamples, long double epsilonLimit){
     int numSampled = step1NumSamples;
     int numSamples = stepSize;
     vector<Candidate> candidates = step1Results.MFCS;
