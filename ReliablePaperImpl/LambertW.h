@@ -62,26 +62,3 @@ double LambertW1(const double z) {
   exit(1);
 }
 #endif
-
-#ifdef TESTW
-/* test program...  */
-int main() {
-  int i;
-  double z,w,err;
-  for (i=0; i<100; i++) {
-    z=i/100.0-0.3678794411714423215955; 
-    if (z>=0.0) break;
-    w=LambertW1(z); 
-    err=exp(w)-z/w;
-    printf("W(%8.4f)=%22.16f, check: exp(W(z))-z/W(z)=%e\n",z,w,err);
-  }
-  z=-1.0e-2; 
-  for (i=0; i<10; i++) {
-    z/=10.0; 
-    w=LambertW1(z); 
-    err=exp(w)-z/w;
-    printf("W(%8.4g)=%22.16f, check: exp(W(z))-z/W(z)=%e\n",z,w,err);
-  }
-  return 0;
-}
-#endif
