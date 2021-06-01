@@ -257,7 +257,7 @@ void run1StepAll(){
     // runExperiments(false, "1Step", "num_nodes", eps, delta, k);
     // runExperiments(true, "1Step", "num_nodes", eps, delta, k);
     // runExperiments(false, "1Step", "edge_degree", eps, delta, k);
-    runExperiments(true, "1Step", "edge_degree", eps, delta, k);
+    // runExperiments(true, "1Step", "edge_degree", eps, delta, k);
     runExperiments(false, "1Step", "delta", eps, delta, k);
     runExperiments(true, "1Step", "delta", eps, delta, k);
     // runExperiments(false, "1Step", "Varying_K", eps, delta, k);
