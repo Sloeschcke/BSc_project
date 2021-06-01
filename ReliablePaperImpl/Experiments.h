@@ -254,14 +254,14 @@ void run1StepAll(){
     long double eps = 0.05;
     long double delta = 0.01;
     int k = 3;
-    // runExperiments(false, "1Step", "num_nodes", eps, delta, k);
-    // runExperiments(true, "1Step", "num_nodes", eps, delta, k);
-    // runExperiments(false, "1Step", "edge_degree", eps, delta, k);
-    // runExperiments(true, "1Step", "edge_degree", eps, delta, k);
+    runExperiments(false, "1Step", "num_nodes", eps, delta, k);
+    runExperiments(true, "1Step", "num_nodes", eps, delta, k);
+    runExperiments(false, "1Step", "edge_degree", eps, delta, k);
+    runExperiments(true, "1Step", "edge_degree", eps, delta, k);
     runExperiments(false, "1Step", "delta", eps, delta, k);
     runExperiments(true, "1Step", "delta", eps, delta, k);
-    // runExperiments(false, "1Step", "Varying_K", eps, delta, k);
-    // runExperiments(true, "1Step", "Varying_K", eps, delta, k);
+    runExperiments(false, "1Step", "Varying_K", eps, delta, k);
+    runExperiments(true, "1Step", "Varying_K", eps, delta, k);
     runExperiments(false, "1Step", "epsilon", eps, delta, k);
     runExperiments(true, "1Step", "epsilon", eps, delta, k);
 }
@@ -280,10 +280,10 @@ void run2StepAll(){
     int k = 3;
     // runExperiments(false, "2Step", "num_nodes", eps, delta, k);
     // runExperiments(true, "2Step", "num_nodes", eps, delta, k);
-    runExperiments(false, "2Step", "edge_degree", eps, delta, k);
-    runExperiments(true, "2Step", "edge_degree", eps, delta, k);
     runExperiments(false, "2Step", "delta", eps, delta, k);
     runExperiments(true, "2Step", "delta", eps, delta, k);
+    runExperiments(false, "2Step", "edge_degree", eps, delta, k);
+    runExperiments(true, "2Step", "edge_degree", eps, delta, k);
     // runExperiments(true, "2Step", "Varying_K", eps, delta, k);
     // runExperiments(false, "2Step", "Varying_K", eps, delta, k);
 }

@@ -16,7 +16,7 @@ int main(int argc, char const *argv[])
 	// Precision2Step();
 	// runNumNodesFDist();
 	// ToyDataSetValidation();
-	run1StepAll();
+	// run1StepAll();
 	run2StepAll();
 	// allNumNodesRunExperiments();
 	// allEdgeDegreeRunExperiments();
