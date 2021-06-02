@@ -4,16 +4,14 @@ import networkx as nx
 from itertools import combinations
 from operator import itemgetter
 
-abspath = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt"
 _file = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\ToyGraph\\graph_file5.inf"
-# path_to_graph_reliable_paper = Path(abspath+_file) # file 0.0
-# path_to_graph_reliable_paper = Path("C:/Users/chris/Documents/6. Semester/Bachelor Project/BSc_project/ReliablePaperImpl/test_graphs/graph_file5.inf")
+path_to_graph_reliable_paper = Path("C:/Users/chris/Documents/6. Semester/Bachelor Project/BSc_project/ReliablePaperImpl/test_graphs/graph_file5.inf")
 
 # 1, 4, 9, with reliability: 0.927607
 # 1, 4, 9, with reliability: 0.910838
 # 1, 2, 4, with reliability: 0.938241
 def main():
-    edge_set = get_edgeSet(_file)
+    edge_set = get_edgeSet(path_to_graph_reliable_paper)
     worlds = get_possible_worlds(edge_set)
     world_probs = get_world_probabilities(worlds, edge_set)
     

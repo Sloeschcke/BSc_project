@@ -345,8 +345,9 @@ void testSingleStepVS2step(){
 	start = clock();
 	double long eps = 0.05;
 	double long delta = 0.01;
-	int k=2;
-	string path = abspath + "\\BSc_project\\GraphsGeneration\\processed_graphs\\num_nodes\\0\\0.txt";
+	int k=5;
+
+	string path = abspath + "\\BSc_project\\ReliablePaperImpl\\test_graphs\\graph_file5.inf";
 	resultMFCS res = runTopKPeeling(path, k, eps, delta, 0.001);
 	cout << "buffersize: " << res.MFCSBuffer.size() << "\n";
 	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
@@ -355,7 +356,9 @@ void testSingleStepVS2step(){
 
 	vector<Candidate> resultMFCSSingleStep = runTopKSingleStep(path, k, eps, delta);
 
+	cout << "Attentive \n";
 	printMFCS(res.MFCS);
+	cout << "Eager \n";
 	printMFCS(resultMFCSSingleStep);
 	
 	//10,14,16
