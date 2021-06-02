@@ -14,7 +14,8 @@ int main(int argc, char const *argv[])
 	// ValueTime valTime = run2StepExperiment(path, 2, 0.05, 0.01);
 	// testAll();
 	// Precision2Step();
-	runNumNodesFDist();
+	// runNumNodesFDist();
+	Precision2Step();
 	// ToyDataSetValidation();
 	// run1StepAll();
 	// run2StepAll();
