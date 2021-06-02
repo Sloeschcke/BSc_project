@@ -280,9 +280,9 @@ void run2StepAll(){
     int k = 3;
     // runExperiments(false, "2Step", "num_nodes", eps, delta, k);
     // runExperiments(true, "2Step", "num_nodes", eps, delta, k);
-    runExperiments(false, "2Step", "delta", eps, delta, k);
-    runExperiments(true, "2Step", "delta", eps, delta, k);
-    runExperiments(false, "2Step", "edge_degree", eps, delta, k);
+    // runExperiments(false, "2Step", "delta", eps, delta, k);
+    // runExperiments(true, "2Step", "delta", eps, delta, k);
+    // runExperiments(false, "2Step", "edge_degree", eps, delta, k);
     runExperiments(true, "2Step", "edge_degree", eps, delta, k);
     // runExperiments(true, "2Step", "Varying_K", eps, delta, k);
     // runExperiments(false, "2Step", "Varying_K", eps, delta, k);
