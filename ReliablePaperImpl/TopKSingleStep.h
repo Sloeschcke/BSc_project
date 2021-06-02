@@ -11,7 +11,8 @@ vector<Candidate> topKSingleStep(vector<vector<vector<int>>> * graphSamples, vec
     long double theta = getThresholdOfRandomDFS(graphSamples, components, k);
     cout << "initial theta: " << theta;
     IterApriori iApriori = IterApriori(components, numSamples);
-    iApriori.setMinSupport(max(theta - 0.01, long double (0.0)));
+    long double zero = 0.0;
+    iApriori.setMinSupport(max(theta - 0.01, zero));
     int counter = 0;
     while (tMFCS.size() < k){
         vector<int> candidate = iApriori.getNextFrequentItemset();
