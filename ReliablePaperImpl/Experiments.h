@@ -135,7 +135,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
     vector<int> k_values = {1,2,3,5,10,20,40,60,80,100};
     vector<long double> epsilon_values = {0.025, 0.03, 0.035, 0.04, 0.045, 0.05, 0.055, 0.06, 0.065, 0.07, 0.075};
     vector<long double> delta_values = {0.002, 0.004, 0.006, 0.008, 0.01, 0.012, 0.014, 0.016, 0.018, 0.02};
-    int numExperiments = 10;
+    int numExperiments = 8;
     int numRepetitions = 5;
     for (int j = 0; j < numExperiments; j++){
         string folderPath = path +"/" + to_string(j);
