@@ -10,8 +10,9 @@ def main():
     valency_probs = [0.1, 0.3, 0.5, 0.7, 0.9]
     # generate_edge_degree_graphs()
     # generate_numNodes_graphs_f_dist()
+    generate_numNodes_graphs_f_dist()
     # generate_edge_degree_graphs(valency= valency_probs)
-    generate_numNodes_graphs()
+    # generate_numNodes_graphs()
     # generate_numNodes_graphs(valency = valency_probs)
     # generate_data_for_vary_k()
     # generate_data_for_vary_k(valency = valency_probs)
@@ -44,7 +45,7 @@ def generate_numNodes_graphs(valency = None):
             create_processed_graph_files(path, folder_index, sample_index, nodes, edges, 1, value_for_plot, nodes, valency)
 
 def generate_numNodes_graphs_f_dist():
-    num_nodes = [50, 100, 200, 400, 800]
+    num_nodes = [50, 100, 200, 400, 800, 1600, 3200, 6400]
     edge_degree = 1.5
     num_samples = 5
     value_for_plot = "num_nodes_f_dist"
