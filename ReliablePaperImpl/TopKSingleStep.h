@@ -23,6 +23,7 @@ vector<Candidate> topKSingleStep(vector<vector<vector<int>>> * graphSamples, vec
             double long reliability = subgraphReliability(*graphSamples, candidateSet, theta);
             if(reliability >= theta){
                 tMFCS.push_back(Candidate(candidate, reliability));
+                cout << reliability << "\n";
             }
         }
     }
@@ -30,8 +31,6 @@ vector<Candidate> topKSingleStep(vector<vector<vector<int>>> * graphSamples, vec
     
     while(iApriori.hasNext()){
         counter++;
-        if(counter % 40000 == 0){
-        }
         Candidate canCandidate = getNextCandidateAndCheckReliability(iApriori, graphSamples, theta);
         if(canCandidate.nodes.size()==0){
             return tMFCS;
