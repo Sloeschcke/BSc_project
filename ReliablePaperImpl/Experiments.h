@@ -235,7 +235,7 @@ void runExperiments(bool valency, string algorithm, string category, long double
                 return;
         }
     }
-    writeListOfResultsToFile(resPath, results, category, category);
+    // writeListOfResultsToFile(resPath, results, category, category);
 }
 
 void allNumNodesRunExperiments(){
