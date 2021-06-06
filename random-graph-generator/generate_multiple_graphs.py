@@ -45,7 +45,7 @@ def generate_numNodes_graphs(valency = None):
             create_processed_graph_files(path, folder_index, sample_index, nodes, edges, 1, value_for_plot, nodes, valency)
 
 def generate_numNodes_graphs_f_dist():
-    num_nodes = [50, 100, 200, 400, 800, 1600, 3200, 6400]
+    num_nodes = [50, 100, 200, 400, 800, 1600, 3200]
     edge_degree = 1.5
     num_samples = 5
     value_for_plot = "num_nodes_f_dist"
