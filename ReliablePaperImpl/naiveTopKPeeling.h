@@ -1,11 +1,11 @@
 #ifndef NAIVETOPKPEELING_H
 #define NAIVETOPKPEELING_H
-#include "hoved.h"
-#include "graph.h"
-#include "utility.h"
+#include "Hoved.h"
+#include "Graph.h"
+#include "Utility.h"
 #include "Apriori.h"
 #include "IterApriori.h"
-#include "fastPeeling.h"
+#include "FastPeeling.h"
 #include "TopKPeeling.h"
 #include "MiningNonMaximal.h"
 

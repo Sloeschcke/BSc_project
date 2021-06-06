@@ -1,7 +1,7 @@
 #include <iostream>
-#include "graph.h"
-#include "hoved.h"
-#include "tests.h"
+#include "Graph.h"
+#include "Hoved.h"
+#include "Tests.h"
 #include "Experiments.h"
 #include <cstdio>
 

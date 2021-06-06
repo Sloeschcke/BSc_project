@@ -1,8 +1,8 @@
 #ifndef TOPKPSINGLESTEP_H
 #define TOPKPSINGLESTEP_H
-#include "hoved.h"
-#include "graph.h"
-#include "utility.h"
+#include "Hoved.h"
+#include "Graph.h"
+#include "Utility.h"
 #include "IterApriori.h"
 #include "TopKPeeling.h"
 
@@ -12,12 +12,8 @@ vector<Candidate> topKSingleStep(vector<vector<vector<int>>> * graphSamples, vec
     cout << "initial theta: " << theta;
     IterApriori iApriori = IterApriori(components, numSamples);
     iApriori.setMinSupport(theta);
-    int counter = 0;
     while (tMFCS.size() < k){
         vector<int> candidate = iApriori.getNextFrequentItemset();
-        counter ++;
-        if(counter % 4000 == 0){
-        }
         if(candidate.size()>2){
             set<int> candidateSet = convertVectorToSet(candidate);
             double long reliability = subgraphReliability(*graphSamples, candidateSet, theta);
@@ -29,9 +25,6 @@ vector<Candidate> topKSingleStep(vector<vector<vector<int>>> * graphSamples, vec
     theta = tMFCS[getMinSupportIndex(tMFCS)].support;
     
     while(iApriori.hasNext()){
-        counter++;
-        if(counter % 40000 == 0){
-        }
         Candidate canCandidate = getNextCandidateAndCheckReliability(iApriori, graphSamples, theta);
         if(canCandidate.nodes.size()==0){
             return tMFCS;

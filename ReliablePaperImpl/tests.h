@@ -1,11 +1,11 @@
-#include "hoved.h"
-#include "utility.h"
+#include "Hoved.h"
+#include "Utility.h"
 #include "Apriori.h"
-#include "peeling.h"
-#include "fastPeeling.h"
+#include "Peeling.h"
+#include "FastPeeling.h"
 #include "TopKPeeling.h"
 #include "IterApriori.h"
-#include "naiveTopKPeeling.h"
+#include "NaiveTopKPeeling.h"
 #include "TopKSingleStep.h"
 using namespace std;
 

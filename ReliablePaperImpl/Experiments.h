@@ -1,14 +1,14 @@
 #ifndef EXPERIMENTS_H
 #define EXPERIMENTS_H
 
-#include "hoved.h"
-#include "utility.h"
+#include "Hoved.h"
+#include "Utility.h"
 #include "Apriori.h"
-#include "peeling.h"
-#include "fastPeeling.h"
+#include "Peeling.h"
+#include "FastPeeling.h"
 #include "TopKPeeling.h"
 #include "IterApriori.h"
-#include "naiveTopKPeeling.h"
+#include "NaiveTopKPeeling.h"
 #include "TopKSingleStep.h"
 
 string abs_path = "C:\\Users\\mabet\\OneDrive - Aarhus Universitet\\Datalogi\\Bachelor projekt\\BSc_project\\GraphsGeneration\\processed_graphs\\";

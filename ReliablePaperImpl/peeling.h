@@ -1,9 +1,9 @@
 
 #ifndef PEELING_H
 #define PEELING_H
-#include "hoved.h"
-#include "graph.h"
-#include "utility.h"
+#include "Hoved.h"
+#include "Graph.h"
+#include "Utility.h"
 #include "Apriori.h"
 
 using namespace std;

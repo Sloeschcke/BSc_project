@@ -1,8 +1,8 @@
 #ifndef TOPKPEELING_H
 #define TOPKPEELING_H
-#include "hoved.h"
-#include "graph.h"
-#include "utility.h"
+#include "Hoved.h"
+#include "Graph.h"
+#include "Utility.h"
 #include "IterApriori.h"
 
 struct resultMFCS{
@@ -76,12 +76,8 @@ resultMFCS topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<AggCon
     vector<Candidate> candidateBuffer;
     IterApriori iApriori = IterApriori(components, numSamples);
     iApriori.setMinSupport(thetaRelaxed);
-    int counter = 0;
     while (tMFCS.size() < k){
         vector<int> candidate = iApriori.getNextFrequentItemset();
-        counter ++;
-        if(counter % 4000 == 0){
-        }
         if(candidate.size()>2){
             set<int> candidateSet = convertVectorToSet(candidate);
             double long reliability = subgraphReliability(*graphSamples, candidateSet, theta);
@@ -94,9 +90,6 @@ resultMFCS topKPeeling(vector<vector<vector<int>>> * graphSamples, vector<AggCon
     thetaRelaxed = max((long double)0.0,theta-2*eps);
     
     while(iApriori.hasNext()){
-        counter++;
-        if(counter % 40000 == 0){
-        }
         Candidate canCandidate = getNextCandidateAndCheckReliability(iApriori, graphSamples, theta);
         if(canCandidate.nodes.size()==0){
             return resultMFCS(tMFCS, candidateBuffer, theta, thetaRelaxed);
@@ -162,16 +155,12 @@ vector<Candidate> topKPeelingStep2 (Graph & graph, resultMFCS & step1Results, in
     int numSamples = stepSize;
     vector<Candidate> candidates = step1Results.MFCS;
     candidates.insert(candidates.end(), step1Results.MFCSBuffer.begin(),  step1Results.MFCSBuffer.end() ); 
-    //TODO fix while less than
     while(numSampled < 100000000 && candidates.size()>k){
         vector<vector<vector<int>>> graphSamples =  sample(graph, numSamples);
         candidates = updateReliabilities(graphSamples, candidates, numSampled);
         numSampled = numSampled+graphSamples.size();
         long double currentEpsilon = calculateEpsilon(delta, numSampled, candidates.size());
         cout << numSampled <<" : " << currentEpsilon << " " << candidates[k-1].support << "," << candidates[k].support << "\n";
-        // if(numSampled > 700000){
-        //     cout << "numSampled > 700000 \n";
-        // }
         if(currentEpsilon<epsilonLimit) {
             cout << "Early stopped";
             sort(candidates.begin(), candidates.end());
@@ -179,7 +168,6 @@ vector<Candidate> topKPeelingStep2 (Graph & graph, resultMFCS & step1Results, in
             for (int i = 0; i<k; i++){
                 candidates_topk.push_back(candidates[i]);
             }
-            // copy(candidates.begin(), candidates.begin()+k+1, candidates_topk.begin());
             return candidates_topk;
         }
         candidates = filterCandidates(candidates, k, currentEpsilon);

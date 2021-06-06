@@ -1,7 +1,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 #include <cassert>
-#include "hoved.h"
+#include "Hoved.h"
 
 using namespace std;
 class Graph

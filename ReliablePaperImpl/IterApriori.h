@@ -1,8 +1,8 @@
 #ifndef ITERAPRIORI_H
 #define ITERAPRIORI_H
-#include "utility.h"
-#include "hoved.h"
-#include "graph.h"
+#include "Utility.h"
+#include "Hoved.h"
+#include "Graph.h"
 
 struct Candidate {
     double long support;
@@ -75,15 +75,12 @@ public:
     }
 
     vector<int> getNextFrequentItemset(){
-        //TODO loop
         vector<int> candidate;
         while ( candidate.empty() ||  candidate.size()!=0 ){
             vector<int> candidate = getNextCandidate();
             if(candidate.size()==0 && nowStep!=0){
-                //  cout << "Had a zero length candidate";
                  break;
             }
-            //TODO check if candidate is used before
             long double support = getSupport(&candidate);
             if(support >= minSupport){
                 if(candidate.size() == nowStep+1){

@@ -1,6 +1,6 @@
 #ifndef APRIORI_H
 #define APRIORI_H
-#include "hoved.h"
+#include "Hoved.h"
 
 using namespace std;
 
