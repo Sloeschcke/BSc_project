@@ -1,4 +1,4 @@
-#Abstract
+# Abstract
 Uncertain graphs are widely used for representing the inherent uncertainty in complex systems.
 This project reviews and extends the work of Jin et al. [1], by studying the problem of discover-
 ing the k most reliable subgraphs in uncertain graphs. This problem is relevant in the analysis
@@ -16,7 +16,6 @@ novel approaches provide significant improvements compared to naively extending 
 of Jin et al. to the top-k setting.
 
 
-# BSc_project
 Names of algorithms does not correspond to the names in the report.
 
 The equvalences are as follows:
